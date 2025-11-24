@@ -24,6 +24,7 @@
             --text-color: #333;
             --input-border: #ADD8E6; /* Açık Mavi Kenarlık */
             --hover-dark: #002244; /* Daha Koyu Mavi (Hover/Vurgu) */
+            --sepet-bg: #e6f7ff; /* Açık Mavi Sepet Arka Planı */
         }
         html,body{
             height:100%;
@@ -32,7 +33,7 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: var(--primary); /* Ana zemin Koyu Mavi */
+            background-color: var(--primary); 
             color: var(--text-color);
             -webkit-font-smoothing:antialiased;
             text-align: center;
@@ -47,7 +48,7 @@
             max-width:420px;
         }
         .header {
-            background-color: var(--accent); /* Başlık Kırmızı */
+            background-color: var(--accent); 
             padding: 15px 0;
             color: white;
             font-size: 18px;
@@ -55,63 +56,52 @@
             border-radius: 12px 12px 0 0;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
         }
-        /* Başlık içindeki linkin stilini ayarlama */
         .header a {
             color: white;
-            text-decoration: none; /* Link altındaki çizgiyi kaldır */
-            display: block; /* Linkin tüm header alanını kaplamasını sağla */
+            text-decoration: none; 
+            display: block; 
         }
         .container {
             margin: 0 auto;
             padding: 25px;
-            background-color: var(--light-bg); /* İç Alan Beyaz */
+            background-color: var(--light-bg); 
             border-radius: 0 0 12px 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             text-align: left;
         }
-
-        h2 {
-            color: var(--primary); /* Başlık Mavi */
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 24px;
-            font-weight: 700;
+        /* Sekme Başlıkları */
+        .tab-buttons {
+            display: flex;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
         }
-        label {
-            display: block;
-            margin-bottom: 4px;
-            font-weight: 600;
+        .tab-btn {
+            flex: 1;
+            padding: 12px 10px;
+            background-color: #f0f0f0; 
             color: var(--text-color);
+            border: none;
+            cursor: pointer;
             font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s, color 0.2s;
         }
+        .tab-btn.active {
+            background-color: var(--primary); 
+            color: white;
+            pointer-events: none; 
+        }
+
         /* Giriş Alanı Gruplaması */
         .input-group {
             position: relative;
             margin-bottom: 18px;
         }
-        /* En/Boy/Yükseklik için ikon */
-        .input-group:not(.desi-input-group)::before {
-            content: '📐'; /* Cetvel/Ölçü emojisi */
-            font-size: 20px;
-            position: absolute;
-            left: 12px;
-            top: 10px; 
-            z-index: 10;
-        }
-        /* Desi girişi için ikon */
-        .desi-input-group::before {
-            content: '🔢'; /* Numara emojisi */
-            font-size: 20px;
-            position: absolute;
-            left: 12px;
-            top: 10px; 
-            z-index: 10;
-        }
-        
         input[type="number"] {
             width: 100%;
-            padding: 14px 14px 14px 45px; /* İkon için soldan boşluk */
+            padding: 14px 14px 14px 45px;
             border: 2px solid var(--input-border);
             border-radius: 10px;
             box-sizing: border-box;
@@ -120,14 +110,14 @@
             transition: border-color .2s;
         }
         input[type="number"]:focus {
-            border-color: var(--primary); /* Focus Mavi */
+            border-color: var(--primary);
             outline: none;
         }
         
         button {
             width: 100%;
             padding: 16px;
-            background-color: var(--accent); /* Buton Kırmızı */
+            background-color: var(--accent); 
             color: white;
             border: none;
             border-radius: 10px;
@@ -139,12 +129,94 @@
             box-shadow: 0 4px 12px rgba(204, 0, 0, 0.4); 
             margin-top: 5px;
         }
-        button:active { 
-            transform: translateY(2px);
-            box-shadow: 0 2px 8px rgba(204, 0, 0, 0.4);
+        /* Yeni: Sepete Ekle Butonu */
+        .add-to-cart-btn {
+            width: auto;
+            padding: 8px 15px;
+            font-size: 14px;
+            margin-top: 0;
+            border-radius: 8px;
+            background-color: var(--primary);
+            box-shadow: none;
         }
-        button:hover { background-color: var(--hover-dark); } /* Hover Koyu Mavi */
+        .add-to-cart-btn:hover {
+            background-color: var(--hover-dark);
+        }
 
+        /* Yeni: Hazır Ürün Listesi Stili */
+        .product-list {
+            list-style: none;
+            padding: 0;
+        }
+        .product-list .product-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .product-list .product-info span:last-child {
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .product-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .product-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Yeni: Sepetim Kutusu Stili */
+        .cart-box {
+            background-color: var(--sepet-bg);
+            border: 1px solid #b3e0ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 25px;
+            display: none; /* Başlangıçta gizli */
+        }
+        .cart-box h4 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 5px;
+            font-size: 16px;
+        }
+        .cart-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 10px 0;
+            font-size: 14px;
+        }
+        .cart-list li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            color: #333;
+        }
+        .cart-list li button {
+            all: unset;
+            cursor: pointer;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .cart-summary {
+            font-weight: 700;
+            border-top: 1px solid #ccc;
+            padding-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+        }
+
+        /* Sonuç Kutusu */
         .result-box {
             margin-top: 22px;
             padding: 18px;
@@ -155,21 +227,13 @@
             box-shadow: 0 0 15px rgba(204, 0, 0, 0.2); 
         }
         .result-box p { margin: 6px 0; font-size: 16px; color: var(--text-color); }
-        .result-box h3 { color: var(--accent); margin: 8px 0 0; font-size: 20px; font-weight: 700; } /* Ücret Kırmızı */
+        .result-box h3 { color: var(--accent); margin: 8px 0 0; font-size: 20px; font-weight: 700; } 
 
-        .footer {
-            margin-top: 14px;
-            padding: 6px;
-            color: #ddd; 
-            font-size: 12px;
-            text-align: center;
-        }
+        /* İkon Stilleri */
+        .input-group:not(.desi-input-group):not(.kg-input-group)::before { content: '📐'; font-size: 20px; position: absolute; left: 12px; top: 10px; z-index: 10; }
+        .desi-input-group::before { content: '🔢'; font-size: 20px; position: absolute; left: 12px; top: 10px; z-index: 10; }
+        .kg-input-group::before { content: '⚖️'; font-size: 20px; position: absolute; left: 12px; top: 10px; z-index: 10; }
         
-        /* Mobil uyum */
-        @media (max-width:420px) {
-            .container { padding: 20px; }
-            button { padding: 14px; font-size: 16px; }
-        }
     </style>
 </head>
 <body>
@@ -184,38 +248,129 @@
                 ORDU TAŞIMACILIK
             </p>
 
-            <div id="lwh-group">
-                <div class="input-group">
-                    <label for="en">En (cm)</label>
-                    <input type="number" id="en" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
-                </div>
-
-                <div class="input-group">
-                    <label for="boy">Boy (cm)</label>
-                    <input type="number" id="boy" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
-                </div>
-
-                <div class="input-group">
-                    <label for="yukseklik">Yükseklik (cm)</label>
-                    <input type="number" id="yukseklik" placeholder="Örn: 40" inputmode="numeric" min="0" step="any">
-                </div>
-
-                <button id="hesapBtnLWH">Hacim ile Fiyatı Hesapla</button>
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="tabOzelFiyat">Özel Fiyat Hesapla</button>
+                <button class="tab-btn" data-tab="tabHazirFiyat">Hazır Ürün Sepeti</button>
             </div>
 
 
-            <hr style="margin:25px 0; border-top:1px solid var(--input-border);">
-            <h3 style="text-align:center; color:var(--primary); margin-bottom:15px; font-weight:600;">🔢 Ya da Desiyi Direkt Girin</h3>
+            <div id="tabOzelFiyat" class="tab-content">
+                 
+                <div id="lwh-group">
+                    <div class="input-group">
+                        <label for="en">En (cm)</label>
+                        <input type="number" id="en" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
+                    </div>
 
-            <div class="input-group desi-input-group">
-                <label for="desi">Desi Değeri (Adet)</label>
-                <input type="number" id="desi" placeholder="Örn: 5" inputmode="numeric" min="0" step="1">
+                    <div class="input-group">
+                        <label for="boy">Boy (cm)</label>
+                        <input type="number" id="boy" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="yukseklik">Yükseklik (cm)</label>
+                        <input type="number" id="yukseklik" placeholder="Örn: 40" inputmode="numeric" min="0" step="any">
+                    </div>
+
+                    <div class="input-group kg-input-group">
+                        <label for="agirlik">Ağırlık (kg)</label>
+                        <input type="number" id="agirlik" placeholder="Örn: 5" inputmode="numeric" min="0" step="any">
+                    </div>
+
+                    <button id="hesapBtnLWH">Hacim ve Ağırlık ile Fiyatı Hesapla</button>
+                </div>
+
+
+                <hr style="margin:25px 0; border-top:1px solid var(--input-border);">
+                <h3 style="text-align:center; color:var(--primary); margin-bottom:15px; font-weight:600;">🔢 Ya da Desiyi Direkt Girin</h3>
+
+                <div class="input-group desi-input-group">
+                    <label for="desi">Desi Değeri (Adet)</label>
+                    <input type="number" id="desi" placeholder="Örn: 5" inputmode="numeric" min="0" step="1">
+                </div>
+                
+                <button id="hesapBtnDesi">Desi ile Fiyatı Hesapla</button>
             </div>
-            
-            <button id="hesapBtnDesi">Desi ile Fiyatı Hesapla</button>
+
+
+            <div id="tabHazirFiyat" class="tab-content" style="display:none;">
+                
+                <h3 style="text-align:center; color:var(--primary); margin-bottom:15px; font-weight:600;">🛒 Ürünleri Sepete Ekleyin</h3>
+
+                <ul class="product-list">
+                    <li data-name="Ütü, Küçük Ev Aletleri" data-desi="3" data-price="200.00">
+                        <div class="product-info">
+                            <span>Ütü, Küçük Ev Aletleri (3 Desi)</span>
+                            <span>200,00 TL</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-name="Ütü, Küçük Ev Aletleri" data-desi="3" data-price="200.00">Sepete Ekle</button>
+                    </li>
+                    <li data-name="Mikrodalga, Küçük Fırın" data-desi="12" data-price="4500.00">
+                        <div class="product-info">
+                            <span>Mikrodalga, Küçük Fırın (12 Desi)</span>
+                            <span>4.500,00 TL</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-name="Mikrodalga, Küçük Fırın" data-desi="12" data-price="4500.00">Sepete Ekle</button>
+                    </li>
+                    <li data-name="Masaüstü Bilgisayar Kasası" data-desi="20" data-price="12000.00">
+                        <div class="product-info">
+                            <span>Masaüstü Bilgisayar Kasası (20 Desi)</span>
+                            <span>12.000,00 TL</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-name="Masaüstü Bilgisayar Kasası" data-desi="20" data-price="12000.00">Sepete Ekle</button>
+                    </li>
+                    <li data-name="Bulaşık Makinesi" data-desi="35" data-price="10500.00">
+                        <div class="product-info">
+                            <span>Bulaşık Makinesi (35 Desi)</span>
+                            <span>10.500,00 TL</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-name="Bulaşık Makinesi" data-desi="35" data-price="10500.00">Sepete Ekle</button>
+                    </li>
+                    
+                    <li data-name="Çamaşır Makinesi" data-desi="50" data-price="1750.00">
+                        <div class="product-info">
+                            <span>Çamaşır Makinesi (50 Desi)</span>
+                            <span>1.750,00 TL</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-name="Çamaşır Makinesi" data-desi="50" data-price="1750.00">Sepete Ekle</button>
+                    </li>
+                    <li data-name="Buzdolabı (Tek Kapılı)" data-desi="25" data-price="2500.00">
+                        <div class="product-info">
+                            <span>Buzdolabı (Tek Kapılı) (25 Desi)</span>
+                            <span>2.500,00 TL</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-name="Buzdolabı (Tek Kapılı)" data-desi="25" data-price="2500.00">Sepete Ekle</button>
+                    </li>
+                    
+                    <li data-name="Buzdolabı (Çift Kapılı)" data-desi="120" data-price="18000.00">
+                        <div class="product-info">
+                            <span>Buzdolabı (Çift Kapılı) (120 Desi)</span>
+                            <span>18.000,00 TL</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-name="Buzdolabı (Çift Kapılı)" data-desi="120" data-price="18000.00">Sepete Ekle</button>
+                    </li>
+                </ul>
+                
+                <div id="cartBox" class="cart-box">
+                    <h4>📦 Sepetim</h4>
+                    <ul id="cartList" class="cart-list">
+                        </ul>
+                    <div class="cart-summary">
+                        <span>Toplam Desi:</span>
+                        <span id="totalDesi">-</span>
+                    </div>
+                    <div class="cart-summary" style="font-weight:700; color:var(--primary); margin-top:5px; border-top:none; padding-top:0;">
+                        <span>Toplam Ürün Değeri:</span>
+                        <span id="totalPriceSpan">-</span>
+                    </div>
+                    <button id="clearCartBtn" style="background-color: #900; margin-top: 15px; font-size:16px;">Sepeti Temizle</button>
+                </div>
+
+            </div>
+
 
             <div class="result-box" aria-live="polite">
-                <p id="desiSonuc">Desi Değeri: -</p>
+                <p id="desiSonuc">Hesaplanan Desi: -</p>
                 <h3>Tahmini Kargo Ücreti: <span id="ucretSonuc">-</span> TL</h3>
             </div>
         </div>
@@ -224,77 +379,58 @@
     </div>
 
     <script>
-        // DESI FIYATINI BURADA GÜNCELLEYEBİLİRSİNİZ
+        // DESI FIYAT VE BÖLEN DEĞERLERİ
         const DESI_BOLENI = 3000;
-        const DESI_FIYAT = 9.17; // FİYAT DEĞİŞTİRİLMEDİ (12 Desi için ~110 TL)
+        const DESI_FIYAT = 9.17; 
 
-        const lwhInputs = document.querySelectorAll('#lwh-group input');
+        // SEPET DURUMU
+        let cart = {}; 
+
+        // DOM ELEMANLARI
+        // Ağırlık inputu eklendi
+        const lwhInputs = document.querySelectorAll('#lwh-group input:not(#agirlik)'); 
+        const agirlikInput = document.getElementById('agirlik'); 
         const desiInput = document.getElementById('desi');
+        const desiSonuc = document.getElementById('desiSonuc');
+        const ucretSonuc = document.getElementById('ucretSonuc');
+        const cartBox = document.getElementById('cartBox');
+        const cartList = document.getElementById('cartList');
+        const totalDesiSpan = document.getElementById('totalDesi');
+        const totalPriceSpan = document.getElementById('totalPriceSpan'); 
 
+        // SEKME ELEMANLARI
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabOzelFiyat = document.getElementById('tabOzelFiyat');
+        const tabHazirFiyat = document.getElementById('tabHazirFiyat');
+        
+        // HAZIR ÜRÜN BUTONLARI
+        const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
+        const clearCartBtn = document.getElementById('clearCartBtn');
+
+
+        // FONKSİYONLAR
         function formatTL(x){
             return new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x);
         }
 
-        // 1. Desi Hesaplama Fonksiyonu (En/Boy/Yükseklik ile)
-        function hesaplaLWH() {
-            // Desi inputunu temizle
-            desiInput.value = '';
-
-            const en = parseFloat(document.getElementById('en').value);
-            const boy = parseFloat(document.getElementById('boy').value);
-            const yukseklik = parseFloat(document.getElementById('yukseklik').value);
-
-            if (isNaN(en) || isNaN(boy) || isNaN(yukseklik) || en <= 0 || boy <= 0 || yukseklik <= 0) {
-                document.getElementById('ucretSonuc').textContent = '—';
-                document.getElementById('desiSonuc').textContent = 'Lütfen tüm ölçü alanlarını doldurun.';
-                return;
-            }
-
-            const desi = (en * boy * yukseklik) / DESI_BOLENI;
-            const yuvarlanmisDesi = Math.ceil(desi);
-            const kargoUcreti = yuvarlanmisDesi * DESI_FIYAT;
-
-            document.getElementById('desiSonuc').textContent = `Hacim Desisi: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
-            document.getElementById('ucretSonuc').textContent = formatTL(kargoUcreti);
-        }
-
-        // 2. Direkt Desi Hesaplama Fonksiyonu
-        function hesaplaDesi() {
-            // LWH inputlarını temizle
+        function clearInputs() {
             lwhInputs.forEach(input => input.value = '');
-
-            const desi = parseFloat(desiInput.value);
-
-            if (isNaN(desi) || desi <= 0) {
-                document.getElementById('ucretSonuc').textContent = '—';
-                document.getElementById('desiSonuc').textContent = 'Lütfen geçerli bir Desi değeri girin.';
-                return;
-            }
-
-            const yuvarlanmisDesi = Math.ceil(desi);
-            const kargoUcreti = yuvarlanmisDesi * DESI_FIYAT;
-
-            document.getElementById('desiSonuc').textContent = `Girilen Desi: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
-            document.getElementById('ucretSonuc').textContent = formatTL(kargoUcreti);
+            agirlikInput.value = ''; // Ağırlık inputu temizlendi
+            desiInput.value = '';
         }
 
-        // Etkileşim: Event Listener'lar
-        document.getElementById('hesapBtnLWH').addEventListener('click', hesaplaLWH);
-        document.getElementById('hesapBtnDesi').addEventListener('click', hesaplaDesi);
+        function clearResults() {
+            desiSonuc.textContent = 'Hesaplanan Desi: -';
+            ucretSonuc.textContent = '-';
+        }
 
-        // Enter ile de hesapla (LWH alanı odaklıysa LWH, Desi alanı odaklıysa Desi hesaplanır)
-        lwhInputs.forEach(input => {
-            input.addEventListener('keydown', function(e){
-                if (e.key === 'Enter') {
-                    hesaplaLWH();
-                }
-            });
-        });
-        desiInput.addEventListener('keydown', function(e){
-            if (e.key === 'Enter') {
-                hesaplaDesi();
-            }
-        });
-    </script>
-</body>
-</html>
+        // Genel Hesaplama Motoru
+        function calculateAndDisplay(desiValue, description) {
+            const yuvarlanmisDesi = Math.ceil(desiValue);
+            const kargoUcreti = yuvarlanmisDesi * DESI_FIYAT;
+
+            desiSonuc.innerHTML = description;
+            ucretSonuc.textContent = formatTL(kargoUcreti);
+        }
+
+        // --- 1. ÖZ
