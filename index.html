@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>ORDU Kargo Hesaplama</title>
 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="📦 Kargo Hesapla">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -14,23 +16,24 @@
     <link rel="icon" type="image/png" href="apple-touch-icon.png?v=20251124">
 
     <style>
-        /* CSS: Tasarım Kuralları (dokunmatik için biraz daha büyük hedefler) */
+        /* CSS: YENİ KOYU TEMA VE GÖLGELENDİRMELER */
         :root{
-            --dark-blue: #191970;
-            --mid-blue: #4682b4;
-            --light-blue: #e6f7ff;
-            --input-border: #add8e6;
-            --bg: #f0f8ff;
+            --dark: #1e1e1e; /* Koyu Arka Plan */
+            --light-bg: #f5f5f5; /* İç Alan Arka Planı */
+            --accent: #ff8c00; /* Turuncu Vurgu Rengi */
+            --accent-dark: #cc7000; /* Buton Hover Rengi */
+            --text-color: #333;
+            --input-border: #ddd;
         }
         html,body{
             height:100%;
         }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: var(--bg);
-            color: var(--dark-blue);
+            background-color: var(--dark);
+            color: var(--text-color);
             -webkit-font-smoothing:antialiased;
             text-align: center;
             display:flex;
@@ -44,110 +47,143 @@
             max-width:420px;
         }
         .header {
-            background-color: var(--dark-blue);
-            padding: 12px 0;
+            background-color: var(--accent);
+            padding: 15px 0;
             color: white;
             font-size: 18px;
-            font-weight: 600;
+            font-weight: 700;
             border-radius: 12px 12px 0 0;
-            display:flex;
-            justify-content:center;
-            align-items:center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
         }
         .container {
             margin: 0 auto;
-            padding: 18px;
-            background-color: #fff;
+            padding: 25px;
+            background-color: var(--light-bg);
             border-radius: 0 0 12px 12px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Derinlik Artırıldı */
             text-align: left;
         }
         h2 {
-            color: var(--mid-blue);
+            color: var(--accent);
             text-align: center;
             margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 20px;
+            margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: 700;
         }
         label {
             display: block;
-            margin-bottom: 6px;
-            font-weight: 700;
-            color: var(--dark-blue);
+            margin-bottom: 4px;
+            font-weight: 600;
+            color: var(--text-color);
             font-size: 14px;
         }
+
+        /* Giriş Alanı Gruplaması */
+        .input-group {
+            position: relative;
+            margin-bottom: 18px;
+        }
+        .input-group::before {
+            content: '📦'; /* Kutu Emojisi */
+            font-size: 20px;
+            position: absolute;
+            left: 12px;
+            top: 10px; 
+            z-index: 10;
+        }
+
         input[type="number"] {
             width: 100%;
-            padding: 14px;
-            margin-bottom: 14px;
+            padding: 14px 14px 14px 45px; /* İkon için soldan boşluk */
             border: 2px solid var(--input-border);
             border-radius: 10px;
             box-sizing: border-box;
             font-size: 16px;
             -webkit-appearance: none;
+            transition: border-color .2s;
+        }
+        input[type="number"]:focus {
+            border-color: var(--accent);
+            outline: none;
         }
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
+        
         button {
             width: 100%;
-            padding: 14px;
-            background-color: var(--mid-blue);
+            padding: 16px;
+            background-color: var(--accent);
             color: white;
             border: none;
             border-radius: 10px;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color .18s;
+            transition: background-color .18s, transform .1s;
             touch-action: manipulation;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
-        button:active { transform: translateY(1px); }
-        button:hover { background-color: var(--dark-blue); }
+        button:active { 
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        button:hover { background-color: var(--accent-dark); }
 
         .result-box {
-            margin-top: 18px;
-            padding: 14px;
-            border: 1px dashed var(--input-border);
-            background-color: var(--light-blue);
+            margin-top: 22px;
+            padding: 18px;
+            border: 2px solid var(--accent);
+            background-color: #fff;
             border-radius: 10px;
             text-align: center;
+            box-shadow: 0 0 15px rgba(255, 140, 0, 0.2); /* Turuncu vurgu gölgesi */
         }
-        .result-box p { margin: 6px 0; font-size: 15px; }
-        .result-box h3 { color: #d2691e; margin: 8px 0 0; font-size: 18px; }
+        .result-box p { margin: 6px 0; font-size: 16px; color: var(--text-color); }
+        .result-box h3 { color: var(--accent-dark); margin: 8px 0 0; font-size: 20px; font-weight: 700; }
 
         .footer {
             margin-top: 14px;
             padding: 6px;
-            color: #888;
+            color: #ccc;
             font-size: 12px;
             text-align: center;
         }
-
-        /* Küçük ekranlarda biraz daha boşluk */
+        
+        /* Mobil uyum */
         @media (max-width:420px) {
-            .container { padding: 16px; }
-            input[type="number"] { padding: 12px; }
-            button { padding: 12px; }
+            .container { padding: 20px; }
+            button { padding: 14px; font-size: 16px; }
         }
     </style>
 </head>
 <body>
     <div class="app" role="application" aria-label="Kargo Ücreti Hesaplayıcı">
-        <div class="header">www.ordutasimacilik.com</div>
+        <div class="header">ORDU KARGO - Hızlı & Güvenilir Hesaplama</div>
 
         <div class="container" role="main">
-            <h2>📦 Kargo Ücreti Hesaplama</h2>
+            <h2>📦 Hacimsel Kargo Hesaplama</h2>
+            <p style="font-size:14px; text-align:center; margin-bottom:20px; color:#666;">
+                Desi hesabı, (En x Boy x Yükseklik) / 3000 formülüne göre yapılır. Lütfen tüm ölçüleri santimetre (cm) cinsinden girin.
+            </p>
 
-            <label for="en">En (cm)</label>
-            <input type="number" id="en" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
+            <div class="input-group">
+                <label for="en">En (cm)</label>
+                <input type="number" id="en" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
+            </div>
 
-            <label for="boy">Boy (cm)</label>
-            <input type="number" id="boy" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
+            <div class="input-group">
+                <label for="boy">Boy (cm)</label>
+                <input type="number" id="boy" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
+            </div>
 
-            <label for="yukseklik">Yükseklik (cm)</label>
-            <input type="number" id="yukseklik" placeholder="Örn: 40" inputmode="numeric" min="0" step="any">
+            <div class="input-group">
+                <label for="yukseklik">Yükseklik (cm)</label>
+                <input type="number" id="yukseklik" placeholder="Örn: 40" inputmode="numeric" min="0" step="any">
+            </div>
 
             <button id="hesapBtn">Fiyatı Hesapla</button>
 
@@ -157,27 +193,16 @@
             </div>
         </div>
 
-        <div class="footer">Designed by Melih Bilal Öztürk</div>
+        <div class="footer">Tasarım: Modern Vurgu | Ordu Taşımacılık</div>
     </div>
 
     <script>
-        // Açıklama:
-        // Senin verdiğin örneğe göre: 30x30x40 => 12 desi ve bunun fiyatı 200 TL olduğuna göre
-        // desi başı fiyat = 200 / 12 = 16.666666...
-        // DESI_BOLENI = 3000 olarak korunuyor (standart desi formülü)
-
+        // DESI FIYATINI BURADA GÜNCELLEYEBİLİRSİNİZ
         const DESI_BOLENI = 3000;
-
-        // Eğer sabit istiyorsan: DESI_FIYAT_SABIT'i örneğe göre sabitledim.
-        // İstersen burada doğrudan farklı bir sabit / girdi koyabilirsin.
-        const DESI_FIYAT = 200 / 12; // örnek bazlı sabit (200 TL için)
-
-        // Alternatif: Kullanıcı kendi "baz fiyat"ını girebilsin istersen
-        // form'a ekstra bir alan ekleyip dinamik hesaplama yapabilirim.
+        const DESI_FIYAT = 18.5; // Örnek olarak desi başına fiyatı 18.50 TL olarak ayarladım. İhtiyacınıza göre değiştirin.
 
         function formatTL(x){
-            // Türkçe format, küsurat 2 basamak
-            return Number(x).toFixed(2).replace('.', ',');
+            return new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x);
         }
 
         function hesapla() {
@@ -186,23 +211,23 @@
             const yukseklik = parseFloat(document.getElementById('yukseklik').value);
 
             if (isNaN(en) || isNaN(boy) || isNaN(yukseklik) || en <= 0 || boy <= 0 || yukseklik <= 0) {
-                alert("Lütfen tüm alanlara geçerli, pozitif sayısal değerler girin.");
+                document.getElementById('ucretSonuc').textContent = '—';
+                document.getElementById('desiSonuc').textContent = 'Lütfen tüm alanları doldurun.';
                 return;
             }
 
             const desi = (en * boy * yukseklik) / DESI_BOLENI;
-            const yuvarlanmisDesi = Math.ceil(desi); // desi yukarı yuvarlanır
+            const yuvarlanmisDesi = Math.ceil(desi);
             const kargoUcreti = yuvarlanmisDesi * DESI_FIYAT;
 
             document.getElementById('desiSonuc').textContent = `Desi Değeri: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
             document.getElementById('ucretSonuc').textContent = formatTL(kargoUcreti);
         }
 
-        // Dokunmatik ve klavye ile uyumlu tetikleme
+        // Etkileşim
         const hesapBtn = document.getElementById('hesapBtn');
         hesapBtn.addEventListener('click', hesapla);
 
-        // Enter ile de hesapla
         document.querySelectorAll('input[type="number"]').forEach(input => {
             input.addEventListener('keydown', function(e){
                 if (e.key === 'Enter') {
@@ -210,13 +235,6 @@
                 }
             });
         });
-
-        // Basit service worker register (isteğe bağlı): eğer sw.js yüklersen offline PWA için.
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(regs => {
-                // sadece varsa sessizce kaydetmeye çalış
-            }).catch(()=>{});
-        }
     </script>
 </body>
 </html>
