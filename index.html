@@ -8,26 +8,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
+        /* CSS: YENİ MAVİ-KIRMIZI KURUMSAL TEMA */
         :root{
-            --primary: #003366;
-            --accent: #CC0000;
-            --light-bg: #FFFFFF;
+            --primary: #003366; /* Koyu Mavi */
+            --accent: #CC0000; /* Kırmızı Vurgu */
+            --light-bg: #FFFFFF; /* İç Alan Arka Planı (Beyaz) */
             --text-color: #333;
             --input-border: #ADD8E6;
             --hover-dark: #002244;
             --light-gray: #f5f5f5;
         }
+        
+        /* 🔥 KRİTİK REVİZYONLAR 🔥 */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 20px; /* Kenar boşluğu her zaman olsun */
             background-color: var(--primary);
             color: var(--text-color);
             min-height: 100vh;
             display: flex;
-            align-items: center;
+            align-items: flex-start; /* İçeriği en üste hizala (scroll sorunu olmasın diye) */
             justify-content: center;
-            padding: 20px;
             box-sizing: border-box;
             font-size: 14px;
         }
@@ -36,7 +38,10 @@
             max-width: 420px;
             display: flex;
             flex-direction: column;
+            /* Yükseklik kısıtlaması kaldırıldı */
         }
+        /* KRİTİK REVİZYON SONU */
+
         .header {
             background-color: var(--accent);
             padding: 15px 0;
@@ -59,26 +64,13 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             text-align: left;
             position: relative;
+            min-height: 500px; /* İçerik görünmezse bu alanı zorla beyaz yap! */
         }
+        
+        /* Diğer CSS kodları */
         h2 {
             color: var(--primary);
             text-align: center;
             margin-top: 0;
             margin-bottom: 15px;
-            font-size: 24px;
-            font-weight: 700;
-        }
-        label {
-            display: block;
-            margin-bottom: 4px;
-            font-weight: 600;
-            color: var(--text-color);
-            font-size: 14px;
-        }
-        .input-group {
-            position: relative;
-            margin-bottom: 18px;
-        }
-        .input-group:not(.desi-input-group)::before {
-            content: '📐';
             font
