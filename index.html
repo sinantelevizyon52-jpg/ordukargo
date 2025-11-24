@@ -117,7 +117,6 @@
         }
         input[type="text"] {
              width: 100%;
-             /* Padding'i simge için ayarla */
             padding: 10px 14px 10px 40px; 
             border: 1px solid var(--input-border);
             border-radius: 8px;
@@ -165,6 +164,7 @@
             overflow-y: auto;
             border: 1px solid var(--input-border);
             border-radius: 8px;
+            margin-top: 5px; /* Arama kutusundan sonra biraz boşluk */
         }
         .urun-tablosu {
             width: 100%;
@@ -203,6 +203,7 @@
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
+            /* Başlangıçta görünür kılmak için display: block olarak bırakıyoruz */
         }
         .sonuc-gosterge {
             display: flex;
@@ -226,8 +227,10 @@
             color: var(--accent);
             text-align: left;
         }
+        /* Başlangıçta görünür olabilmeleri için "none" tanımını kaldırıp, JS ile kontrol edeceğiz */
         .manuel-hesap-sonuc, .sepet-hesap-sonuc {
-            display: none;
+             /* Düzeltme: JS ile kontrol edilecek */
+            display: none; 
             text-align: left;
             margin-bottom: 10px;
             padding-bottom: 10px;
@@ -359,4 +362,10 @@
             { ad: "Ses Sistemi Subwoofer", desi: 41.7, fiyat: 382.39 },
             { ad: "Koşu Bandı (Kutu 1)", desi: 144.0, fiyat: 1320.48 },
             { ad: "Bisiklet Tamir Sehpası", desi: 16.0, fiyat: 146.72 },
-            { ad: "Trambol
+            { ad: "Trambolin Filesi ve Yayları (Kutu)", desi: 24.0, fiyat: 220.08 },
+            { ad: "Kamp Çadırı (6 Kişilik)", desi: 24.0, fiyat: 220.08 },
+            { ad: "Uyku Tulumu (4 Adet Paket)", desi: 20.0, fiyat: 183.40 },
+            { ad: "Büyük Oyuncak Araba (Akü)", desi: 66.7, fiyat: 611.53 },
+            { ad: "Tekstil Kolisi (Geniş, Hafif)", desi: 64.0, fiyat: 586.88 },
+            { ad: "Ayakkabı Kolisi (10 Çift)", desi: 32.0, fiyat: 293.44 },
+            { ad: "Deri Ceket (Askılı Kutu)", desi: 10.
