@@ -148,6 +148,17 @@
             list-style: none;
             padding: 0;
         }
+        /* Ürün fiyatını biraz ayırmak için */
+        .product-list .product-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .product-list .product-info span:last-child {
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
         .product-list li {
             display: flex;
             justify-content: space-between;
@@ -275,203 +286,4 @@
                 <h3 style="text-align:center; color:var(--primary); margin-bottom:15px; font-weight:600;">🔢 Ya da Desiyi Direkt Girin</h3>
 
                 <div class="input-group desi-input-group">
-                    <label for="desi">Desi Değeri (Adet)</label>
-                    <input type="number" id="desi" placeholder="Örn: 5" inputmode="numeric" min="0" step="1">
-                </div>
-                
-                <button id="hesapBtnDesi">Desi ile Fiyatı Hesapla</button>
-            </div>
-
-
-            <div id="tabHazirFiyat" class="tab-content" style="display:none;">
-                
-                <h3 style="text-align:center; color:var(--primary); margin-bottom:15px; font-weight:600;">🛒 Ürünleri Sepete Ekleyin</h3>
-
-                <ul class="product-list">
-                    <li data-name="Ütü, Küçük Ev Aletleri" data-desi="3">
-                        <span>Ütü, Küçük Ev Aletleri (3 Desi)</span>
-                        <button class="add-to-cart-btn" data-name="Ütü, Küçük Ev Aletleri" data-desi="3">Sepete Ekle</button>
-                    </li>
-                    <li data-name="Mikrodalga, Küçük Fırın" data-desi="12">
-                        <span>Mikrodalga, Küçük Fırın (12 Desi)</span>
-                        <button class="add-to-cart-btn" data-name="Mikrodalga, Küçük Fırın" data-desi="12">Sepete Ekle</button>
-                    </li>
-                    <li data-name="Masaüstü Bilgisayar Kasası" data-desi="20">
-                        <span>Masaüstü Bilgisayar Kasası (20 Desi)</span>
-                        <button class="add-to-cart-btn" data-name="Masaüstü Bilgisayar Kasası" data-desi="20">Sepete Ekle</button>
-                    </li>
-                    <li data-name="Bulaşık Makinesi" data-desi="35">
-                        <span>Bulaşık Makinesi (35 Desi)</span>
-                        <button class="add-to-cart-btn" data-name="Bulaşık Makinesi" data-desi="35">Sepete Ekle</button>
-                    </li>
-                    <li data-name="Çamaşır Makinesi" data-desi="50">
-                        <span>Çamaşır Makinesi (50 Desi)</span>
-                        <button class="add-to-cart-btn" data-name="Çamaşır Makinesi" data-desi="50">Sepete Ekle</button>
-                    </li>
-                    <li data-name="Buzdolabı (Tek Kapılı)" data-desi="90">
-                        <span>Buzdolabı (Tek Kapılı) (90 Desi)</span>
-                        <button class="add-to-cart-btn" data-name="Buzdolabı (Tek Kapılı)" data-desi="90">Sepete Ekle</button>
-                    </li>
-                    <li data-name="Buzdolabı (Çift Kapılı)" data-desi="120">
-                        <span>Buzdolabı (Çift Kapılı) (120 Desi)</span>
-                        <button class="add-to-cart-btn" data-name="Buzdolabı (Çift Kapılı)" data-desi="120">Sepete Ekle</button>
-                    </li>
-                </ul>
-                
-                <div id="cartBox" class="cart-box">
-                    <h4>📦 Sepetim</h4>
-                    <ul id="cartList" class="cart-list">
-                        </ul>
-                    <div class="cart-summary">
-                        <span>Toplam Desi:</span>
-                        <span id="totalDesi">-</span>
-                    </div>
-                    <button id="clearCartBtn" style="background-color: #900; margin-top: 15px; font-size:16px;">Sepeti Temizle</button>
-                </div>
-
-            </div>
-
-
-            <div class="result-box" aria-live="polite">
-                <p id="desiSonuc">Hesaplanan Desi: -</p>
-                <h3>Tahmini Kargo Ücreti: <span id="ucretSonuc">-</span> TL</h3>
-            </div>
-        </div>
-
-        <div class="footer">Tasarım: Melih Bilal Öztürk | Ordu Taşımacılık</div>
-    </div>
-
-    <script>
-        // DESI FIYAT VE BÖLEN DEĞERLERİ
-        const DESI_BOLENI = 3000;
-        const DESI_FIYAT = 9.17; 
-
-        // SEPET DURUMU
-        let cart = {}; // { 'Ütü, Küçük Ev Aletleri': { desi: 3, quantity: 1 }, ... }
-
-        // DOM ELEMANLARI
-        const lwhInputs = document.querySelectorAll('#lwh-group input:not(#agirlik)');
-        const agirlikInput = document.getElementById('agirlik');
-        const desiInput = document.getElementById('desi');
-        const desiSonuc = document.getElementById('desiSonuc');
-        const ucretSonuc = document.getElementById('ucretSonuc');
-        const cartBox = document.getElementById('cartBox');
-        const cartList = document.getElementById('cartList');
-        const totalDesiSpan = document.getElementById('totalDesi');
-
-        // SEKME ELEMANLARI
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const tabOzelFiyat = document.getElementById('tabOzelFiyat');
-        const tabHazirFiyat = document.getElementById('tabHazirFiyat');
-        
-        // HAZIR ÜRÜN BUTONLARI
-        const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
-        const clearCartBtn = document.getElementById('clearCartBtn');
-
-
-        // FONKSİYONLAR
-        function formatTL(x){
-            return new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x);
-        }
-
-        function clearInputs() {
-            lwhInputs.forEach(input => input.value = '');
-            agirlikInput.value = '';
-            desiInput.value = '';
-        }
-
-        function clearResults() {
-            desiSonuc.textContent = 'Hesaplanan Desi: -';
-            ucretSonuc.textContent = '-';
-        }
-
-        // Genel Hesaplama Motoru
-        function calculateAndDisplay(desiValue, description) {
-            const yuvarlanmisDesi = Math.ceil(desiValue);
-            const kargoUcreti = yuvarlanmisDesi * DESI_FIYAT;
-
-            desiSonuc.innerHTML = description;
-            ucretSonuc.textContent = formatTL(kargoUcreti);
-        }
-
-        // --- 1. ÖZEL FİYAT HESAPLAMA (LWH + KG) ---
-        function hesaplaLWH() {
-            // Sepeti temizle ve diğer inputları temizle
-            clearInputs();
-            cart = {};
-            updateCartDisplay();
-
-            const en = parseFloat(document.getElementById('en').value);
-            const boy = parseFloat(document.getElementById('boy').value);
-            const yukseklik = parseFloat(document.getElementById('yukseklik').value);
-            const agirlik = parseFloat(agirlikInput.value); 
-
-            if (isNaN(en) || isNaN(boy) || isNaN(yukseklik) || isNaN(agirlik) || en <= 0 || boy <= 0 || yukseklik <= 0 || agirlik <= 0) {
-                ucretSonuc.textContent = '—';
-                desiSonuc.textContent = 'Lütfen tüm ölçü ve ağırlık alanlarını doldurun.';
-                return;
-            }
-
-            const hacimDesi = (en * boy * yukseklik) / DESI_BOLENI;
-            
-            // Büyük olan Desi seçilir (Hacim Desisi vs. Gerçek Ağırlık)
-            const faturaEdilecekDesi = Math.max(hacimDesi, agirlik); 
-
-            const description = 
-                `Hacim Desisi: ${hacimDesi.toFixed(2)} | Ağırlık: ${agirlik.toFixed(2)} kg<br> 
-                Fatura Edilecek Desi: ${Math.ceil(faturaEdilecekDesi)} (Büyük olan)`;
-            
-            calculateAndDisplay(faturaEdilecekDesi, description);
-        }
-
-        // --- 2. DİREKT DESİ HESAPLAMA ---
-        function hesaplaDesi() {
-            // Sepeti temizle ve diğer inputları temizle
-            clearInputs();
-            cart = {};
-            updateCartDisplay();
-
-            const desi = parseFloat(desiInput.value);
-
-            if (isNaN(desi) || desi <= 0) {
-                ucretSonuc.textContent = '—';
-                desiSonuc.textContent = 'Lütfen geçerli bir Desi değeri girin.';
-                return;
-            }
-            
-            const yuvarlanmisDesi = Math.ceil(desi);
-            const description = `Girilen Desi: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
-            
-            calculateAndDisplay(desi, description);
-        }
-
-        // --- 3. SEPET MANTIĞI FONKSİYONLARI ---
-
-        function updateCartDisplay() {
-            cartList.innerHTML = '';
-            let totalDesi = 0;
-            let totalQuantity = 0;
-
-            // Sepeti gez, Desi ve Adet hesapla
-            for (const name in cart) {
-                const item = cart[name];
-                if (item.quantity > 0) {
-                    const li = document.createElement('li');
-                    li.innerHTML = `
-                        <span>${item.quantity} x ${name} (${item.desi} Desi)</span>
-                        <button data-name="${name}" class="remove-from-cart-btn">Kaldır</button>
-                    `;
-                    cartList.appendChild(li);
-                    
-                    totalDesi += item.desi * item.quantity;
-                    totalQuantity += item.quantity;
-                }
-            }
-
-            // Toplam Desi ve Fiyatı hesapla ve göster
-            if (totalQuantity > 0) {
-                cartBox.style.display = 'block';
-                const description = `Sepetteki ${totalQuantity} Ürünün Toplam Desisi: ${totalDesi.toFixed(2)}`;
-                calculateAndDisplay(totalDesi, description);
-            } else {
-                cartBox.style.display =
+                    <label for="desi">Desi
