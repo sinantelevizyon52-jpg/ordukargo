@@ -84,17 +84,28 @@
             position: relative;
             margin-bottom: 18px;
         }
-        .input-group::before {
-            content: '📦';
+        /* En/Boy/Yükseklik için ikon */
+        .input-group:not(.desi-input-group)::before {
+            content: '📐'; /* Cetvel/Ölçü emojisi */
             font-size: 20px;
             position: absolute;
             left: 12px;
             top: 10px; 
             z-index: 10;
         }
+        /* Desi girişi için ikon */
+        .desi-input-group::before {
+            content: '🔢'; /* Numara emojisi */
+            font-size: 20px;
+            position: absolute;
+            left: 12px;
+            top: 10px; 
+            z-index: 10;
+        }
+        
         input[type="number"] {
             width: 100%;
-            padding: 14px 14px 14px 45px; 
+            padding: 14px 14px 14px 45px; /* İkon için soldan boşluk */
             border: 2px solid var(--input-border);
             border-radius: 10px;
             box-sizing: border-box;
@@ -119,7 +130,8 @@
             cursor: pointer;
             transition: background-color .18s, transform .1s;
             touch-action: manipulation;
-            box-shadow: 0 4px 12px rgba(204, 0, 0, 0.4); /* Kırmızı Gölge */
+            box-shadow: 0 4px 12px rgba(204, 0, 0, 0.4); 
+            margin-top: 5px;
         }
         button:active { 
             transform: translateY(2px);
@@ -160,27 +172,40 @@
 
         <div class="container" role="main">
             
-            <h2>📦 Hacimsel Kargo Hesaplama</h2>
+            <h2>📐 En/Boy/Yükseklik ile Hesaplama</h2>
             <p style="font-size:14px; text-align:center; margin-bottom:20px; color:#666;">
                 Desi hesabı, (En x Boy x Yükseklik) / 3000 formülüne göre yapılır. Lütfen tüm ölçüleri santimetre (cm) cinsinden girin.
             </p>
 
-            <div class="input-group">
-                <label for="en">En (cm)</label>
-                <input type="number" id="en" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
+            <div id="lwh-group">
+                <div class="input-group">
+                    <label for="en">En (cm)</label>
+                    <input type="number" id="en" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
+                </div>
+
+                <div class="input-group">
+                    <label for="boy">Boy (cm)</label>
+                    <input type="number" id="boy" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
+                </div>
+
+                <div class="input-group">
+                    <label for="yukseklik">Yükseklik (cm)</label>
+                    <input type="number" id="yukseklik" placeholder="Örn: 40" inputmode="numeric" min="0" step="any">
+                </div>
+
+                <button id="hesapBtnLWH">Hacim ile Fiyatı Hesapla</button>
             </div>
 
-            <div class="input-group">
-                <label for="boy">Boy (cm)</label>
-                <input type="number" id="boy" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
-            </div>
 
-            <div class="input-group">
-                <label for="yukseklik">Yükseklik (cm)</label>
-                <input type="number" id="yukseklik" placeholder="Örn: 40" inputmode="numeric" min="0" step="any">
-            </div>
+            <hr style="margin:25px 0; border-top:1px solid var(--input-border);">
+            <h3 style="text-align:center; color:var(--primary); margin-bottom:15px; font-weight:600;">🔢 Ya da Desiyi Direkt Girin</h3>
 
-            <button id="hesapBtn">Fiyatı Hesapla</button>
+            <div class="input-group desi-input-group">
+                <label for="desi">Desi Değeri (Adet)</label>
+                <input type="number" id="desi" placeholder="Örn: 5" inputmode="numeric" min="0" step="1">
+            </div>
+            
+            <button id="hesapBtnDesi">Desi ile Fiyatı Hesapla</button>
 
             <div class="result-box" aria-live="polite">
                 <p id="desiSonuc">Desi Değeri: -</p>
@@ -188,7 +213,7 @@
             </div>
         </div>
 
-        <div class="footer">Tasarım: Kurumsal Vurgu | Ordu Taşımacılık</div>
+        <div class="footer">Tasarım: Melih Bilal Öztürk | Ordu Taşımacılık</div>
     </div>
 
     <script>
@@ -196,18 +221,25 @@
         const DESI_BOLENI = 3000;
         const DESI_FIYAT = 18.5; // Desi başına fiyat (İhtiyacınıza göre bu rakamı değiştirin)
 
+        const lwhInputs = document.querySelectorAll('#lwh-group input');
+        const desiInput = document.getElementById('desi');
+
         function formatTL(x){
             return new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x);
         }
 
-        function hesapla() {
+        // 1. Desi Hesaplama Fonksiyonu (En/Boy/Yükseklik ile)
+        function hesaplaLWH() {
+            // Desi inputunu temizle
+            desiInput.value = '';
+
             const en = parseFloat(document.getElementById('en').value);
             const boy = parseFloat(document.getElementById('boy').value);
             const yukseklik = parseFloat(document.getElementById('yukseklik').value);
 
             if (isNaN(en) || isNaN(boy) || isNaN(yukseklik) || en <= 0 || boy <= 0 || yukseklik <= 0) {
                 document.getElementById('ucretSonuc').textContent = '—';
-                document.getElementById('desiSonuc').textContent = 'Lütfen tüm alanları doldurun.';
+                document.getElementById('desiSonuc').textContent = 'Lütfen tüm ölçü alanlarını doldurun.';
                 return;
             }
 
@@ -215,20 +247,46 @@
             const yuvarlanmisDesi = Math.ceil(desi);
             const kargoUcreti = yuvarlanmisDesi * DESI_FIYAT;
 
-            document.getElementById('desiSonuc').textContent = `Desi Değeri: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
+            document.getElementById('desiSonuc').textContent = `Hacim Desisi: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
             document.getElementById('ucretSonuc').textContent = formatTL(kargoUcreti);
         }
 
-        // Etkileşim
-        const hesapBtn = document.getElementById('hesapBtn');
-        hesapBtn.addEventListener('click', hesapla);
+        // 2. Direkt Desi Hesaplama Fonksiyonu
+        function hesaplaDesi() {
+            // LWH inputlarını temizle
+            lwhInputs.forEach(input => input.value = '');
 
-        document.querySelectorAll('input[type="number"]').forEach(input => {
+            const desi = parseFloat(desiInput.value);
+
+            if (isNaN(desi) || desi <= 0) {
+                document.getElementById('ucretSonuc').textContent = '—';
+                document.getElementById('desiSonuc').textContent = 'Lütfen geçerli bir Desi değeri girin.';
+                return;
+            }
+
+            const yuvarlanmisDesi = Math.ceil(desi);
+            const kargoUcreti = yuvarlanmisDesi * DESI_FIYAT;
+
+            document.getElementById('desiSonuc').textContent = `Girilen Desi: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
+            document.getElementById('ucretSonuc').textContent = formatTL(kargoUcreti);
+        }
+
+        // Etkileşim: Event Listener'lar
+        document.getElementById('hesapBtnLWH').addEventListener('click', hesaplaLWH);
+        document.getElementById('hesapBtnDesi').addEventListener('click', hesaplaDesi);
+
+        // Enter ile de hesapla (LWH alanı odaklıysa LWH, Desi alanı odaklıysa Desi hesaplanır)
+        lwhInputs.forEach(input => {
             input.addEventListener('keydown', function(e){
                 if (e.key === 'Enter') {
-                    hesapla();
+                    hesaplaLWH();
                 }
             });
+        });
+        desiInput.addEventListener('keydown', function(e){
+            if (e.key === 'Enter') {
+                hesaplaDesi();
+            }
         });
     </script>
 </body>
