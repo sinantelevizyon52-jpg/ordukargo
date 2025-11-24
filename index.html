@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ORDU Kargo Hesaplama</title>
+    <title>ORDU Kargo Hesaplama ve Hazır Ürün Sepeti</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -24,6 +24,7 @@
             --text-color: #333;
             --input-border: #ADD8E6; /* Açık Mavi Kenarlık */
             --hover-dark: #002244; /* Daha Koyu Mavi (Hover/Vurgu) */
+            --light-gray: #f5f5f5;
         }
         html,body{
             height:100%;
@@ -41,10 +42,13 @@
             justify-content:center;
             padding: 20px;
             box-sizing:border-box;
+            font-size: 14px; /* Global font size düşürüldü */
         }
         .app {
             width:100%;
             max-width:420px;
+            display: flex;
+            flex-direction: column;
         }
         .header {
             background-color: var(--accent); /* Başlık Kırmızı */
@@ -55,11 +59,10 @@
             border-radius: 12px 12px 0 0;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
         }
-        /* Başlık içindeki linkin stilini ayarlama */
         .header a {
             color: white;
-            text-decoration: none; /* Link altındaki çizgiyi kaldır */
-            display: block; /* Linkin tüm header alanını kaplamasını sağla */
+            text-decoration: none;
+            display: block;
         }
         .container {
             margin: 0 auto;
@@ -68,10 +71,10 @@
             border-radius: 0 0 12px 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             text-align: left;
+            position: relative;
         }
-
         h2 {
-            color: var(--primary); /* Başlık Mavi */
+            color: var(--primary);
             text-align: center;
             margin-top: 0;
             margin-bottom: 15px;
@@ -85,33 +88,29 @@
             color: var(--text-color);
             font-size: 14px;
         }
-        /* Giriş Alanı Gruplaması */
         .input-group {
             position: relative;
             margin-bottom: 18px;
         }
-        /* En/Boy/Yükseklik için ikon */
         .input-group:not(.desi-input-group)::before {
-            content: '📐'; /* Cetvel/Ölçü emojisi */
+            content: '📐';
             font-size: 20px;
             position: absolute;
             left: 12px;
-            top: 10px; 
+            top: 10px;
             z-index: 10;
         }
-        /* Desi girişi için ikon */
         .desi-input-group::before {
-            content: '🔢'; /* Numara emojisi */
+            content: '🔢';
             font-size: 20px;
             position: absolute;
             left: 12px;
-            top: 10px; 
+            top: 10px;
             z-index: 10;
         }
-        
         input[type="number"] {
             width: 100%;
-            padding: 14px 14px 14px 45px; /* İkon için soldan boşluk */
+            padding: 14px 14px 14px 45px;
             border: 2px solid var(--input-border);
             border-radius: 10px;
             box-sizing: border-box;
@@ -119,182 +118,4 @@
             -webkit-appearance: none;
             transition: border-color .2s;
         }
-        input[type="number"]:focus {
-            border-color: var(--primary); /* Focus Mavi */
-            outline: none;
-        }
-        
-        button {
-            width: 100%;
-            padding: 16px;
-            background-color: var(--accent); /* Buton Kırmızı */
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color .18s, transform .1s;
-            touch-action: manipulation;
-            box-shadow: 0 4px 12px rgba(204, 0, 0, 0.4); 
-            margin-top: 5px;
-        }
-        button:active { 
-            transform: translateY(2px);
-            box-shadow: 0 2px 8px rgba(204, 0, 0, 0.4);
-        }
-        button:hover { background-color: var(--hover-dark); } /* Hover Koyu Mavi */
-
-        .result-box {
-            margin-top: 22px;
-            padding: 18px;
-            border: 2px solid var(--accent);
-            background-color: #fff;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 0 15px rgba(204, 0, 0, 0.2); 
-        }
-        .result-box p { margin: 6px 0; font-size: 16px; color: var(--text-color); }
-        .result-box h3 { color: var(--accent); margin: 8px 0 0; font-size: 20px; font-weight: 700; } /* Ücret Kırmızı */
-
-        .footer {
-            margin-top: 14px;
-            padding: 6px;
-            color: #ddd; 
-            font-size: 12px;
-            text-align: center;
-        }
-        
-        /* Mobil uyum */
-        @media (max-width:420px) {
-            .container { padding: 20px; }
-            button { padding: 14px; font-size: 16px; }
-        }
-    </style>
-</head>
-<body>
-    <div class="app" role="application" aria-label="Kargo Ücreti Hesaplayıcı">
-        <div class="header">
-            <a href="http://www.ordutasimacilik.com" target="_blank">www.ordutasimacilik.com</a>
-        </div>
-
-        <div class="container" role="main">
-            
-            <p style="font-size:18px; font-weight: 700; text-align:center; margin-bottom:20px; color:var(--primary);">
-                ORDU TAŞIMACILIK
-            </p>
-
-            <div id="lwh-group">
-                <div class="input-group">
-                    <label for="en">En (cm)</label>
-                    <input type="number" id="en" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
-                </div>
-
-                <div class="input-group">
-                    <label for="boy">Boy (cm)</label>
-                    <input type="number" id="boy" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
-                </div>
-
-                <div class="input-group">
-                    <label for="yukseklik">Yükseklik (cm)</label>
-                    <input type="number" id="yukseklik" placeholder="Örn: 40" inputmode="numeric" min="0" step="any">
-                </div>
-
-                <button id="hesapBtnLWH">Hacim ile Fiyatı Hesapla</button>
-            </div>
-
-
-            <hr style="margin:25px 0; border-top:1px solid var(--input-border);">
-            <h3 style="text-align:center; color:var(--primary); margin-bottom:15px; font-weight:600;">🔢 Ya da Desiyi Direkt Girin</h3>
-
-            <div class="input-group desi-input-group">
-                <label for="desi">Desi Değeri (Adet)</label>
-                <input type="number" id="desi" placeholder="Örn: 5" inputmode="numeric" min="0" step="1">
-            </div>
-            
-            <button id="hesapBtnDesi">Desi ile Fiyatı Hesapla</button>
-
-            <div class="result-box" aria-live="polite">
-                <p id="desiSonuc">Desi Değeri: -</p>
-                <h3>Tahmini Kargo Ücreti: <span id="ucretSonuc">-</span> TL</h3>
-            </div>
-        </div>
-
-        <div class="footer">Tasarım: Melih Bilal Öztürk | Ordu Taşımacılık</div>
-    </div>
-
-    <script>
-        // DESI FIYATINI BURADA GÜNCELLEYEBİLİRSİNİZ
-        const DESI_BOLENI = 3000;
-        const DESI_FIYAT = 9.17; // FİYAT DEĞİŞTİRİLMEDİ (12 Desi için ~110 TL)
-
-        const lwhInputs = document.querySelectorAll('#lwh-group input');
-        const desiInput = document.getElementById('desi');
-
-        function formatTL(x){
-            return new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x);
-        }
-
-        // 1. Desi Hesaplama Fonksiyonu (En/Boy/Yükseklik ile)
-        function hesaplaLWH() {
-            // Desi inputunu temizle
-            desiInput.value = '';
-
-            const en = parseFloat(document.getElementById('en').value);
-            const boy = parseFloat(document.getElementById('boy').value);
-            const yukseklik = parseFloat(document.getElementById('yukseklik').value);
-
-            if (isNaN(en) || isNaN(boy) || isNaN(yukseklik) || en <= 0 || boy <= 0 || yukseklik <= 0) {
-                document.getElementById('ucretSonuc').textContent = '—';
-                document.getElementById('desiSonuc').textContent = 'Lütfen tüm ölçü alanlarını doldurun.';
-                return;
-            }
-
-            const desi = (en * boy * yukseklik) / DESI_BOLENI;
-            const yuvarlanmisDesi = Math.ceil(desi);
-            const kargoUcreti = yuvarlanmisDesi * DESI_FIYAT;
-
-            document.getElementById('desiSonuc').textContent = `Hacim Desisi: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
-            document.getElementById('ucretSonuc').textContent = formatTL(kargoUcreti);
-        }
-
-        // 2. Direkt Desi Hesaplama Fonksiyonu
-        function hesaplaDesi() {
-            // LWH inputlarını temizle
-            lwhInputs.forEach(input => input.value = '');
-
-            const desi = parseFloat(desiInput.value);
-
-            if (isNaN(desi) || desi <= 0) {
-                document.getElementById('ucretSonuc').textContent = '—';
-                document.getElementById('desiSonuc').textContent = 'Lütfen geçerli bir Desi değeri girin.';
-                return;
-            }
-
-            const yuvarlanmisDesi = Math.ceil(desi);
-            const kargoUcreti = yuvarlanmisDesi * DESI_FIYAT;
-
-            document.getElementById('desiSonuc').textContent = `Girilen Desi: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
-            document.getElementById('ucretSonuc').textContent = formatTL(kargoUcreti);
-        }
-
-        // Etkileşim: Event Listener'lar
-        document.getElementById('hesapBtnLWH').addEventListener('click', hesaplaLWH);
-        document.getElementById('hesapBtnDesi').addEventListener('click', hesaplaDesi);
-
-        // Enter ile de hesapla (LWH alanı odaklıysa LWH, Desi alanı odaklıysa Desi hesaplanır)
-        lwhInputs.forEach(input => {
-            input.addEventListener('keydown', function(e){
-                if (e.key === 'Enter') {
-                    hesaplaLWH();
-                }
-            });
-        });
-        desiInput.addEventListener('keydown', function(e){
-            if (e.key === 'Enter') {
-                hesaplaDesi();
-            }
-        });
-    </script>
-</body>
-</html>
+        input
