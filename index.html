@@ -82,6 +82,7 @@
             position: relative;
             margin-bottom: 18px;
         }
+        /* Boyut inputlarına ikon */
         .input-group:not(.desi-input-group)::before {
             content: '📐';
             font-size: 20px;
@@ -98,9 +99,10 @@
             top: 10px;
             z-index: 10;
         }
-        /* Arama kutusu için simgeyi kaldır */
-        .input-group:nth-of-type(4)::before {
-            content: none !important;
+        /* Arama kutusu için ikon stili */
+        .arama-input-group::before {
+             content: '🔍' !important; /* Arama ikonu */
+             top: 34px !important; /* Pozisyonu ayarla */
         }
 
         input[type="number"] {
@@ -115,7 +117,8 @@
         }
         input[type="text"] {
              width: 100%;
-            padding: 10px 14px; /* Arama kutusu daha küçük */
+             /* Padding'i simge için ayarla */
+            padding: 10px 14px 10px 40px; 
             border: 1px solid var(--input-border);
             border-radius: 8px;
             box-sizing: border-box;
@@ -291,8 +294,8 @@
                 <hr style="margin:25px 0; border-top:1px solid var(--input-border); border-color:var(--primary);">
                 <h3>📦 Hazır Ürün Seçimi - Ekipman ve Tekstil (3000 Bölen)</h3>
 
-                <div class="input-group" style="margin-bottom: 10px;">
-                    <label for="urunArama" style="font-style: italic;">🔍 Ürün Ara...</label>
+                <div class="input-group arama-input-group" style="margin-bottom: 15px;">
+                    <label for="urunArama" style="font-style: italic;">Ürün Ara...</label>
                     <input type="text" id="urunArama" placeholder="Örn: Televizyon veya Kompresör">
                 </div>
                 <div class="urun-listesi-kapsayici">
@@ -356,186 +359,4 @@
             { ad: "Ses Sistemi Subwoofer", desi: 41.7, fiyat: 382.39 },
             { ad: "Koşu Bandı (Kutu 1)", desi: 144.0, fiyat: 1320.48 },
             { ad: "Bisiklet Tamir Sehpası", desi: 16.0, fiyat: 146.72 },
-            { ad: "Trambolin Filesi ve Yayları (Kutu)", desi: 24.0, fiyat: 220.08 },
-            { ad: "Kamp Çadırı (6 Kişilik)", desi: 24.0, fiyat: 220.08 },
-            { ad: "Uyku Tulumu (4 Adet Paket)", desi: 20.0, fiyat: 183.40 },
-            { ad: "Büyük Oyuncak Araba (Akü)", desi: 66.7, fiyat: 611.53 },
-            { ad: "Tekstil Kolisi (Geniş, Hafif)", desi: 64.0, fiyat: 586.88 },
-            { ad: "Ayakkabı Kolisi (10 Çift)", desi: 32.0, fiyat: 293.44 },
-            { ad: "Deri Ceket (Askılı Kutu)", desi: 10.0, fiyat: 91.70 },
-            { ad: "Havlu Seti (50 Adet, Paket)", desi: 33.3, fiyat: 305.36 },
-            { ad: "Oto Tampon (Ön/Arka)", desi: 144.0, fiyat: 1320.48 },
-            { ad: "Far Takımı (Sağ/Sol)", desi: 24.0, fiyat: 220.08 },
-            { ad: "Egzoz Sistemi (Uzun Parça)", desi: 30.0, fiyat: 275.10 },
-            { ad: "Çim Biçme Makinesi", desi: 53.3, fiyat: 488.76 },
-            { ad: "Ağaç Kesme Motoru (Zincirli)", desi: 26.7, fiyat: 244.84 },
-            { ad: "Valiz (Büyük Boy, Boş)", desi: 51.3, fiyat: 470.42 },
-            { ad: "Tabak/Bardak Seti (Porselen, Kutu)", desi: 20.0, fiyat: 183.40 },
-            { ad: "Tencere Seti (Büyük Kutu)", desi: 24.0, fiyat: 220.08 },
-            { ad: "Kahve Makinesi (Filtre)", desi: 8.75, fiyat: 80.24 },
-            { ad: "Televizyon (55 inç, Kutu)", desi: 90.0, fiyat: 825.30 },
-            { ad: "Masaüstü Bilgisayar Kasası", desi: 40.0, fiyat: 366.80 },
-            { ad: "Ofis Koltuğu (Demonte Kutu)", desi: 55.0, fiyat: 504.35 },
-            { ad: "Büyük Boy Kitap Kolisi", desi: 45.0, fiyat: 412.65 },
-            { ad: "Bebek Arabası (Katlanabilir)", desi: 35.0, fiyat: 320.95 },
-            { ad: "Jeneratör (Orta Boy)", desi: 110.0, fiyat: 1008.70 },
-            { ad: "Seramik Karo Kolisi (20 Adet)", desi: 60.0, fiyat: 550.20 },
-            { ad: "Elektrikli Süpürge (Dikey)", desi: 18.0, fiyat: 165.06 },
-            { ad: "Yazıcı (Lazer, Kutu)", desi: 25.0, fiyat: 229.25 },
-            { ad: "Giyim Ürünü (Küçük Kutu/Tek Parça)", desi: 5.0, fiyat: 45.85 }
-        ];
-
-        // HTML Elementleri
-        const lwhInputs = document.querySelectorAll('#lwh-group input');
-        const desiInput = document.getElementById('desi');
-        const manuelSonucDiv = document.getElementById('manuelSonuc');
-        const sepetSonucDiv = document.getElementById('sepetSonuc');
-        const urunTablosuBody = document.querySelector('#urun-tablosu tbody');
-        const toplamDesiSpan = document.getElementById('toplam-desi');
-        const toplamFiyatSpan = document.getElementById('toplam-fiyat');
-        const urunAramaInput = document.getElementById('urunArama'); // 🔥 Yeni Arama Input'u
-
-        function formatTL(x) {
-            return new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x);
-        }
-
-        function gizleManuelSonuc() { manuelSonucDiv.style.display = 'none'; }
-        function gizleSepetSonuc() { sepetSonucDiv.style.display = 'none'; }
-        
-        function hesaplaLWH() {
-            gizleSepetSonuc();
-            desiInput.value = '';
-            const en = parseFloat(document.getElementById('en').value);
-            const boy = parseFloat(document.getElementById('boy').value);
-            const yukseklik = parseFloat(document.getElementById('yukseklik').value);
-
-            if (isNaN(en) || isNaN(boy) || isNaN(yukseklik) || en <= 0 || boy <= 0 || yukseklik <= 0) {
-                document.getElementById('ucretSonuc').textContent = '—';
-                document.getElementById('desiSonuc').textContent = 'Lütfen tüm ölçü alanlarını doldurun.';
-                manuelSonucDiv.style.display = 'block';
-                return;
-            }
-
-            const desi = (en * boy * yukseklik) / DESI_BOLENI;
-            const yuvarlanmisDesi = Math.ceil(desi);
-            const kargoUcreti = yuvarlanmisDesi * DESI_FIYAT;
-
-            document.getElementById('desiSonuc').textContent = `Hacim Desisi: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
-            document.getElementById('ucretSonuc').textContent = formatTL(kargoUcreti) + ' TL';
-            manuelSonucDiv.style.display = 'block';
-        }
-
-        function hesaplaDesi() {
-            gizleSepetSonuc();
-            lwhInputs.forEach(input => input.value = '');
-            const desi = parseFloat(desiInput.value);
-
-            if (isNaN(desi) || desi <= 0) {
-                document.getElementById('ucretSonuc').textContent = '—';
-                document.getElementById('desiSonuc').textContent = 'Lütfen geçerli bir Desi değeri girin.';
-                manuelSonucDiv.style.display = 'block';
-                return;
-            }
-
-            const yuvarlanmisDesi = Math.ceil(desi);
-            const kargoUcreti = yuvarlanmisDesi * DESI_FIYAT;
-
-            document.getElementById('desiSonuc').textContent = `Girilen Desi: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
-            document.getElementById('ucretSonuc').textContent = formatTL(kargoUcreti) + ' TL';
-            manuelSonucDiv.style.display = 'block';
-        }
-
-        function sepetiHesapla() {
-            gizleManuelSonuc();
-
-            let toplamDesi = 0;
-            let toplamFiyat = 0;
-            
-            const seciliUrunler = document.querySelectorAll('#urun-tablos input[type="checkbox"]:checked');
-
-            seciliUrunler.forEach(checkbox => {
-                const desi = parseFloat(checkbox.dataset.desi);
-                const fiyat = parseFloat(checkbox.dataset.fiyat);
-
-                if (!isNaN(desi) && !isNaN(fiyat)) {
-                    toplamDesi += Math.ceil(desi); 
-                    toplamFiyat += fiyat; 
-                }
-            });
-
-            if (toplamFiyat > 0) {
-                toplamDesiSpan.textContent = toplamDesi.toFixed(1); 
-                toplamFiyatSpan.textContent = formatTL(toplamFiyat) + ' TL';
-                sepetSonucDiv.style.display = 'block';
-            } else {
-                 gizleSepetSonuc();
-            }
-        }
-
-        // 🔥 GÜNCELLENMİŞ urunleriListele FONKSİYONU (Filtreleme desteği) 🔥
-        function urunleriListele(filtreMetni = '') {
-            if (!urunTablosuBody) return; 
-
-            // Eski içeriği temizle
-            urunTablosuBody.innerHTML = '';
-            
-            const aramaKriteri = filtreMetni.toLowerCase().trim();
-
-            const filtrelenmisUrunler = urunVerileri.filter(urun => 
-                urun.ad.toLowerCase().includes(aramaKriteri)
-            );
-            
-            // Eğer arama sonucunda ürün yoksa bilgi mesajı göster
-             if (filtrelenmisUrunler.length === 0) {
-                const satir = urunTablosuBody.insertRow();
-                satir.innerHTML = `<td colspan="4" style="text-align: center; color: var(--accent); padding: 15px;">Aradığınız kritere uyan ürün bulunamadı.</td>`;
-                return;
-            }
-
-            filtrelenmisUrunler.forEach(urun => {
-                const satir = urunTablosuBody.insertRow();
-                satir.innerHTML = `
-                    <td style="text-align: left;">${urun.ad}</td>
-                    <td>${Math.ceil(urun.desi).toFixed(1)}</td>
-                    <td>${formatTL(urun.fiyat)} TL</td> 
-                    <td style="text-align: center;"><input type="checkbox" name="urunSecim" data-desi="${urun.desi}" data-fiyat="${urun.fiyat.toFixed(2)}"></td>
-                `;
-            });
-
-            // Checkbox dinleyicilerini yeniden kur
-            const tumCheckboxlar = document.querySelectorAll('#urun-tablos input[type="checkbox"]');
-            tumCheckboxlar.forEach(checkbox => {
-                checkbox.addEventListener('change', sepetiHesapla);
-            });
-        }
-        
-        // 🔥 YENİ FİLTRELEME DİNLEYİCİSİ 🔥
-        function filtreleUrunleri() {
-            urunleriListele(urunAramaInput.value);
-            sepetiHesapla(); // Filtreleme yapıldığında seçili ürünlerin toplamını güncelle
-        }
-
-        // Event Listener'lar
-        document.getElementById('hesapBtnLWH').addEventListener('click', hesaplaLWH);
-        document.getElementById('hesapBtnDesi').addEventListener('click', hesaplaDesi);
-        
-        // Arama kutusuna her harf girildiğinde filtrele
-        urunAramaInput.addEventListener('input', filtreleUrunleri); 
-
-        lwhInputs.forEach(input => {
-            input.addEventListener('keydown', function(e){
-                if (e.key === 'Enter') { hesaplaLWH(); }
-            });
-        });
-        desiInput.addEventListener('keydown', function(e){
-            if (e.key === 'Enter') { hesaplaDesi(); }
-        });
-
-        // Sayfa yüklendiğinde çalıştır
-        urunleriListele(); // Tüm ürünleri listele
-        gizleManuelSonuc(); 
-        gizleSepetSonuc();
-
-    </script>
-</body>
-</html>
+            { ad: "Trambol
