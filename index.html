@@ -48,14 +48,19 @@
         }
         .header {
             background-color: var(--accent); /* Başlık Kırmızı */
-            padding: 15px 0;
             color: white;
             font-size: 18px;
             font-weight: 700;
-            border-radius: 12px 12px 0 0;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            
+            /* 🔥🔥🔥 IOS GÜVENLİ ALAN DÜZELTMESİ YAPILDI 🔥🔥🔥 */
+            padding-top: calc(15px + env(safe-area-inset-top, 0px)); /* Üst çentik mesafesi kadar ek boşluk */
+            padding-bottom: 15px; /* Alt boşluk sabit */
+            padding-left: 0;
+            padding-right: 0;
+            border-radius: 0; /* Yuvarlak köşeler kaldırıldı ki renk ekranın tepesine kadar dolsun */
         }
-        /* YENİ: Başlık içindeki linkin stilini ayarlama */
+        /* Başlık içindeki linkin stilini ayarlama */
         .header a {
             color: white;
             text-decoration: none; /* Link altındaki çizgiyi kaldır */
@@ -183,118 +188,3 @@
             <p style="font-size:14px; text-align:center; margin-bottom:20px; color:#666;">
                 Kargo Fiyatı Hesaplama
             </p>
-
-            <div id="lwh-group">
-                <div class="input-group">
-                    <label for="en">En (cm)</label>
-                    <input type="number" id="en" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
-                </div>
-
-                <div class="input-group">
-                    <label for="boy">Boy (cm)</label>
-                    <input type="number" id="boy" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
-                </div>
-
-                <div class="input-group">
-                    <label for="yukseklik">Yükseklik (cm)</label>
-                    <input type="number" id="yukseklik" placeholder="Örn: 40" inputmode="numeric" min="0" step="any">
-                </div>
-
-                <button id="hesapBtnLWH">Hacim ile Fiyatı Hesapla</button>
-            </div>
-
-
-            <hr style="margin:25px 0; border-top:1px solid var(--input-border);">
-            <h3 style="text-align:center; color:var(--primary); margin-bottom:15px; font-weight:600;">🔢 Ya da Desiyi Direkt Girin</h3>
-
-            <div class="input-group desi-input-group">
-                <label for="desi">Desi Değeri (Adet)</label>
-                <input type="number" id="desi" placeholder="Örn: 5" inputmode="numeric" min="0" step="1">
-            </div>
-            
-            <button id="hesapBtnDesi">Desi ile Fiyatı Hesapla</button>
-
-            <div class="result-box" aria-live="polite">
-                <p id="desiSonuc">Desi Değeri: -</p>
-                <h3>Tahmini Kargo Ücreti: <span id="ucretSonuc">-</span> TL</h3>
-            </div>
-        </div>
-
-        <div class="footer">Tasarım: Melih Bilal Öztürk | Ordu Taşımacılık</div>
-    </div>
-
-    <script>
-        // DESI FIYATINI BURADA GÜNCELLEYEBİLİRSİNİZ
-        const DESI_BOLENI = 3000;
-        const DESI_FIYAT = 9.17; // FİYAT DEĞİŞTİRİLMEDİ (12 Desi için ~110 TL)
-
-        const lwhInputs = document.querySelectorAll('#lwh-group input');
-        const desiInput = document.getElementById('desi');
-
-        function formatTL(x){
-            return new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x);
-        }
-
-        // 1. Desi Hesaplama Fonksiyonu (En/Boy/Yükseklik ile)
-        function hesaplaLWH() {
-            // Desi inputunu temizle
-            desiInput.value = '';
-
-            const en = parseFloat(document.getElementById('en').value);
-            const boy = parseFloat(document.getElementById('boy').value);
-            const yukseklik = parseFloat(document.getElementById('yukseklik').value);
-
-            if (isNaN(en) || isNaN(boy) || isNaN(yukseklik) || en <= 0 || boy <= 0 || yukseklik <= 0) {
-                document.getElementById('ucretSonuc').textContent = '—';
-                document.getElementById('desiSonuc').textContent = 'Lütfen tüm ölçü alanlarını doldurun.';
-                return;
-            }
-
-            const desi = (en * boy * yukseklik) / DESI_BOLENI;
-            const yuvarlanmisDesi = Math.ceil(desi);
-            const kargoUcreti = yuvarlanmisDesi * DESI_FIYAT;
-
-            document.getElementById('desiSonuc').textContent = `Hacim Desisi: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
-            document.getElementById('ucretSonuc').textContent = formatTL(kargoUcreti);
-        }
-
-        // 2. Direkt Desi Hesaplama Fonksiyonu
-        function hesaplaDesi() {
-            // LWH inputlarını temizle
-            lwhInputs.forEach(input => input.value = '');
-
-            const desi = parseFloat(desiInput.value);
-
-            if (isNaN(desi) || desi <= 0) {
-                document.getElementById('ucretSonuc').textContent = '—';
-                document.getElementById('desiSonuc').textContent = 'Lütfen geçerli bir Desi değeri girin.';
-                return;
-            }
-
-            const yuvarlanmisDesi = Math.ceil(desi);
-            const kargoUcreti = yuvarlanmisDesi * DESI_FIYAT;
-
-            document.getElementById('desiSonuc').textContent = `Girilen Desi: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
-            document.getElementById('ucretSonuc').textContent = formatTL(kargoUcreti);
-        }
-
-        // Etkileşim: Event Listener'lar
-        document.getElementById('hesapBtnLWH').addEventListener('click', hesaplaLWH);
-        document.getElementById('hesapBtnDesi').addEventListener('click', hesaplaDesi);
-
-        // Enter ile de hesapla (LWH alanı odaklıysa LWH, Desi alanı odaklıysa Desi hesaplanır)
-        lwhInputs.forEach(input => {
-            input.addEventListener('keydown', function(e){
-                if (e.key === 'Enter') {
-                    hesaplaLWH();
-                }
-            });
-        });
-        desiInput.addEventListener('keydown', function(e){
-            if (e.key === 'Enter') {
-                hesaplaDesi();
-            }
-        });
-    </script>
-</body>
-</html>
