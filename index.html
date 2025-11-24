@@ -16,14 +16,14 @@
     <link rel="icon" type="image/png" href="apple-touch-icon.png?v=20251124">
 
     <style>
-        /* CSS: YENİ KOYU TEMA VE GÖLGELENDİRMELER */
+        /* CSS: YENİ MAVİ-KIRMIZI KURUMSAL TEMA */
         :root{
-            --dark: #1e1e1e; /* Koyu Arka Plan */
-            --light-bg: #f5f5f5; /* İç Alan Arka Planı */
-            --accent: #ff8c00; /* Turuncu Vurgu Rengi */
-            --accent-dark: #cc7000; /* Buton Hover Rengi */
+            --primary: #003366; /* Koyu Mavi */
+            --accent: #CC0000; /* Kırmızı Vurgu */
+            --light-bg: #FFFFFF; /* İç Alan Arka Planı (Beyaz) */
             --text-color: #333;
-            --input-border: #ddd;
+            --input-border: #ADD8E6; /* Açık Mavi Kenarlık */
+            --hover-dark: #002244; /* Daha Koyu Mavi (Hover/Vurgu) */
         }
         html,body{
             height:100%;
@@ -32,7 +32,7 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: var(--dark);
+            background-color: var(--primary); /* Ana zemin Koyu Mavi */
             color: var(--text-color);
             -webkit-font-smoothing:antialiased;
             text-align: center;
@@ -47,7 +47,7 @@
             max-width:420px;
         }
         .header {
-            background-color: var(--accent);
+            background-color: var(--accent); /* Başlık Kırmızı */
             padding: 15px 0;
             color: white;
             font-size: 18px;
@@ -58,13 +58,14 @@
         .container {
             margin: 0 auto;
             padding: 25px;
-            background-color: var(--light-bg);
+            background-color: var(--light-bg); /* İç Alan Beyaz */
             border-radius: 0 0 12px 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Derinlik Artırıldı */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             text-align: left;
         }
+
         h2 {
-            color: var(--accent);
+            color: var(--primary); /* Başlık Mavi */
             text-align: center;
             margin-top: 0;
             margin-bottom: 15px;
@@ -78,24 +79,22 @@
             color: var(--text-color);
             font-size: 14px;
         }
-
         /* Giriş Alanı Gruplaması */
         .input-group {
             position: relative;
             margin-bottom: 18px;
         }
         .input-group::before {
-            content: '📦'; /* Kutu Emojisi */
+            content: '📦';
             font-size: 20px;
             position: absolute;
             left: 12px;
             top: 10px; 
             z-index: 10;
         }
-
         input[type="number"] {
             width: 100%;
-            padding: 14px 14px 14px 45px; /* İkon için soldan boşluk */
+            padding: 14px 14px 14px 45px; 
             border: 2px solid var(--input-border);
             border-radius: 10px;
             box-sizing: border-box;
@@ -104,19 +103,14 @@
             transition: border-color .2s;
         }
         input[type="number"]:focus {
-            border-color: var(--accent);
+            border-color: var(--primary); /* Focus Mavi */
             outline: none;
-        }
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
         }
         
         button {
             width: 100%;
             padding: 16px;
-            background-color: var(--accent);
+            background-color: var(--accent); /* Buton Kırmızı */
             color: white;
             border: none;
             border-radius: 10px;
@@ -125,13 +119,13 @@
             cursor: pointer;
             transition: background-color .18s, transform .1s;
             touch-action: manipulation;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(204, 0, 0, 0.4); /* Kırmızı Gölge */
         }
         button:active { 
             transform: translateY(2px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 8px rgba(204, 0, 0, 0.4);
         }
-        button:hover { background-color: var(--accent-dark); }
+        button:hover { background-color: var(--hover-dark); } /* Hover Koyu Mavi */
 
         .result-box {
             margin-top: 22px;
@@ -140,15 +134,15 @@
             background-color: #fff;
             border-radius: 10px;
             text-align: center;
-            box-shadow: 0 0 15px rgba(255, 140, 0, 0.2); /* Turuncu vurgu gölgesi */
+            box-shadow: 0 0 15px rgba(204, 0, 0, 0.2); 
         }
         .result-box p { margin: 6px 0; font-size: 16px; color: var(--text-color); }
-        .result-box h3 { color: var(--accent-dark); margin: 8px 0 0; font-size: 20px; font-weight: 700; }
+        .result-box h3 { color: var(--accent); margin: 8px 0 0; font-size: 20px; font-weight: 700; } /* Ücret Kırmızı */
 
         .footer {
             margin-top: 14px;
             padding: 6px;
-            color: #ccc;
+            color: #ddd; 
             font-size: 12px;
             text-align: center;
         }
@@ -165,6 +159,7 @@
         <div class="header">ORDU KARGO - Hızlı & Güvenilir Hesaplama</div>
 
         <div class="container" role="main">
+            
             <h2>📦 Hacimsel Kargo Hesaplama</h2>
             <p style="font-size:14px; text-align:center; margin-bottom:20px; color:#666;">
                 Desi hesabı, (En x Boy x Yükseklik) / 3000 formülüne göre yapılır. Lütfen tüm ölçüleri santimetre (cm) cinsinden girin.
@@ -193,13 +188,13 @@
             </div>
         </div>
 
-        <div class="footer">Tasarım: Modern Vurgu | Ordu Taşımacılık</div>
+        <div class="footer">Tasarım: Kurumsal Vurgu | Ordu Taşımacılık</div>
     </div>
 
     <script>
         // DESI FIYATINI BURADA GÜNCELLEYEBİLİRSİNİZ
         const DESI_BOLENI = 3000;
-        const DESI_FIYAT = 18.5; // Örnek olarak desi başına fiyatı 18.50 TL olarak ayarladım. İhtiyacınıza göre değiştirin.
+        const DESI_FIYAT = 18.5; // Desi başına fiyat (İhtiyacınıza göre bu rakamı değiştirin)
 
         function formatTL(x){
             return new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x);
