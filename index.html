@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORDU Kargo Hesaplama</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="📦 Kargo Hesapla">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default"> 
+    
+    <style>
+        /* CSS: Tasarım Kuralları */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff; /* Açık Mavi Zemin */
+            color: #191970; /* Koyu Mavi Yazı */
+            text-align: center;
+        }
+        /* Uygulama İçi Başlık (www.ordutasimacilik.com yazısı) */
+        .header {
+            background-color: #191970; /* Koyu Mavi Başlık Çubuğu */
+            padding: 15px 0;
+            color: white;
+            font-size: 20px; /* Okunur Boyut */
+            font-weight: 600; /* Biraz kalın */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 45px; 
+        }
+        .container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            text-align: left;
+        }
+        h2 {
+            color: #4682b4;
+            text-align: center;
+            margin-top: 0;
+            border-bottom: 2px solid #e0f0ff;
+            padding-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #191970;
+        }
+        input[type="number"] {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #add8e6;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        input[type="number"]:focus {
+            border-color: #4682b4;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4682b4; /* Mavi Buton */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #191970;
+        }
+        .result-box {
+            margin-top: 25px;
+            padding: 15px;
+            border: 1px dashed #add8e6;
+            background-color: #e6f7ff; /* Açık Mavi Sonuç Kutusu */
+            border-radius: 8px;
+            text-align: center;
+        }
+        .result-box h3 {
+            color: #d2691e;
+            margin: 5px 0 0;
+        }
+        /* Footer (Köşede göz batmayan yazı) */
+        .footer {
+            margin-top: 30px;
+            padding: 10px;
+            color: #aaa; /* Açık Gri */
+            font-size: 12px;
+            text-align: right; /* Sağa Hizalama */
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        www.ordutasimacilik.com
+    </div>
+
+    <div class="container">
+        <h2>📦 Kargo Ücreti Hesaplama</h2>
+        
+        <label for="en">En (cm)</label>
+        <input type="number" id="en" placeholder="Örn: 30" required>
+
+        <label for="boy">Boy (cm)</label>
+        <input type="number" id="boy" placeholder="Örn: 30" required>
+
+        <label for="yukseklik">Yükseklik (cm)</label>
+        <input type="number" id="yukseklik" placeholder="Örn: 40" required>
+
+        <button onclick="hesapla()">Fiyatı Hesapla</button>
+
+        <div class="result-box">
+            <p id="desiSonuc">Desi Değeri: -</p>
+            <h3>Tahmini Kargo Ücreti: <span id="ucretSonuc">-</span> TL</h3>
+        </div>
+    </div>
+
+    <div class="footer">
+        Designed by Melih Bilal Öztürk
+    </div>
+
+    <script>
+        // JavaScript: Hesaplama Mantığı
+        
+        // Formül: (30*30*40) / 3000 = 12 Desi
+        // Desi Başına Fiyat Sabiti: 175 TL / 12 Desi = 14.583333... TL
+        const DESI_FIYAT = 110 / 12; 
+        const DESI_BOLENI = 3000;
+
+        function hesapla() {
+            const en = parseFloat(document.getElementById('en').value);
+            const boy = parseFloat(document.getElementById('boy').value);
+            const yukseklik = parseFloat(document.getElementById('yukseklik').value);
+            
+            // Sadece En, Boy, Yükseklik kontrol edilir
+            if (isNaN(en) || isNaN(boy) || isNaN(yukseklik) || en <= 0 || boy <= 0 || yukseklik <= 0) {
+                alert("Lütfen tüm alanlara geçerli, pozitif sayısal değerler girin.");
+                return;
+            }
+
+            // Desi hesaplama
+            const desi = (en * boy * yukseklik) / DESI_BOLENI;
+            const yuvarlanmisDesi = Math.ceil(desi); // Desi her zaman yukarı yuvarlanır
+
+            // Fiyat Hesaplama
+            const kargoUcreti = yuvarlanmisDesi * DESI_FIYAT;
+
+            // Sonuçları Ekrana Yazma
+            document.getElementById('desiSonuc').innerHTML = `Desi Değeri: **${desi.toFixed(2)}** (Yuvarlanmış: **${yuvarlanmisDesi}** Desi)`;
+            document.getElementById('ucretSonuc').textContent = kargoUcreti.toFixed(2);
+        }
+    </script>
+
+</body>
+</html>
