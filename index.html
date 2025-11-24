@@ -37,7 +37,7 @@
             -webkit-font-smoothing:antialiased;
             text-align: center;
             display:flex;
-            /* align-items:center KALDIRILDI: Bu, masaüstü pencerelerde kesilmeye neden oluyordu. */
+            align-items:center;
             justify-content:center;
             padding: 20px;
             box-sizing:border-box;
@@ -45,28 +45,17 @@
         .app {
             width:100%;
             max-width:420px;
-            /* align-items: center kaldırıldığı için dikeyde ortalamayı kaybedebilir, ancak kesilmeyi engeller. */
-            /* Mobil cihazlarda başlığın ekrana yapışmasını engellemek için gerektiğinde üstten boşluk bırakıyoruz. */
-            margin-top: auto; 
-            margin-bottom: auto;
         }
         .header {
             background-color: var(--accent); /* Başlık Kırmızı */
+            padding: 15px 0;
             color: white;
             font-size: 18px;
             font-weight: 700;
+            border-radius: 12px 12px 0 0;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-            
-            /* IOS GÜVENLİ ALAN DÜZELTMESİ KORUNDU */
-            padding-top: calc(15px + env(safe-area-inset-top, 0px)); 
-            padding-bottom: 15px; 
-            padding-left: 0;
-            padding-right: 0;
-            /* Yuvarlak köşeler tekrar eklendi */
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
         }
-        /* Başlık içindeki linkin stilini ayarlama */
+        /* YENİ: Başlık içindeki linkin stilini ayarlama */
         .header a {
             color: white;
             text-decoration: none; /* Link altındaki çizgiyi kaldır */
