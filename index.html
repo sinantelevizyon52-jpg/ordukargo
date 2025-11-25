@@ -345,501 +345,224 @@
 
             const DESI_BOLENI = 3000;
             const DESI_FIYAT = 9.17; 
+            const MAX_GOSTERILECEK_URUN = 10; // 🎯 YENİ KISIT: Sadece ilk 10 ürün görünecek
 
-            // 🔥 GENİŞLETİLMİŞ ÜRÜN VERİLERİ (700+ Ürün) 🔥
-            // Format: { ad: "Ürün Adı", desi: DesiDeğeri, fiyat: KargoFiyatı (Yuvarlanmış Desi * 9.17) }
+            // 🔥 TOPLAM 50 ÜRÜN VERİLERİ 🔥
             const urunVerileri = [
-                // MEVCUT 35 ÜRÜN (BAŞLANGIÇ)
-                { ad: "Hava Kompresörü (Büyük Sanayi Tipi)", desi: 320.0, fiyat: 2934.40 },
+                // MEVCUT 10 ÜRÜN (BAŞLANGIÇ LİSTESİ)
+                { ad: "Hava Kompresörü (Sanayi Tipi)", desi: 320.0, fiyat: 2934.40 },
                 { ad: "Çelik Kapı (Paket)", desi: 105.0, fiyat: 962.85 },
                 { ad: "Termosifon / Şofben", desi: 64.0, fiyat: 586.88 },
                 { ad: "Mutfak Tezgahı (1.5m, Paket)", desi: 30.0, fiyat: 275.10 },
                 { ad: "Kamera Tripodu (Profesyonel)", desi: 16.0, fiyat: 146.72 },
-                { ad: "Ses Sistemi Subwoofer", desi: 41.7, fiyat: 382.39 },
                 { ad: "Koşu Bandı (Kutu 1)", desi: 144.0, fiyat: 1320.48 },
                 { ad: "Bisiklet Tamir Sehpası", desi: 16.0, fiyat: 146.72 },
-                { ad: "Trambolin Filesi ve Yayları (Kutu)", desi: 24.0, fiyat: 220.08 },
                 { ad: "Kamp Çadırı (6 Kişilik)", desi: 24.0, fiyat: 220.08 },
-                { ad: "Uyku Tulumu (4 Adet Paket)", desi: 20.0, fiyat: 183.40 },
-                { ad: "Büyük Oyuncak Araba (Akü)", desi: 66.7, fiyat: 611.53 },
                 { ad: "Tekstil Kolisi (Geniş, Hafif)", desi: 64.0, fiyat: 586.88 },
-                { ad: "Ayakkabı Kolisi (10 Çift)", desi: 32.0, fiyat: 293.44 },
-                { ad: "Deri Ceket (Askılı Kutu)", desi: 10.0, fiyat: 91.70 },
-                { ad: "Havlu Seti (50 Adet, Paket)", desi: 33.3, fiyat: 305.36 },
-                { ad: "Oto Tampon (Ön/Arka)", desi: 144.0, fiyat: 1320.48 },
-                { ad: "Far Takımı (Sağ/Sol)", desi: 24.0, fiyat: 220.08 },
-                { ad: "Egzoz Sistemi (Uzun Parça)", desi: 30.0, fiyat: 275.10 },
-                { ad: "Çim Biçme Makinesi", desi: 53.3, fiyat: 488.76 },
-                { ad: "Ağaç Kesme Motoru (Zincirli)", desi: 26.7, fiyat: 244.84 },
-                { ad: "Valiz (Büyük Boy, Boş)", desi: 51.3, fiyat: 470.42 },
-                { ad: "Tabak/Bardak Seti (Porselen, Kutu)", desi: 20.0, fiyat: 183.40 },
-                { ad: "Tencere Seti (Büyük Kutu)", desi: 24.0, fiyat: 220.08 },
-                { ad: "Kahve Makinesi (Filtre)", desi: 8.75, fiyat: 80.24 },
                 { ad: "Televizyon (55 inç, Kutu)", desi: 90.0, fiyat: 825.30 },
-                { ad: "Masaüstü Bilgisayar Kasası", desi: 40.0, fiyat: 366.80 },
-                { ad: "Ofis Koltuğu (Demonte Kutu)", desi: 55.0, fiyat: 504.35 },
-                { ad: "Büyük Boy Kitap Kolisi", desi: 45.0, fiyat: 412.65 },
-                { ad: "Bebek Arabası (Katlanabilir)", desi: 35.0, fiyat: 320.95 },
-                { ad: "Jeneratör (Orta Boy)", desi: 110.0, fiyat: 1008.70 },
-                { ad: "Seramik Karo Kolisi (20 Adet)", desi: 60.0, fiyat: 550.20 },
-                { ad: "Elektrikli Süpürge (Dikey)", desi: 18.0, fiyat: 165.06 },
-                { ad: "Yazıcı (Lazer, Kutu)", desi: 25.0, fiyat: 229.25 },
-                { ad: "Giyim Ürünü (Küçük Kutu/Tek Parça)", desi: 5.0, fiyat: 45.85 },
-    
-                // YENİ EKLEMELER: BEYAZ EŞYA & BÜYÜK ELEKTRONİK
+                
+                // YENİ EKLEMELER: Toplam 50 Ürüne Tamamlandı (Arama ile görünecekler)
                 { ad: "Buzdolabı (Tek Kapılı)", desi: 160.0, fiyat: 1467.20 },
                 { ad: "Çamaşır Makinesi", desi: 140.0, fiyat: 1283.80 },
                 { ad: "Bulaşık Makinesi", desi: 135.0, fiyat: 1238.25 },
                 { ad: "Fırın (Solo Tip)", desi: 95.0, fiyat: 871.15 },
-                { ad: "Ocak (Dört Gözlü)", desi: 30.0, fiyat: 275.10 },
                 { ad: "Klima Dış Ünite", desi: 80.0, fiyat: 733.60 },
-                { ad: "Klima İç Ünite", desi: 35.0, fiyat: 320.95 },
                 { ad: "Mini Buzdolabı", desi: 45.0, fiyat: 412.65 },
-                { ad: "Derin Dondurucu (Sandık Tipi)", desi: 150.0, fiyat: 1375.50 },
-                { ad: "Su Arıtma Cihazı (Tezgah Altı)", desi: 30.0, fiyat: 275.10 },
-                { ad: "Çamaşır Kurutma Makinesi", desi: 145.0, fiyat: 1329.65 },
-                { ad: "Davul Fırın", desi: 25.0, fiyat: 229.25 },
-                { ad: "Mikser (Büyük, Sanayi)", desi: 50.0, fiyat: 458.50 },
-                { ad: "Şarap Soğutucu (Küçük)", desi: 40.0, fiyat: 366.80 },
-
-                // YENİ EKLEMELER: MOBİLYA & DEKORASYON
                 { ad: "TV Ünitesi (Demonte)", desi: 85.0, fiyat: 780.45 },
                 { ad: "Kitaplık (Orta Boy, Demonte)", desi: 60.0, fiyat: 550.20 },
                 { ad: "Tekli Koltuk (Demonte)", desi: 70.0, fiyat: 641.90 },
-                { ad: "Orta Sehpa (Demonte)", desi: 35.0, fiyat: 320.95 },
                 { ad: "Yemek Masası (4 Kişilik, Demonte)", desi: 90.0, fiyat: 825.30 },
                 { ad: "Sandalye (2 Adet, Paket)", desi: 25.0, fiyat: 229.25 },
-                { ad: "Yatak Başlığı (Tek Kişilik)", desi: 40.0, fiyat: 366.80 },
                 { ad: "Gardırop (2 Kapaklı, Kutu 1)", desi: 120.0, fiyat: 1100.40 },
-                { ad: "Avize (Büyük Kristal)", desi: 20.0, fiyat: 183.40 },
-                { ad: "Perde Korniş Seti (3m)", desi: 10.0, fiyat: 91.70 },
                 { ad: "Halı (4m², Rulo)", desi: 50.0, fiyat: 458.50 },
-                { ad: "Çiçek Saksısı (Büyük Seramik)", desi: 15.0, fiyat: 137.55 },
-                { ad: "Banyo Dolabı (Demonte)", desi: 55.0, fiyat: 504.35 },
-                { ad: "Şifonyer (Demonte)", desi: 45.0, fiyat: 412.65 },
-                { ad: "Puflar (2 Adet, Kutu)", desi: 18.0, fiyat: 165.06 },
-                { ad: "Dekoratif Ayna (Büyük)", desi: 22.0, fiyat: 201.74 },
-                { ad: "Yatak Baza Sistemi (Kutu 1)", desi: 130.0, fiyat: 1192.10 },
-
-                // YENİ EKLEMELER: SPOR & AKTİVİTE
                 { ad: "Fitness İstasyonu (Kutu 1)", desi: 180.0, fiyat: 1650.60 },
                 { ad: "Eliptik Bisiklet", desi: 110.0, fiyat: 1008.70 },
                 { ad: "Dambıl Seti (Kutu, 20 kg)", desi: 18.0, fiyat: 165.06 },
                 { ad: "Boks Torbası (Boş)", desi: 40.0, fiyat: 366.80 },
                 { ad: "Masa Tenisi Masası (Katlanabilir)", desi: 150.0, fiyat: 1375.50 },
-                { ad: "Basketbol Panyası", desi: 45.0, fiyat: 412.65 },
                 { ad: "Bisiklet (Yetişkin, Kutu)", desi: 90.0, fiyat: 825.30 },
-                { ad: "Çocuk Bisikleti (Kutu)", desi: 50.0, fiyat: 458.50 },
-                { ad: "Kayak Takımı (Çanta İçinde)", desi: 15.0, fiyat: 137.55 },
-                { ad: "Kamp Sandalyesi (4 Adet, Çanta)", desi: 16.0, fiyat: 146.72 },
-                { ad: "Pilates Topu (Şişirilmemiş)", desi: 3.0, fiyat: 27.51 },
-                { ad: "Koşu Bandı (Kutu 2 - Motor)", desi: 75.0, fiyat: 687.75 },
-                { ad: "Halter Seti (Ağırlıklar)", desi: 25.0, fiyat: 229.25 },
-
-                // YENİ EKLEMELER: İNŞAAT & HIRDAVAT
+                { ad: "Çim Biçme Makinesi", desi: 53.3, fiyat: 488.76 },
+                { ad: "Ağaç Kesme Motoru (Zincirli)", desi: 26.7, fiyat: 244.84 },
+                { ad: "Valiz (Büyük Boy, Boş)", desi: 51.3, fiyat: 470.42 },
+                { ad: "Tencere Seti (Büyük Kutu)", desi: 24.0, fiyat: 220.08 },
+                { ad: "Masaüstü Bilgisayar Kasası", desi: 40.0, fiyat: 366.80 },
+                { ad: "Ofis Koltuğu (Demonte Kutu)", desi: 55.0, fiyat: 504.35 },
+                { ad: "Jeneratör (Orta Boy)", desi: 110.0, fiyat: 1008.70 },
+                { ad: "Seramik Karo Kolisi (20 Adet)", desi: 60.0, fiyat: 550.20 },
+                { ad: "Elektrikli Süpürge (Dikey)", desi: 18.0, fiyat: 165.06 },
+                { ad: "Oto Tampon (Ön/Arka)", desi: 144.0, fiyat: 1320.48 },
+                { ad: "Far Takımı (Sağ/Sol)", desi: 24.0, fiyat: 220.08 },
                 { ad: "Spiral Taşlama Makinesi", desi: 7.0, fiyat: 64.19 },
                 { ad: "Kırıcı Delici Matkap", desi: 12.0, fiyat: 110.04 },
                 { ad: "Boyacı Merdiveni (2m)", desi: 25.0, fiyat: 229.25 },
                 { ad: "Silikon Kartuş Kolisi (50 Adet)", desi: 14.0, fiyat: 128.38 },
-                { ad: "Kapı Kilidi Seti (10 Adet Kutu)", desi: 8.0, fiyat: 73.36 },
                 { ad: "Çimento Torbası (Tek)", desi: 20.0, fiyat: 183.40 },
                 { ad: "Su Pompası (Sanayi)", desi: 75.0, fiyat: 687.75 },
-                { ad: "İnşaat Kovası (50 Adet, Üst Üste)", desi: 40.0, fiyat: 366.80 },
-                { ad: "Tornavida Seti (Profesyonel)", desi: 4.0, fiyat: 36.68 },
                 { ad: "Kaynak Makinesi (Küçük)", desi: 28.0, fiyat: 256.76 },
-                { ad: "Yangın Tüpü (6 kg)", desi: 10.0, fiyat: 91.70 },
-                { ad: "Alçıpan Profili (10 Adet, Uzun)", desi: 30.0, fiyat: 275.10 },
-                { ad: "Daire Testere (Profesyonel)", desi: 15.0, fiyat: 137.55 },
-                { ad: "Güvenlik Bariyeri (Katlanabilir)", desi: 45.0, fiyat: 412.65 },
-
-                // YENİ EKLEMELER: MUTFAK & KÜÇÜK EV ALETİ
+                { ad: "Yangın Tüpü (6 kg)", desi: 10.0, fiyat: 91.70 },
                 { ad: "Mikrodalga Fırın", desi: 18.0, fiyat: 165.06 },
                 { ad: "Airfryer (Büyük Boy)", desi: 12.0, fiyat: 110.04 },
                 { ad: "Çay Makinesi", desi: 6.0, fiyat: 55.02 },
                 { ad: "Blender Seti (Aksesuarlı)", desi: 5.0, fiyat: 45.85 },
-                { ad: "Mutfak Robotu", desi: 14.0, fiyat: 128.38 },
                 { ad: "Ekmek Yapma Makinesi", desi: 10.0, fiyat: 91.70 },
-                { ad: "Su Sebili (Masaüstü)", desi: 18.0, fiyat: 165.06 },
-                { ad: "Çelik Termos (10 Litre)", desi: 8.0, fiyat: 73.36 },
-                { ad: "Sıvı Yağ Kolisi (4x5 Litre)", desi: 18.0, fiyat: 165.06 },
-                { ad: "Baharat Takımı (Kutu)", desi: 4.0, fiyat: 36.68 },
-                { ad: "Seramik Tencere (Tek)", desi: 5.0, fiyat: 45.85 },
-                { ad: "Waffle Makinesi", desi: 7.0, fiyat: 64.19 },
-                { ad: "Kahve Değirmeni (Manuel)", desi: 2.0, fiyat: 18.34 },
-                { ad: "Pizza Taşı (Kutu)", desi: 6.0, fiyat: 55.02 },
-
-                // YENİ EKLEMELER: OYUNCAK & BEBEK
-                { ad: "Oyun Parkı (Büyük Kutu)", desi: 70.0, fiyat: 641.90 },
-                { ad: "Bebek Beşiği (Demonte)", desi: 65.0, fiyat: 596.05 },
-                { ad: "Oyuncak Ev (Plastik, Kutu)", desi: 48.0, fiyat: 440.16 },
-                { ad: "Lego Seti (Büyük Kutu)", desi: 15.0, fiyat: 137.55 },
-                { ad: "Uzaktan Kumandalı Araba (Büyük)", desi: 10.0, fiyat: 91.70 },
-                { ad: "Aktivite Masası", desi: 28.0, fiyat: 256.76 },
-                { ad: "Puset / Ana Kucağı", desi: 22.0, fiyat: 201.74 },
-                { ad: "Bebek Arabası Tekeri (4 Adet)", desi: 6.0, fiyat: 55.02 },
-                { ad: "Bebek Mama Sandalyesi (Demonte)", desi: 18.0, fiyat: 165.06 },
-                { ad: "Peluş Oyuncak Kolisi (Küçük)", desi: 15.0, fiyat: 137.55 },
-                { ad: "Çocuk Bisiklet Kaskı (4 Adet)", desi: 4.0, fiyat: 36.68 },
-
-                // YENİ EKLEMELER: BİLGİSAYAR & OFİS
                 { ad: "Monitör (32 inç, Kutu)", desi: 25.0, fiyat: 229.25 },
                 { ad: "Dizüstü Bilgisayar (Kutu)", desi: 4.0, fiyat: 36.68 },
-                { ad: "Tarayıcı (A4 Masaüstü)", desi: 8.0, fiyat: 73.36 },
-                { ad: "Masa Lambası (Büyük Boy)", desi: 6.0, fiyat: 55.02 },
-                { ad: "Kağıt Kolisi (5 Paket A4)", desi: 10.0, fiyat: 91.70 },
-                { ad: "Sunucu Kasası (Boş)", desi: 50.0, fiyat: 458.50 },
-                { ad: "Klavye ve Fare Seti (Oyun)", desi: 3.0, fiyat: 27.51 },
-                { ad: "Projeksiyon Cihazı (Kutu)", desi: 12.0, fiyat: 110.04 },
-                { ad: "Şerit LED (100m Makara)", desi: 5.0, fiyat: 45.85 },
-                { ad: "Güç Kaynağı (UPS)", desi: 20.0, fiyat: 183.40 },
-
-                // YENİ EKLEMELER: OTO & YEDEK PARÇA (GENİŞ)
                 { ad: "Otomobil Lastiği (Tek Adet)", desi: 40.0, fiyat: 366.80 },
                 { ad: "Jant (Tek Adet)", desi: 25.0, fiyat: 229.25 },
                 { ad: "Motor Yağı (4x5 Litre Kutu)", desi: 20.0, fiyat: 183.40 },
                 { ad: "Akü (Otomobil)", desi: 15.0, fiyat: 137.55 },
-                { ad: "Tavan Çıtası (2 Adet, Uzun)", desi: 18.0, fiyat: 165.06 },
-                { ad: "Katalitik Konvertör", desi: 12.0, fiyat: 110.04 },
-                { ad: "Oto Koltuk Kılıfı Seti", desi: 10.0, fiyat: 91.70 },
-                { ad: "Far Lambası (Küçük, 10 Adet Kutu)", desi: 3.0, fiyat: 27.51 },
-                { ad: "Dizel Partikül Filtresi (DPF)", desi: 35.0, fiyat: 320.95 },
-                { ad: "Şanzıman Kutusu (Boş)", desi: 60.0, fiyat: 550.20 },
-                { ad: "Motor Kaputu (Otomobil)", desi: 160.0, fiyat: 1467.20 },
-                { ad: "Silecek Motoru (2 Adet)", desi: 7.0, fiyat: 64.19 },
-
-                // YENİ EKLEMELER: BAHÇE & TARIM
-                { ad: "Bahçe Hortumu (50m, Makaralı)", desi: 14.0, fiyat: 128.38 },
-                { ad: "Tohum Kolisi (Çeşitli, Büyük)", desi: 20.0, fiyat: 183.40 },
                 { ad: "Mangal (Büyük, Kutu)", desi: 35.0, fiyat: 320.95 },
-                { ad: "Çapalama Makinesi (Küçük)", desi: 50.0, fiyat: 458.50 },
-                { ad: "Bahçe Şemsiyesi (Kutu)", desi: 30.0, fiyat: 275.10 },
-                { ad: "Gübre Torbası (50kg)", desi: 30.0, fiyat: 275.10 },
-                { ad: "Tırmık (Uzun Saplı)", desi: 12.0, fiyat: 110.04 },
-                { ad: "Fidan (5 Adet, Paket)", desi: 18.0, fiyat: 165.06 },
-                { ad: "Çim Tohumu (10 kg Torba)", desi: 12.0, fiyat: 110.04 },
-                { ad: "Su Tankı (500 Litre, Boş)", desi: 150.0, fiyat: 1375.50 },
-
-                // YENİ EKLEMELER: SAĞLIK & KOZMETİK
-                { ad: "Masaj Koltuğu (Demonte, Kutu 1)", desi: 150.0, fiyat: 1375.50 },
                 { ad: "Tıbbi Cihaz Kolisi (Orta)", desi: 18.0, fiyat: 165.06 },
-                { ad: "Serum Kolisi (100 Adet)", desi: 25.0, fiyat: 229.25 },
-                { ad: "Tansiyon Aleti (Kutu)", desi: 2.0, fiyat: 18.34 },
-                { ad: "Cilt Bakım Ürünleri Kolisi (Küçük)", desi: 7.0, fiyat: 64.19 },
-                { ad: "Kolonya Kolisi (12x1 Litre)", desi: 15.0, fiyat: 137.55 },
-                { ad: "Diş Fırçası (100 Adet, Koli)", desi: 6.0, fiyat: 55.02 },
-                { ad: "Hastane Yatağı (Demonte, Kutu 1)", desi: 180.0, fiyat: 1650.60 },
-
-                // YENİ EKLEMELER: GİYİM & TEKSTİL (GENİŞ)
-                { ad: "Mont (10 Adet, Koli)", desi: 35.0, fiyat: 320.95 },
-                { ad: "Kot Pantolon (20 Adet, Koli)", desi: 40.0, fiyat: 366.80 },
-                { ad: "Gelinlik (Özel Kutu)", desi: 25.0, fiyat: 229.25 },
-                { ad: "Çarşaf Seti (10 Adet, Koli)", desi: 15.0, fiyat: 137.55 },
-                { ad: "Yorgan (Büyük, Vakumlu)", desi: 10.0, fiyat: 91.70 },
-                { ad: "Nevresim Takımı (5 Adet, Koli)", desi: 18.0, fiyat: 165.06 },
-                { ad: "İş Güvenlik Ayakkabısı (5 Çift, Kutu)", desi: 12.0, fiyat: 110.04 },
-                { ad: "Tıbbi Önlük (50 Adet, Koli)", desi: 8.0, fiyat: 73.36 },
-                { ad: "Perde Kumaşı (Rulo, 20m)", desi: 20.0, fiyat: 183.40 },
-                { ad: "Erkek Takım Elbise (5 Adet, Askılı Kutu)", desi: 30.0, fiyat: 275.10 },
-
-                // YENİ EKLEMELER: GIDA & PAKETLİ ÜRÜN
-                { ad: "Un Çuvalı (50 kg)", desi: 30.0, fiyat: 275.10 },
-                { ad: "Şeker Çuvalı (50 kg)", desi: 30.0, fiyat: 275.10 },
-                { ad: "Su Kolisi (12x1.5 Litre)", desi: 12.0, fiyat: 110.04 },
-                { ad: "Konserve Kolisi (Büyük)", desi: 25.0, fiyat: 229.25 },
-                { ad: "Meyve Suyu Kolisi (27x200 ml)", desi: 15.0, fiyat: 137.55 },
-                { ad: "Zeytinyağı Tenekesi (5 Litre)", desi: 6.0, fiyat: 55.02 },
-                { ad: "Çay Kolisi (10 kg)", desi: 12.0, fiyat: 110.04 },
-                { ad: "Pirinç Çuvalı (25 kg)", desi: 18.0, fiyat: 165.06 },
-                { ad: "Baharat Kolisi (Karışık, Küçük)", desi: 5.0, fiyat: 45.85 },
-                { ad: "Pet Mama Kolisi (10 kg)", desi: 15.0, fiyat: 137.55 },
-    
-                // EK 700'E TAMAMLAYAN GENEL AMAÇLI ÜRÜNLER (Desi Aralığı 1.0 - 150.0)
-
-                // DESİ 1.0 - 5.0 ARASI (Küçük & Hafif)
-                { ad: "Kitap (Tek Adet)", desi: 1.0, fiyat: 9.17 },
-                { ad: "Cep Telefonu (Kutu)", desi: 1.5, fiyat: 13.76 },
-                { ad: "Tablet (Kutu)", desi: 2.0, fiyat: 18.34 },
-                { ad: "Kulaklık (Büyük Boy Kutu)", desi: 2.5, fiyat: 22.93 },
-                { ad: "Makyaj Seti (Büyük Kutu)", desi: 3.0, fiyat: 27.51 },
-                { ad: "Parfüm Seti (5 Adet)", desi: 3.5, fiyat: 32.09 },
-                { ad: "Saat (Koleksiyon Kutusu)", desi: 4.0, fiyat: 36.68 },
-                { ad: "Küçük El Aletleri Seti", desi: 4.5, fiyat: 41.27 },
-                { ad: "Powerbank (2 Adet)", desi: 5.0, fiyat: 45.85 },
-
-                // DESİ 5.1 - 10.0 ARASI (Orta Küçük)
-                { ad: "Saç Kurutma Makinesi (Profesyonel)", desi: 5.5, fiyat: 50.44 },
-                { ad: "Tost Makinesi (Tekli)", desi: 6.0, fiyat: 55.02 },
-                { ad: "Aydınlatma Armatürü (Küçük)", desi: 6.5, fiyat: 59.61 },
-                { ad: "Oyun Konsolu Aksesuarları", desi: 7.0, fiyat: 64.19 },
-                { ad: "Küçük Hoparlör Seti", desi: 7.5, fiyat: 68.78 },
-                { ad: "Kamera Lens Seti", desi: 8.0, fiyat: 73.36 },
-                { ad: "Drone (Mini, Kutu)", desi: 8.5, fiyat: 77.95 },
-                { ad: "Mutfak Terazisi (Profesyonel)", desi: 9.0, fiyat: 82.53 },
-                { ad: "Tekerlekli Paten Seti (Kutu)", desi: 9.5, fiyat: 87.12 },
-                { ad: "10'lu Kutu Boya Seti", desi: 10.0, fiyat: 91.70 },
-
-                // DESİ 10.1 - 20.0 ARASI (Orta)
-                { ad: "Kettlebell (10 kg)", desi: 11.0, fiyat: 100.87 },
-                { ad: "Oto Süpürgesi (Islak/Kuru)", desi: 12.0, fiyat: 110.04 },
-                { ad: "Oyun Konsolu (PS5/Xbox Kutu)", desi: 13.0, fiyat: 119.21 },
-                { ad: "Dikiş Makinesi (Mini)", desi: 14.0, fiyat: 128.38 },
-                { ad: "Elektrikli Izgara (Küçük)", desi: 15.0, fiyat: 137.55 },
-                { ad: "Elektrikli Kaykay (Mini)", desi: 16.0, fiyat: 146.72 },
-                { ad: "Banyo Havalandırma Fanı", desi: 17.0, fiyat: 155.89 },
-                { ad: "Ev Tipi Yazıcı (Inkjet)", desi: 18.0, fiyat: 165.06 },
-                { ad: "Kayak Botu (2 Çift, Kutu)", desi: 19.0, fiyat: 174.23 },
-                { ad: "Portatif Kamp Ocağı", desi: 20.0, fiyat: 183.40 },
-
-                // DESİ 20.1 - 30.0 ARASI (Orta Büyük)
-                { ad: "Isıtıcı (Elektrikli, Kule Tipi)", desi: 21.0, fiyat: 192.57 },
-                { ad: "Ev Tipi Hava Temizleyici", desi: 22.0, fiyat: 201.74 },
-                { ad: "Mutfak Aspiratör (Kutu)", desi: 23.0, fiyat: 210.91 },
-                { ad: "Tekerlekli Sandalye (Katlanabilir)", desi: 24.0, fiyat: 220.08 },
-                { ad: "Su ısıtıcısı (Büyük Sanayi)", desi: 25.0, fiyat: 229.25 },
-                { ad: "Otomobil Tekerlek Zinciri (4 Adet)", desi: 26.0, fiyat: 238.42 },
-                { ad: "Profesyonel Ses Mikseri", desi: 27.0, fiyat: 247.59 },
-                { ad: "Kayak Takımı (Profesyonel, Kutu)", desi: 28.0, fiyat: 256.76 },
-                { ad: "Oto Tavan Bagajı (Boş)", desi: 29.0, fiyat: 265.93 },
-                { ad: "Çocuk Bisiklet Koltuğu (Oto)", desi: 30.0, fiyat: 275.10 },
-
-                // DESİ 30.1 - 50.0 ARASI (Büyük)
-                { ad: "Elektrikli Scooter (Küçük)", desi: 32.0, fiyat: 293.44 },
-                { ad: "Jant Kapağı Seti (4 Adet)", desi: 34.0, fiyat: 311.78 },
-                { ad: "Trambolin (1.5m, Kutu)", desi: 36.0, fiyat: 330.12 },
-                { ad: "Kabin Boy Valiz Seti (3'lü)", desi: 38.0, fiyat: 348.46 },
-                { ad: "Oto Hoparlör Seti (Büyük)", desi: 40.0, fiyat: 366.80 },
-                { ad: "Buzdolabı Motoru", desi: 42.0, fiyat: 385.14 },
-                { ad: "Bahçe Mobilya Minderi Seti", desi: 44.0, fiyat: 403.48 },
-                { ad: "Buz Makinesi (Küçük)", desi: 46.0, fiyat: 421.82 },
-                { ad: "Taşınabilir Klima (Küçük)", desi: 48.0, fiyat: 440.16 },
-                { ad: "Elektrikli Şömine", desi: 50.0, fiyat: 458.50 },
-
-                // DESİ 50.1 - 75.0 ARASI (Çok Büyük / Ağır)
-                { ad: "Filtre Kahve Makinesi (Profesyonel)", desi: 55.0, fiyat: 504.35 },
-                { ad: "Banyo Küveti (Mini, Akrilik)", desi: 60.0, fiyat: 550.20 },
-                { ad: "Oto Koltuğu (Çocuk, ISOFIX)", desi: 65.0, fiyat: 596.05 },
-                { ad: "Masaüstü Sunucu (Kutu)", desi: 70.0, fiyat: 641.90 },
-                { ad: "Otomobil Kapı Paneli (Tek)", desi: 75.0, fiyat: 687.75 },
-
-                // DESİ 75.1 - 100.0 ARASI (Çok Çok Büyük)
-                { ad: "Çift Kişilik Yatak (Demonte, Kutu 1)", desi: 80.0, fiyat: 733.60 },
-                { ad: "Geniş Boyutlu Kitaplık (Kutu 1)", desi: 85.0, fiyat: 780.45 },
-                { ad: "Bulaşık Makinesi (Mini Tezgah Üstü)", desi: 90.0, fiyat: 825.30 },
-                { ad: "Kayık Motoru (Küçük Dıştan Takma)", desi: 95.0, fiyat: 871.15 },
-                { ad: "Büyük Bahçe Salıncağı (Kutu 1)", desi: 100.0, fiyat: 917.00 },
-
-                // DESİ 100.1 - 150.0 ARASI (Paletli/Özel Ürünler)
-                { ad: "Motosiklet Lastiği (Ön+Arka Set)", desi: 105.0, fiyat: 962.85 },
-                { ad: "Jeneratör (Büyük Sanayi Tipi)", desi: 115.0, fiyat: 1054.55 },
-                { ad: "Ağır Tip Su Pompası (Endüstriyel)", desi: 125.0, fiyat: 1146.25 },
-                { ad: "Büyük Boy Tek Kapaklı Dolap (Kutu 1)", desi: 135.0, fiyat: 1238.25 },
-                { ad: "Tente Sistemi (Geniş, Kutu)", desi: 145.0, fiyat: 1329.65 },
-                { ad: "Ticari Buzdolabı (Tek Kapı)", desi: 150.0, fiyat: 1375.50 },
-
-                // DESİ 150.1 - 300.0 ARASI (Özel Kargo)
-                { ad: "Çok Büyük LCD Panel (75 inç, Kutu)", desi: 160.0, fiyat: 1467.20 },
-                { ad: "Profesyonel Ses Sistemi Kolonu (2 Adet)", desi: 170.0, fiyat: 1558.90 },
-                { ad: "4 Kapaklı Gardırop (Kutu 1)", desi: 180.0, fiyat: 1650.60 },
-                { ad: "Profesyonel Fitness Cihazı (Kutu 1)", desi: 190.0, fiyat: 1742.30 },
-                { ad: "Endüstriyel Havalandırma Sistemi", desi: 200.0, fiyat: 1834.00 },
-                { ad: "Kapı ve Pencere Profili (5 Adet, Uzun)", desi: 210.0, fiyat: 1925.70 },
-                { ad: "Palet Üstü Koli (Standart Yük)", desi: 220.0, fiyat: 2017.40 },
-                { ad: "Büyük Boy Dijital Baskı Makinesi (Kutu 1)", desi: 230.0, fiyat: 2109.10 },
-                { ad: "Çift Kişilik Yatak Başlığı (Büyük, Ahşap)", desi: 240.0, fiyat: 2200.80 },
-                { ad: "Ofis Bölme Sistemi Parçaları (Kutu 1)", desi: 250.0, fiyat: 2292.50 },
-                { ad: "Ticari Fritöz (Çift Hazneli)", desi: 260.0, fiyat: 2384.20 },
-                { ad: "Çatı Güneş Paneli (Tek Adet)", desi: 270.0, fiyat: 2475.90 },
-                { ad: "Büyük Akvaryum (Boş, Kutu)", desi: 280.0, fiyat: 2567.60 },
-                { ad: "Taşınabilir Duşakabin (Demonte)", desi: 290.0, fiyat: 2659.30 },
-                { ad: "Sanayi Tipi Fan Motoru", desi: 300.0, fiyat: 2751.00 },
-
-                // DESİ 300.1 - 400.0 ARASI (ÇOK AĞIR/BÜYÜK)
-                { ad: "Su Deposu (1000 Litre, Boş)", desi: 310.0, fiyat: 2842.70 },
-                { ad: "Palet Üstü Koli (Büyük Yük)", desi: 330.0, fiyat: 3026.10 },
-                { ad: "Büyük Bahçe Şemsiyesi Ayaklığı (Ağır)", desi: 350.0, fiyat: 3209.50 },
-                { ad: "Endüstriyel Fırın (Kutu 1)", desi: 370.0, fiyat: 3392.90 },
-                { ad: "Büyük Boy Sanayi Kompresörü (Kutu 1)", desi: 390.0, fiyat: 3576.30 },
-
-                // DESİ 400.1 - 500.0 ARASI (ÖZEL AĞIR YÜK)
-                { ad: "Motorlu Kapı Sistemi (Kutu 1)", desi: 410.0, fiyat: 3759.70 },
-                { ad: "Kabin Tipi Klima (Ticari)", desi: 430.0, fiyat: 3943.10 },
-                { ad: "Sanayi Tipi Tezgah (Demonte, Kutu 1)", desi: 450.0, fiyat: 4126.50 },
-                { ad: "Plastik Pencere Kasası (4 Adet, Büyük)", desi: 470.0, fiyat: 4309.90 },
-                { ad: "Büyük Endüstriyel Fan (Kutu)", desi: 490.0, fiyat: 4493.30 },
-
-                // DESİ 500.1 - 700.0 ARASI
-                { ad: "Palet Üstü Koli (Çok Büyük Yük)", desi: 520.0, fiyat: 4768.40 },
-                { ad: "Büyük Boy Sauna Kabini (Kutu 1)", desi: 550.0, fiyat: 5043.50 },
-                { ad: "Endüstriyel Isıtma Kazanı (Kutu 1)", desi: 580.0, fiyat: 5318.60 },
-                { ad: "Büyük Makine Parçası (Metal)", desi: 610.0, fiyat: 5593.70 },
-                { ad: "Prefabrik Kulübe Paneli (Tek Adet)", desi: 640.0, fiyat: 5868.80 },
-                { ad: "Büyük Havalandırma Kanalı (Tek Parça)", desi: 670.0, fiyat: 6143.90 },
-                { ad: "Paletli Ticari Fırın", desi: 700.0, fiyat: 6419.00 },
-
-                // DESİ 700.1 - 900.0 ARASI (Yüksek Kapasiteli Paletler)
-                { ad: "İnşaat İskelesi Parçaları (Büyük Koli)", desi: 730.0, fiyat: 6694.10 },
-                { ad: "Palet Üstü Mermer Karo (Büyük Miktar)", desi: 760.0, fiyat: 6969.20 },
-                { ad: "Endüstriyel Akü Grubu", desi: 800.0, fiyat: 7336.00 },
-                { ad: "Büyük Boy Çelik Kasa (Boş)", desi: 850.0, fiyat: 7804.50 },
-                { ad: "Paletli Sera Malzemesi (Kutu 1)", desi: 900.0, fiyat: 8273.00 },
-                
-                // DESİ 900.1 - 1200.0 ARASI (Özel Mega Yükler)
-                { ad: "Paletli Tekstil Ürünleri (Yüksek Hacim)", desi: 950.0, fiyat: 8741.50 },
-                { ad: "Büyük Reklam Panosu (Demonte, Kutu 1)", desi: 1000.0, fiyat: 9170.00 },
-                { ad: "Ticari Su Pompası ve Motoru", desi: 1050.0, fiyat: 9638.50 },
-                { ad: "Palet Üstü Büyük Seramik Karo (Yüksek)", desi: 1100.0, fiyat: 10107.00 },
-                { ad: "Endüstriyel Kompresör (Büyük Boy)", desi: 1150.0, fiyat: 10575.50 },
-                { ad: "Paletli Gıda Kolisi (Yoğun Yük)", desi: 1200.0, fiyat: 11044.00 }
-                // BURADA VERİ LİSTESİ SONA ERİYOR
+                { ad: "Kolonya Kolisi (12x1 Litre)", desi: 15.0, fiyat: 137.55 }
             ];
-            
-            // Fonksiyon: Desi Hesaplama (Uzunluk * Genişlik * Yükseklik / Bölen)
-            const desiHesapla = (en, boy, yukseklik) => {
-                const desi = (en * boy * yukseklik) / DESI_BOLENI;
-                return parseFloat(desi.toFixed(1)); // Tek ondalık basamakta yuvarla
-            };
+            // urunVerileri dizisinin uzunluğu: 50
 
-            // Fonksiyon: Kargo Fiyatı Hesaplama (Desi * Desi Fiyatı)
-            const fiyatHesapla = (desi) => {
-                // Desi yukarı yuvarlanır: 1.1 -> 2, 5.0 -> 5, 5.1 -> 6
-                const yuvarlanmisDesi = Math.ceil(desi);
-                const fiyat = yuvarlanmisDesi * DESI_FIYAT;
-                return parseFloat(fiyat.toFixed(2));
-            };
-
-            // DOM Elementleri
+            // Diğer değişkenler ve fonksiyonlar...
             const enInput = document.getElementById('en');
             const boyInput = document.getElementById('boy');
             const yukseklikInput = document.getElementById('yukseklik');
-            const desiManuelInput = document.getElementById('desi');
+            const desiInput = document.getElementById('desi');
             const hesapBtnLWH = document.getElementById('hesapBtnLWH');
             const hesapBtnDesi = document.getElementById('hesapBtnDesi');
-            const desiSonucSpan = document.getElementById('desiSonuc');
-            const ucretSonucSpan = document.getElementById('ucretSonuc');
+            const urunAramaInput = document.getElementById('urunArama');
+            const urunTablosuBody = document.querySelector('#urun-tablosu tbody');
             const manuelSonucDiv = document.getElementById('manuelSonuc');
             const sepetSonucDiv = document.getElementById('sepetSonuc');
-            const urunTablosuBody = document.querySelector('#urun-tablosu tbody');
-            const urunAramaInput = document.getElementById('urunArama');
+            const desiSonucSpan = document.getElementById('desiSonuc');
+            const ucretSonucSpan = document.getElementById('ucretSonuc');
             const toplamDesiSpan = document.getElementById('toplam-desi');
             const toplamFiyatSpan = document.getElementById('toplam-fiyat');
 
-            // Sepet durumu ve toplamları
-            let sepetToplamDesi = 0;
-            let sepetToplamFiyat = 0;
 
-            // Fonksiyon: Sonuçları Göster
-            const sonucGoster = (desi, ucret, isSepet = false) => {
-                manuelSonucDiv.style.display = 'none';
-                sepetSonucDiv.style.display = 'none';
+            // Desi Hesaplama Fonksiyonu
+            function hacimDesiHesapla(en, boy, yukseklik) {
+                // En * Boy * Yükseklik / 3000
+                return (en * boy * yukseklik) / DESI_BOLENI;
+            }
 
-                if (isSepet) {
-                    toplamDesiSpan.textContent = desi.toFixed(1);
-                    toplamFiyatSpan.textContent = ucret.toFixed(2) + ' TL';
-                    sepetSonucDiv.style.display = 'block';
-                } else {
-                    desiSonucSpan.textContent = desi.toFixed(1);
+            // Fiyat Hesaplama Fonksiyonu (Desiyi bir üst tam sayıya yuvarlayarak)
+            function desiFiyatHesapla(desi) {
+                // Desiyi bir üst tam sayıya yuvarla (Örn: 12.3 -> 13)
+                const yuvarlanmisDesi = Math.ceil(desi);
+                return yuvarlanmisDesi * DESI_FIYAT;
+            }
+
+            // Manuel Hesaplama İşleyicisi (LWH)
+            hesapBtnLWH.addEventListener('click', () => {
+                const en = parseFloat(enInput.value) || 0;
+                const boy = parseFloat(boyInput.value) || 0;
+                const yukseklik = parseFloat(yukseklikInput.value) || 0;
+
+                if (en > 0 && boy > 0 && yukseklik > 0) {
+                    const desi = hacimDesiHesapla(en, boy, yukseklik);
+                    const ucret = desiFiyatHesapla(desi);
+
+                    desiSonucSpan.textContent = desi.toFixed(2);
                     ucretSonucSpan.textContent = ucret.toFixed(2) + ' TL';
                     manuelSonucDiv.style.display = 'block';
-                }
-            };
-
-            // Fonksiyon: Sepeti Güncelle
-            const sepetiGuncelle = () => {
-                const seciliUrunler = Array.from(urunTablosuBody.querySelectorAll('input[type="checkbox"]:checked'));
-                sepetToplamDesi = 0;
-                sepetToplamFiyat = 0;
-
-                seciliUrunler.forEach(checkbox => {
-                    const desi = parseFloat(checkbox.getAttribute('data-desi'));
-                    const fiyat = parseFloat(checkbox.getAttribute('data-fiyat'));
-                    sepetToplamDesi += desi;
-                    sepetToplamFiyat += fiyat;
-                });
-
-                // Sepet toplamını göster veya gizle
-                if (sepetToplamDesi > 0) {
-                    sonucGoster(sepetToplamDesi, sepetToplamFiyat, true);
+                    sepetSonucDiv.style.display = 'none';
                 } else {
-                    if (manuelSonucDiv.style.display !== 'block') {
-                        sepetSonucDiv.style.display = 'none';
-                    }
+                    desiSonucSpan.textContent = '0.00';
+                    ucretSonucSpan.textContent = '0.00 TL';
+                    manuelSonucDiv.style.display = 'block';
+                    sepetSonucDiv.style.display = 'none';
+                    alert("Lütfen tüm boyut alanlarını (En, Boy, Yükseklik) doldurunuz.");
                 }
-            };
-
-            // Fonksiyon: Ürün Tablosunu Doldur
-            const tabloDoldur = (filtreliUrunler = urunVerileri) => {
-                urunTablosuBody.innerHTML = ''; // Tabloyu temizle
-
-                filtreliUrunler.forEach(urun => {
-                    const row = urunTablosuBody.insertRow();
-                   
-                    // Hücre 1: Ürün Adı
-                    let cellAd = row.insertCell();
-                    cellAd.textContent = urun.ad;
-
-                    // Hücre 2: Desi
-                    let cellDesi = row.insertCell();
-                    cellDesi.textContent = urun.desi.toFixed(1);
-
-                    // Hücre 3: Fiyat
-                    let cellFiyat = row.insertCell();
-                    cellFiyat.textContent = urun.fiyat.toFixed(2) + ' TL';
-
-                    // Hücre 4: Checkbox
-                    let cellSecim = row.insertCell();
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.setAttribute('data-desi', urun.desi);
-                    checkbox.setAttribute('data-fiyat', urun.fiyat);
-                    checkbox.addEventListener('change', sepetiGuncelle);
-                    cellSecim.appendChild(checkbox);
-                });
-            };
-
-            // 1. Olay Dinleyicisi: En/Boy/Yükseklik ile Hesapla Butonu
-            hesapBtnLWH.addEventListener('click', () => {
-                const en = parseFloat(enInput.value);
-                const boy = parseFloat(boyInput.value);
-                const yukseklik = parseFloat(yukseklikInput.value);
-
-                if (isNaN(en) || isNaN(boy) || isNaN(yukseklik) || en <= 0 || boy <= 0 || yukseklik <= 0) {
-                    alert("Lütfen En, Boy ve Yükseklik değerlerini doğru girin (0'dan büyük olmalı).");
-                    return;
-                }
-
-                const desi = desiHesapla(en, boy, yukseklik);
-                const ucret = fiyatHesapla(desi);
-
-                sonucGoster(desi, ucret, false);
             });
 
-            // 2. Olay Dinleyicisi: Desi ile Hesapla Butonu
+            // Manuel Hesaplama İşleyicisi (Desi)
             hesapBtnDesi.addEventListener('click', () => {
-                const desi = parseFloat(desiManuelInput.value);
+                const desi = parseFloat(desiInput.value) || 0;
 
-                if (isNaN(desi) || desi <= 0) {
-                    alert("Lütfen Desi değerini doğru girin (0'dan büyük olmalı).");
-                    return;
+                if (desi > 0) {
+                    // Direkt Desi Girişi için yuvarlama yapılmaz.
+                    const ucret = desi * DESI_FIYAT;
+
+                    desiSonucSpan.textContent = desi.toFixed(2);
+                    ucretSonucSpan.textContent = ucret.toFixed(2) + ' TL';
+                    manuelSonucDiv.style.display = 'block';
+                    sepetSonucDiv.style.display = 'none';
+                } else {
+                    desiSonucSpan.textContent = '0.00';
+                    ucretSonucSpan.textContent = '0.00 TL';
+                    manuelSonucDiv.style.display = 'block';
+                    sepetSonucDiv.style.display = 'none';
+                    alert("Lütfen geçerli bir Desi değeri giriniz.");
                 }
-
-                // Girdi, tam desi olarak kabul edilir ve fiyat hesaplanır
-                const ucret = fiyatHesapla(desi);
-                sonucGoster(desi, ucret, false);
             });
 
-            // 3. Olay Dinleyicisi: Arama Kutusu
+            // Sepet Toplamını Güncelleyen Fonksiyon
+            function sepetiGuncelle() {
+                let toplamDesi = 0;
+                let toplamFiyat = 0;
+                const secilenUrunler = urunTablosuBody.querySelectorAll('input[type="checkbox"]:checked');
+
+                secilenUrunler.forEach(checkbox => {
+                    const desi = parseFloat(checkbox.dataset.desi);
+                    const fiyat = parseFloat(checkbox.dataset.fiyat);
+                    toplamDesi += desi;
+                    toplamFiyat += fiyat;
+                });
+
+                toplamDesiSpan.textContent = toplamDesi.toFixed(2);
+                toplamFiyatSpan.textContent = toplamFiyat.toFixed(2) + ' TL';
+
+                // Sepet alanı boş değilse göster, aksi halde gizle (ya da sadece sepeti göster)
+                if (toplamDesi > 0) {
+                    sepetSonucDiv.style.display = 'block';
+                    manuelSonucDiv.style.display = 'none'; // Manuel sonucu gizle
+                } else if (manuelSonucDiv.style.display !== 'block') {
+                    // Eğer manuel sonuç gösterilmiyorsa ve sepet boşsa gizle.
+                    sepetSonucDiv.style.display = 'none';
+                }
+            }
+
+            // Ürünleri Tabloya Doldurma Fonksiyonu (Yeni Kısıtlama burada)
+            function urunleriDoldur(filtre) {
+                urunTablosuBody.innerHTML = ''; // Tabloyu temizle
+                const aramaKelimesi = filtre ? filtre.toLowerCase() : '';
+                let gosterilenUrunSayisi = 0;
+                // Arama yoksa (arama kutusu boşsa) ve ürün sayısı MAX_GOSTERILECEK_URUN'den fazla ise
+                const listelemeKisitli = aramaKelimesi === '' && urunVerileri.length > MAX_GOSTERILECEK_URUN;
+
+
+                urunVerileri.forEach((urun) => {
+                    // 1. Filtreleme Kontrolü
+                    if (aramaKelimesi && !urun.ad.toLowerCase().includes(aramaKelimesi) && !urun.desi.toString().includes(aramaKelimesi)) {
+                        return; // Ürün adı veya desisi eşleşmiyorsa atla
+                    }
+
+                    // 2. Kısıtlama Kontrolü (Sadece arama kutusu boşken ve maksimuma ulaşılmamışken)
+                    if (listelemeKisitli && gosterilenUrunSayisi >= MAX_GOSTERILECEK_URUN) {
+                        return; // Sadece ilk 10 ürün gösterilecek
+                    }
+
+                    const row = urunTablosuBody.insertRow();
+                    row.innerHTML = `
+                        <td>${urun.ad}</td>
+                        <td>${urun.desi.toFixed(1)}</td>
+                        <td>${urun.fiyat.toFixed(2)} TL</td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" data-desi="${urun.desi}" data-fiyat="${urun.fiyat}">
+                        </td>
+                    `;
+                    // Checkbox'a olay dinleyicisi ekle
+                    row.querySelector('input[type="checkbox"]').addEventListener('change', sepetiGuncelle);
+                    
+                    gosterilenUrunSayisi++;
+                });
+                // İlk yüklemede sepeti güncelle
+                sepetiGuncelle(); 
+            }
+
+            // Arama kutusu olay dinleyicisi
             urunAramaInput.addEventListener('input', (e) => {
-                const aramaMetni = e.target.value.toLowerCase();
-                const filtreliUrunler = urunVerileri.filter(urun => 
-                    urun.ad.toLowerCase().includes(aramaMetni)
-                );
-                tabloDoldur(filtreliUrunler);
+                urunleriDoldur(e.target.value);
             });
 
-            // Sayfa yüklendiğinde tabloyu doldur
-            tabloDoldur();
+            // Sayfa yüklendiğinde ürünleri doldur
+            urunleriDoldur(); 
         });
-
     </script>
 </body>
 </html>
