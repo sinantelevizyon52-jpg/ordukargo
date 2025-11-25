@@ -45,7 +45,6 @@
             font-size: 18px;
             font-weight: 700;
             border-radius: 12px 12px 0 0;
-            /* GÖLGE BURADA: 3D etkiyi verir. */
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); 
         }
         .header a {
@@ -58,7 +57,6 @@
             padding: 25px;
             background-color: var(--light-bg);
             border-radius: 0 0 12px 12px;
-            /* GÖLGE BURADA: 3D etkiyi verir. */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); 
             text-align: left;
             position: relative;
@@ -127,7 +125,6 @@
             cursor: pointer;
             transition: background-color .18s, transform .1s;
             touch-action: manipulation;
-            /* GÖLGE BURADA: 3D etkiyi verir. */
             box-shadow: 0 4px 12px rgba(204, 0, 0, 0.4); 
             margin-top: 5px;
         }
@@ -149,7 +146,7 @@
             text-align: center;
         }
         .urun-listesi-kapsayici {
-            max-height: 300px;
+            max-height: 200px; /* Maksimum yükseklik 200px */
             overflow-y: auto;
             border: 1px solid var(--input-border);
             border-radius: 8px;
@@ -190,7 +187,6 @@
             background-color: #fff;
             border-radius: 10px;
             text-align: center;
-            /* GÖLGE BURADA: 3D etkiyi verir. */
             box-shadow: 0 0 15px rgba(204, 0, 0, 0.2); 
         }
         .sonuc-gosterge {
@@ -232,9 +228,23 @@
             font-size: 12px;
             text-align: center;
         }
-        @media (max-width:420px) {
-            .container { padding: 20px; }
-            button { padding: 14px; font-size: 16px; }
+        /* Yeni Arama Stili */
+        .arama-kapsayici {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        #urunArama {
+            width: 100%;
+            padding: 12px 12px 12px 45px;
+            border: 2px solid var(--input-border);
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color .2s;
+        }
+        #urunArama:focus {
+             border-color: var(--primary);
+             outline: none;
         }
     </style>
 </head>
@@ -282,6 +292,10 @@
             <div class="hazir-urunler-tablo">
                 <hr style="margin:25px 0; border-top:1px solid var(--input-border); border-color:var(--primary);">
                 <h3>📦 Hazır Ürün Seçimi - Ekipman ve Tekstil (3000 Bölen)</h3>
+                
+                <div class="arama-kapsayici">
+                    <input type="text" id="urunArama" placeholder="🔍 Ürün Adı Arayın (Örn: Televizyon, Bisiklet)">
+                </div>
                 <div class="urun-listesi-kapsayici">
                     <table id="urun-tablosu" class="urun-tablosu">
                         <thead>
@@ -332,7 +346,9 @@
     <script>
         const DESI_BOLENI = 3000;
         const DESI_FIYAT = 9.17; 
+        const MAX_INITIAL_ITEMS = 2; // Başlangıçta sadece 2 ürün gösterilecek.
 
+        // TOPLAM 37 ADET ÜRÜN VERİSİ
         const urunVerileri = [
             { ad: "Hava Kompresörü (Büyük Sanayi Tipi)", desi: 320.0, fiyat: 2934.40 },
             { ad: "Çelik Kapı (Paket)", desi: 105.0, fiyat: 962.85 },
@@ -358,11 +374,24 @@
             { ad: "Valiz (Büyük Boy, Boş)", desi: 51.3, fiyat: 470.42 },
             { ad: "Tabak/Bardak Seti (Porselen, Kutu)", desi: 20.0, fiyat: 183.40 },
             { ad: "Tencere Seti (Büyük Kutu)", desi: 24.0, fiyat: 220.08 },
-            { ad: "Kahve Makinesi (Filtre)", desi: 8.75, fiyat: 80.24 }
+            { ad: "Kahve Makinesi (Filtre)", desi: 8.75, fiyat: 80.24 },
+            { ad: "55 İnç Televizyon (Kutulu)", desi: 48.0, fiyat: 440.16 },
+            { ad: "Mini Buzdolabı (Tek Kapılı)", desi: 80.0, fiyat: 733.60 },
+            { ad: "Çamaşır Makinesi (Kutulu)", desi: 120.0, fiyat: 1099.00 },
+            { ad: "Fırın/Ocak Seti", desi: 90.0, fiyat: 825.30 },
+            { ad: "Sandalye (Demonte, 4'lü Paket)", desi: 40.0, fiyat: 366.80 },
+            { ad: "Ofis Masası (Küçük, Demonte)", desi: 72.0, fiyat: 660.24 },
+            { ad: "Klima Dış Ünitesi (9000 BTU)", desi: 55.0, fiyat: 504.35 },
+            { ad: "Jeneratör (Orta Boy)", desi: 75.0, fiyat: 687.75 },
+            { ad: "Bebek Arabası (Katlanabilir)", desi: 28.0, fiyat: 256.76 },
+            { ad: "Motosiklet Kaskı (Kutulu)", desi: 12.0, fiyat: 110.04 },
+            { ad: "Bahçe Şemsiyesi (Büyük)", desi: 45.0, fiyat: 412.65 },
+            { ad: "Elektrikli Süpürge (Kutulu)", desi: 18.0, fiyat: 165.06 }
         ];
 
         const lwhInputs = document.querySelectorAll('#lwh-group input');
         const desiInput = document.getElementById('desi');
+        const urunAramaInput = document.getElementById('urunArama');
         const manuelSonucDiv = document.getElementById('manuelSonuc');
         const sepetSonucDiv = document.getElementById('sepetSonuc');
         const urunTablosuBody = document.querySelector('#urun-tablosu tbody');
@@ -440,19 +469,27 @@
             if (toplamFiyat > 0) {
                 toplamDesiSpan.textContent = toplamDesi.toFixed(1); 
                 toplamFiyatSpan.textContent = formatTL(toplamFiyat) + ' TL';
-                
-                // *** BURASI FİYAT GÖSTERME DÜZELTMESİDİR ***
                 sepetSonucDiv.style.display = 'block';
             } else {
-                // Sepet boşsa sonucu gizle
                 gizleSepetSonuc();
             }
         }
         
-        function urunleriListele() {
-            if (!urunTablosuBody) return; 
+        function urunleriListele(filtreMetni = '') {
+            urunTablosuBody.innerHTML = ''; // Tabloyu temizle
+            const normalizeFiltre = filtreMetni.toLowerCase().trim();
 
-            urunVerileri.forEach(urun => {
+            let filtrelenmisUrunler = urunVerileri.filter(urun => {
+                // Filtre metni boşsa veya ürün adı filtre metnini içeriyorsa true döner
+                return normalizeFiltre === '' || urun.ad.toLowerCase().includes(normalizeFiltre);
+            });
+
+            // Eğer filtre boşsa, sadece MAX_INITIAL_ITEMS kadar ürünü göster (Sınırlama burada uygulanır)
+            if (normalizeFiltre === '') {
+                filtrelenmisUrunler = filtrelenmisUrunler.slice(0, MAX_INITIAL_ITEMS);
+            }
+
+            filtrelenmisUrunler.forEach(urun => {
                 const satir = urunTablosuBody.insertRow();
                 satir.innerHTML = `
                     <td style="text-align: left;">${urun.ad}</td>
@@ -462,11 +499,16 @@
                 `;
             });
 
+            // Checkbox event listener'larını her listeleme sonrası yeniden ata
             const tumCheckboxlar = document.querySelectorAll('#urun-tablosu input[type="checkbox"]');
             tumCheckboxlar.forEach(checkbox => {
-                // Checkbox değiştiğinde sepeti hesapla
                 checkbox.addEventListener('change', sepetiHesapla);
             });
+        }
+
+        // Arama kutusu giriş olayını dinle
+        function urunleriFiltrele(event) {
+            urunleriListele(event.target.value);
         }
         
         document.getElementById('hesapBtnLWH').addEventListener('click', hesaplaLWH);
@@ -480,8 +522,12 @@
         desiInput.addEventListener('keydown', function(e){
             if (e.key === 'Enter') { hesaplaDesi(); }
         });
+        
+        // Arama kutusuna olay dinleyicisi ekle
+        urunAramaInput.addEventListener('input', urunleriFiltrele);
 
-        urunleriListele();
+
+        urunleriListele(); // Sayfa yüklendiğinde listeyi (ilk 2 ürünle) oluştur
         gizleManuelSonuc(); 
         gizleSepetSonuc();
 
