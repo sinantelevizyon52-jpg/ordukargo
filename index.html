@@ -1,1020 +1,686 @@
-/* Bu kod aklında kalsın, güncellenmiş çalışan kod istediğimde atarsın. */
-const urunler = [
-    { name: "LCD Televizyon", desi: 18.0, kategori: "Elektronik", oncelik: 1 },
-    { name: "Buzdolabı (Tek Kapı)", desi: 45.0, kategori: "Beyaz Eşya", oncelik: 1 },
-    { name: "Çamaşır Makinesi", desi: 60.0, kategori: "Beyaz Eşya", oncelik: 2 },
-    { name: "Fırın (Set Üstü)", desi: 22.0, kategori: "Beyaz Eşya", oncelik: 2 },
-    { name: "Oturma Grubu (3+1+1)", desi: 120.0, kategori: "Mobilya", oncelik: 3 },
-    { name: "Yemek Masası (6 Kişilik)", desi: 55.0, kategori: "Mobilya", oncelik: 3 },
-    { name: "Gardırop (Demonte)", desi: 80.0, kategori: "Mobilya", oncelik: 4 },
-    { name: "Ofis Koltuğu", desi: 15.0, kategori: "Mobilya", oncelik: 4 },
-    { name: "Spor Salonu Ekipmanları", desi: 90.0, kategori: "Spor", oncelik: 5 },
-    { name: "Bahçe Mobilyası Seti", desi: 70.0, kategori: "Bahçe", oncelik: 5 },
-    { name: "Bisiklet (Yetişkin)", desi: 12.0, kategori: "Spor", oncelik: 6 },
-    { name: "Çocuk Bisikleti", desi: 8.0, kategori: "Spor", oncelik: 6 },
-    { name: "Jant Seti (Otomobil)", desi: 40.0, kategori: "Taşıt Parça", oncelik: 7 },
-    { name: "Lastik (Otomobil)", desi: 25.0, kategori: "Taşıt Parça", oncelik: 7 },
-    { name: "Kombi Cihazı", desi: 30.0, kategori: "Tesisat", oncelik: 8 },
-    { name: "Klima İç Ünite", desi: 15.0, kategori: "Tesisat", oncelik: 8 },
-    { name: "Büyük Boy Kitaplık", desi: 50.0, kategori: "Mobilya", oncelik: 9 },
-    { name: "Sanayi Tipi Süpürge", desi: 35.0, kategori: "Temizlik", oncelik: 9 },
-    { name: "Yazıcı (Lazer, Büyük)", desi: 20.0, kategori: "Elektronik", oncelik: 10 },
-    { name: "Projeksiyon Cihazı", desi: 10.0, kategori: "Elektronik", oncelik: 10 },
-    { name: "KAPI (İç Mekan)", desi: 28.0, kategori: "Yapı Malzemesi", oncelik: 11 },
-    { name: "PENCERE (PVC Çerçeveli)", desi: 32.0, kategori: "Yapı Malzemesi", oncelik: 11 },
-    { name: "Mermer Tezgah Parçası", desi: 40.0, kategori: "Yapı Malzemesi", oncelik: 12 },
-    { name: "Seramik Karo Paleti (Küçük)", desi: 60.0, kategori: "Yapı Malzemesi", oncelik: 12 },
-    { name: "Isıtıcı (Endüstriyel Fan)", desi: 45.0, kategori: "Tesisat", oncelik: 13 },
-    { name: "Su Pompası (Büyük Bahçe)", desi: 25.0, kategori: "Tesisat", oncelik: 13 },
-    { name: "Halı (Büyük Boy)", desi: 15.0, kategori: "Ev Tekstili", oncelik: 14 },
-    { name: "Perde Mekanizması (Toptan Koli)", desi: 10.0, kategori: "Ev Tekstili", oncelik: 14 },
-    { name: "Oyuncak Araba (Uzaktan Kumandalı, Büyük Kutu)", desi: 12.0, kategori: "Oyuncak", oncelik: 15 },
-    { name: "Bebek Arabası (Çift Yönlü)", desi: 14.0, kategori: "Bebek Ürünleri", oncelik: 15 },
-    { name: "Kamera Sistemi (Güvenlik, Koli)", desi: 16.0, kategori: "Elektronik", oncelik: 16 },
-    { name: "Akü (Otomobil)", desi: 20.0, kategori: "Taşıt Parça", oncelik: 16 },
-    { name: "50cc Scooter (Moped, Kutulu)", desi: 38.0, kategori: "Motorlu Taşıt", oncelik: 17 },
-    { name: "100cc Mini Motosiklet (Crated, Demonre)", desi: 52.0, kategori: "Motorlu Taşıt", oncelik: 17 },
-    { name: "Otomobil Tipi Kış Lastiği (1 Adet)", desi: 28.0, kategori: "Lastik", oncelik: 18 },
-    { name: "Jant Kapağı (Toptan Koli)", desi: 10.0, kategori: "Jant", oncelik: 18 },
-    { name: "Buzdolabı (Çift Kapı)", desi: 85.0, kategori: "Beyaz Eşya", oncelik: 19 },
-    { name: "Bulaşık Makinesi", desi: 55.0, kategori: "Beyaz Eşya", oncelik: 19 },
-    { name: "Kurutma Makinesi", desi: 65.0, kategori: "Beyaz Eşya", oncelik: 20 },
-    { name: "Şofben/Termosifon", desi: 20.0, kategori: "Tesisat", oncelik: 20 },
-    { name: "Klima Dış Ünite", desi: 45.0, kategori: "Tesisat", oncelik: 21 },
-    { name: "Kombine Fırın (Ankastre)", desi: 30.0, kategori: "Beyaz Eşya", oncelik: 21 },
-    { name: "Yatak Baza Seti (Çift Kişilik)", desi: 70.0, kategori: "Mobilya", oncelik: 22 },
-    { name: "Çalışma Masası (Büyük)", desi: 40.0, kategori: "Mobilya", oncelik: 22 },
-    { name: "TV Ünitesi", desi: 50.0, kategori: "Mobilya", oncelik: 23 },
-    { name: "Kütüphane (Modüler)", desi: 60.0, kategori: "Mobilya", oncelik: 23 },
-    { name: "Yürüyüş Bandı", desi: 75.0, kategori: "Spor", oncelik: 24 },
-    { name: "Elips Bisiklet", desi: 55.0, kategori: "Spor", oncelik: 24 },
-    { name: "Kayak/Kano (Tek Kişilik)", desi: 35.0, kategori: "Spor", oncelik: 25 },
-    { name: "Kamp Çadırı (6 Kişilik)", desi: 18.0, kategori: "Kamp", oncelik: 25 },
-    { name: "Kamyon Lastiği (Büyük Boy)", desi: 65.0, kategori: "Lastik", oncelik: 26 },
-    { name: "Jeep Lastiği", desi: 55.0, kategori: "Lastik", oncelik: 26 },
-    { name: "Oto Motor Takozu (4 Adet)", desi: 11.0, kategori: "Taşıt Parça", oncelik: 27 },
-    { name: "Oto Klima Kompresörü", desi: 18.5, kategori: "Taşıt Parça", oncelik: 27 },
-    { name: "MOTOR. (Yedek Motor/Büyük)", desi: 88.0, kategori: "Yedek Parça", oncelik: 28 },
-    { name: "50cc Scooter Yedek Gövde Paneli Seti", desi: 14.5, kategori: "Yedek Parça", oncelik: 28 },
-    { name: "BEYAZ LASTİK (Oto Lastiği)", desi: 28.0, kategori: "Lastik", oncelik: 29 },
-    { name: "JANTLI BİNK.LAST. (Oto Lastiği)", desi: 28.0, kategori: "Lastik", oncelik: 29 },
-    { name: "BİNEK LASTİK", desi: 28.0, kategori: "Lastik", oncelik: 30 },
-    { name: "SEDAN OTOMOBİL (Kutulu/Taşıma Kasası)", desi: 550.0, kategori: "Gerçek Otomobil", oncelik: 31 },
-    { name: "HATCHBACK OTOMOBİL (Kutulu/Taşıma Kasası)", desi: 480.0, kategori: "Gerçek Otomobil", oncelik: 31 },
-    { name: "GERÇEK MOTORSİKLET (Racing/Sport)", desi: 180.0, kategori: "Gerçek Motor", oncelik: 32 },
-    { name: "GERÇEK MOTORSİKLET (Enduro/Adventure)", desi: 220.0, kategori: "Gerçek Motor", oncelik: 32 },
-    { name: "GERÇEK MOTORSİKLET (Chopper/Cruiser)", desi: 250.0, kategori: "Gerçek Motor", oncelik: 33 },
-    { name: "50cc MOTOR SİKLET (Kutulu)", desi: 75.0, kategori: "Motorlu Taşıt", oncelik: 33 },
-    { name: "100cc MOTOR SİKLET (Kutulu)", desi: 110.0, kategori: "Motorlu Taşıt", oncelik: 34 },
-    { name: "KOLTUK TAKIMI (3+2+1, Set Kutulu)", desi: 250.0, kategori: "Oturma Grubu", oncelik: 35 },
-    { name: "YEMEK ODASI TAKIMI (Masa+6 Sandalye, Demonre)", desi: 180.0, kategori: "Mobilya Seti", oncelik: 35 },
-    { name: "YATAK ODASI TAKIMI (Gardırop Hariç, Demonre)", desi: 160.0, kategori: "Mobilya Seti", oncelik: 36 },
-    { name: "KÖŞE KOLTUK TAKIMI (L Tipi, 2 Kutu)", desi: 190.0, kategori: "Oturma Grubu", oncelik: 36 },
-    { name: "GARDROP (6 Kapılı, Demonre)", desi: 120.0, kategori: "Mobilya", oncelik: 37 },
-    { name: "TV ÜNİTESİ (Büyük Boy, Demonre)", desi: 85.0, kategori: "Mobilya", oncelik: 37 },
-    { name: "TEKLİ BERJER (Hacimli Model)", desi: 48.0, kategori: "Mobilya", oncelik: 38 },
-    { name: "BAZA VE BAŞLIK SETİ (Çift Kişilik)", desi: 70.0, kategori: "Mobilya/Yatak", oncelik: 38 },
-    { name: "ÇAMAŞIR MAKİNESİ", desi: 60.0, kategori: "Beyaz Eşya", oncelik: 39 },
-    { name: "BULAŞIK MAKİNESİ", desi: 55.0, kategori: "Beyaz Eşya", oncelik: 39 },
-    { name: "BÜYÜK BOY BUZDOLABI (Çift Kapılı)", desi: 110.0, kategori: "Beyaz Eşya", oncelik: 40 },
-    { name: "KLİMA DIŞ ÜNİTESİ (Standart)", desi: 45.0, kategori: "Cihaz", oncelik: 40 },
-    { name: "ŞOFBEN/TERMOSİFON (Duvar Tipi, Büyük)", desi: 20.0, kategori: "Cihaz/Tesisat", oncelik: 41 },
-    { name: "KOMBİ KAZANI (Bireysel Tip)", desi: 55.0, kategori: "Isıtma Cihazı", oncelik: 41 },
-    { name: "MODÜLER OFİS BÖLME SİSTEMİ (1 Adet Panel)", desi: 55.0, kategori: "Yapı/Mobilya", oncelik: 42 },
-    { name: "MAKAM MÜDÜR TAKIMI (Masa+Koltuk+Sehpa)", desi: 185.0, kategori: "Mobilya Seti", oncelik: 42 },
-    { name: "TOPLANTI MASASI (8 Kişilik, Demonre)", desi: 150.0, kategori: "Mobilya", oncelik: 43 },
-    { name: "KÜTÜPHANE RAF ÜNİTESİ (Büyük Boy, Demonre)", desi: 95.0, kategori: "Mobilya", oncelik: 43 },
-    { name: "ÇELİK PARA KASASI (Orta Boy)", desi: 110.0, kategori: "Güvenlik/Ağır", oncelik: 44 },
-    { name: "KLİMA SANTRALİ (Büyük Ticari Tip)", desi: 350.0, kategori: "Isıtma/Soğutma", oncelik: 44 },
-    { name: "ISI POMPASI DIŞ ÜNİTESİ", desi: 120.0, kategori: "Isıtma/Soğutma", oncelik: 45 },
-    { name: "JENERATÖR (5 KVA, Tekerlekli)", desi: 180.0, kategori: "Enerji/Cihaz", oncelik: 45 },
-    { name: "KOMPRESÖR (200 Litre Hava Tankı)", desi: 160.0, kategori: "Endüstriyel Cihaz", oncelik: 46 },
-    { name: "HİDROLİK İŞ MAKİNESİ SİLİNDİRİ", desi: 78.0, kategori: "Sanayi Parça", oncelik: 46 },
-    { name: "BÜYÜK BOY FORKLİFT LASTİĞİ (1 Adet)", desi: 92.0, kategori: "İş Makinesi Parça", oncelik: 47 },
-    { name: "CNC MAKİNE PARÇASI (Göde)", desi: 220.0, kategori: "Sanayi Parça", oncelik: 47 },
-    { name: "PALET ÜSTÜ AĞIR KİMYASAL KOVASI (100 L)", desi: 110.0, kategori: "Kimyasal/Tehlikeli", oncelik: 48 },
-    { name: "FABRİKA TİPİ VİNÇ RAYI (3 Metre)", desi: 140.0, kategori: "Yapı/Ağır Metal", oncelik: 48 },
-    { name: "GIDA SOĞUK HAVA DEPOSU PANELİ (2m x 3m)", desi: 85.0, kategori: "Soğutma/Yapı", oncelik: 49 },
-    { name: "ENDÜSTRİYEL FIRIN (Ticari)", desi: 280.0, kategori: "Mutfak Ekipman", oncelik: 49 },
-    { name: "ENDÜSTRİYEL BULAŞIK MAKİNESİ (Kapüşonlu Tip)", desi: 155.0, kategori: "Mutfak Ekipman", oncelik: 50 },
-    { name: "BÜYÜK TİCARİ BUZDOLABI (2 Kapılı, Paslanmaz)", desi: 190.0, kategori: "Mutfak Ekipman", oncelik: 50 },
-    { name: "KAFETERYA TİPİ SALAT BAR ÜNİTESİ", desi: 135.0, kategori: "Mutfak Ekipman", oncelik: 51 },
-    { name: "TİCARİ OCAK BAŞI ÜNİTESİ", desi: 165.0, kategori: "Mutfak Ekipman", oncelik: 51 },
-    { name: "HASTANE YATAĞI (Ayarlanabilir, Kutusunda)", desi: 90.0, kategori: "Medikal/Mobilya", oncelik: 52 },
-    { name: "AMELİYATHANE MASASI (Demonte Parça)", desi: 125.0, kategori: "Medikal/Ağır", oncelik: 52 },
-    { name: "LABORATUVAR SANTRİFÜJ CİHAZI (Zemin Tipi)", desi: 75.0, kategori: "Medikal/Cihaz", oncelik: 53 },
-    { name: "TIBBİ ATIK KONTEYNERİ (Büyük)", desi: 45.0, kategori: "Medikal/Hacimli", oncelik: 53 },
-    { name: "RÖNTGEN CİHAZI (Taşınabilir Model, Kutulu)", desi: 55.0, kategori: "Medikal/Cihaz", oncelik: 54 },
-    { name: "MASİF AHŞAP KONSOL (Büyük Boy)", desi: 75.0, kategori: "Mobilya", oncelik: 54 },
-    { name: "AYAKKABI DOLABI (Çok Kapılı)", desi: 52.0, kategori: "Mobilya", oncelik: 55 },
-    { name: "DEKORATİF BÜFE/VİTRİN (Camlı)", desi: 68.0, kategori: "Mobilya", oncelik: 55 },
-    { name: "GİRİŞ PORTMANTO (Büyük, Askılıklı)", desi: 72.0, kategori: "Mobilya", oncelik: 56 },
-    { name: "ÇALIŞMA MASASI (L Tipi, Demonre)", desi: 65.0, kategori: "Mobilya", oncelik: 56 },
-    { name: "BAHÇE SALINCAK SETİ (3 Kişilik)", desi: 85.0, kategori: "Bahçe Mobilya", oncelik: 57 },
-    { name: "AHŞAP DECK PANELİ (1m x 2m, 10 Adet)", desi: 115.0, kategori: "Yapı/Bahçe", oncelik: 57 },
-    { name: "BÜYÜK BOY BARBEKÜ IZGARASI (Gazlı)", desi: 60.0, kategori: "Bahçe Ekipman", oncelik: 58 },
-    { name: "DÖKÜM BAHÇE MASA SETİ (4 Kişilik)", desi: 145.0, kategori: "Bahçe Mobilya/Ağır", oncelik: 58 },
-    { name: "HAVUZ POMPA SİSTEMİ (Komple)", desi: 58.0, kategori: "Yapı/Tesisat", oncelik: 59 },
-    { name: "SU ARITMA CİHAZI (Merkezi Sistem)", desi: 78.0, kategori: "Tesisat", oncelik: 59 },
-    { name: "GÜNEŞ ENERJİSİ SU ISITICISI (Kollektör Paneli)", desi: 82.0, kategori: "Enerji/Yapı", oncelik: 60 },
-    { name: "YERDEN ISITMA BORU RULOSU (500 Metre)", desi: 55.0, kategori: "Tesisat", oncelik: 60 },
-    { name: "BETON KESME MAKİNESİ (Büyük El Tipi)", desi: 35.0, kategori: "İnşaat Aleti", oncelik: 61 },
-    { name: "İNŞAAT KALIP MALZEMESİ (5 Adet Panel)", desi: 130.0, kategori: "İnşaat/Yapı", oncelik: 61 },
-    { name: "BÜYÜK BOY VİNÇ KANCASI", desi: 68.0, kategori: "İnşaat/Ağır", oncelik: 62 },
-    { name: "İSKELE KURULUM DİREĞİ (10 Adet)", desi: 90.0, kategori: "İnşaat/Yapı", oncelik: 62 },
-    { name: "DEMİR BAĞLAMA TELİ BALYASI", desi: 45.0, kategori: "İnşaat/Metal", oncelik: 63 },
-    { name: "MİMARİ MODEL (Büyük Hacimli, Koruma Kutulu)", desi: 30.0, kategori: "Hacimli/Hassas", oncelik: 63 },
-    { name: "DİJİTAL BASKI MAKİNESİ (Büyük Format)", desi: 210.0, kategori: "Ticari Cihaz", oncelik: 64 },
-    { name: "KUMAŞ KESME MAKİNESİ (Endüstriyel)", desi: 140.0, kategori: "Tekstil Makine", oncelik: 64 },
-    { name: "PLASTİK ENJEKSİYON KALIBI (Orta Boy)", desi: 110.0, kategori: "Sanayi Alet", oncelik: 65 },
-    { name: "MATBAA MAKİNESİ YEDEK PARÇASI (Silindir)", desi: 95.0, kategori: "Sanayi Parça", oncelik: 65 },
-    { name: "OTOMATİK KAPI SİSTEMİ (Motorlu)", desi: 42.0, kategori: "Yapı/Cihaz", oncelik: 66 },
-    { name: "HAVALANDIRMA FAN ÜNİTESİ (Büyük Sanayi)", desi: 105.0, kategori: "Yapı/Cihaz", oncelik: 66 },
-    { name: "YANGIN ALARM SANTRALİ (Büyük Ticari)", desi: 38.0, kategori: "Güvenlik/Cihaz", oncelik: 67 },
-    { name: "GÜVENLİK KAMERA DİREĞİ (5 Metre)", desi: 70.0, kategori: "Yapı/Hacimli", oncelik: 67 },
-    { name: "AĞIR HİZMET TİPİ DEPO RAFI (Demonre, 2m)", desi: 80.0, kategori: "Depo Ekipman", oncelik: 68 },
-    { name: "MALZEME TAŞIMA ARABASI (Tekerlekli Platform)", desi: 62.0, kategori: "Depo Ekipman", oncelik: 68 },
-    { name: "PALETLİ STREÇ SARMA MAKİNESİ (Yarı Otomatik)", desi: 130.0, kategori: "Ambalaj Makine", oncelik: 69 },
-    { name: "AHŞAP AMBALAJ KASASI (Büyük, Boş)", desi: 48.0, kategori: "Ambalaj", oncelik: 69 },
-    { name: "PLASTİK PALET (Ağır Hizmet Tipi, 10 Adet)", desi: 105.0, kategori: "Ambalaj", oncelik: 70 },
-    { name: "KONVEYÖR BANT MODÜLÜ (2 Metre)", desi: 95.0, kategori: "Endüstriyel Sistem", oncelik: 70 },
-    { name: "OTOMATİK KAYAR KAPI MEKANİZMASI", desi: 50.0, kategori: "Yapı/Cihaz", oncelik: 71 },
-    { name: "ASANSÖR KABİN PANELİ (Tek Adet)", desi: 115.0, kategori: "Yapı/Ağır", oncelik: 71 },
-    { name: "PARKE CİLA MAKİNESİ (Endüstriyel Tip)", desi: 65.0, kategori: "Temizlik Cihazı", oncelik: 72 },
-    { name: "BÜYÜK ENDÜSTRİYEL SÜPÜRGE MAKİNESİ", desi: 120.0, kategori: "Temizlik Cihazı", oncelik: 72 },
-    { name: "ÇELİK TEL HALAT RULOSU (100 Metre)", desi: 45.0, kategori: "Metal/Ağır", oncelik: 73 },
-    { name: "ALÜMİNYUM MERDİVEN (8 Basamaklı)", desi: 32.0, kategori: "Yapı/Hacimli", oncelik: 73 },
-    { name: "TİCARİ KAHVE MAKİNESİ (2 Gruplu)", desi: 40.0, kategori: "Mutfak Cihazı", oncelik: 74 },
-    { name: "SU SEBİLİ (Otel Tipi, Büyük)", desi: 25.0, kategori: "Mutfak Cihazı", oncelik: 74 },
-    { name: "MİKRODALGA FIRIN (Ticari, Hızlı Pişirme)", desi: 38.0, kategori: "Mutfak Cihazı", oncelik: 75 },
-    { name: "OFİS KESON DOLABI (Çekmeceli)", desi: 35.0, kategori: "Mobilya", oncelik: 75 },
-    { name: "ÇELİK SOYUNMA DOLABI (3 Gözlü)", desi: 49.0, kategori: "Mobilya", oncelik: 76 },
-    { name: "KONFERANS SANDALYESİ (10 Adet Paket)", desi: 40.0, kategori: "Mobilya", oncelik: 76 },
-    { name: "PLASTİK ÇÖP KONTEYNERİ (Tekerlekli, 240 Litre)", desi: 55.0, kategori: "Hacimli", oncelik: 77 },
-    { name: "BÜYÜK BOY TUVALET KABİNİ (Demonte)", desi: 90.0, kategori: "Yapı/Hacimli", oncelik: 77 },
-    { name: "BETON KARIŞTIRICI (Küçük Tip, Tekerlekli)", desi: 70.0, kategori: "İnşaat Aleti", oncelik: 78 },
-    { name: "DEMİR İNŞAAT KALIP DESTEĞİ (10 Adet)", desi: 85.0, kategori: "İnşaat/Metal", oncelik: 78 },
-    { name: "TRAFİK SİNYALİZASYON DİREĞİ (4 Metre)", desi: 62.0, kategori: "Yapı/Hacimli", oncelik: 79 },
-    { name: "REKLAM PANOSU LED EKRAN PANELİ", desi: 58.0, kategori: "Elektronik/Yapı", oncelik: 79 },
-    { name: "YOL ÇİZGİ MAKİNESİ (Manuel İtmeli)", desi: 50.0, kategori: "İnşaat/Alet", oncelik: 80 },
-    { name: "TEKSTİL KESİM MASASI (Demonte Parça)", desi: 110.0, kategori: "Sanayi Mobilya", oncelik: 80 },
-    { name: "SERAMİK FAYANS PALETİ (50m²)", desi: 180.0, kategori: "Yapı/Ağır", oncelik: 81 },
-    { name: "ALÜMİNYUM KOMPOZİT PANEL (10 Adet)", desi: 75.0, kategori: "Yapı Malzemesi", oncelik: 81 },
-    { name: "BÜYÜK BOY VANA VE FİTİNG SETİ (Kutulu)", desi: 40.0, kategori: "Tesisat/Ağır", oncelik: 82 },
-    { name: "ENDÜSTRİYEL KAZAN POMPASI", desi: 68.0, kategori: "Tesisat/Ağır", oncelik: 82 },
-    { name: "SU TANKI (Fiberglas, 500 Litre)", desi: 72.0, kategori: "Tesisat/Hacimli", oncelik: 83 },
-    { name: "ISI YALITIM LEVHASI BALYASI (Kalın Tip)", desi: 45.0, kategori: "Yapı Malzemesi", oncelik: 83 },
-    { name: "ÇATI KİREMİT PALETİ (Büyük)", desi: 150.0, kategori: "Yapı/Ağır", oncelik: 84 },
-    { name: "YAPIŞTIRICI HARÇ TORBASI PALETİ (40 Adet)", desi: 120.0, kategori: "Yapı/Ağır", oncelik: 84 },
-    { name: "DIŞ CEPHE BOYASI KOVASI PALETİ (20 Kova)", desi: 85.0, kategori: "Kimyasal/Ağır", oncelik: 85 },
-    { name: "OTOMATİK SULAMA SİSTEMİ SANTRALİ", desi: 35.0, kategori: "Bahçe/Cihaz", oncelik: 85 },
-    { name: "AĞAÇ BUDAMA MAKİNESİ (Profesyonel)", desi: 42.0, kategori: "Bahçe/Alet", oncelik: 86 },
-    { name: "ÇİM BİÇME MAKİNESİ (Benzinli, Büyük)", desi: 55.0, kategori: "Bahçe/Alet", oncelik: 86 },
-    { name: "BAHÇE TRAKTÖRÜ (Küçük Model, Kutulu)", desi: 150.0, kategori: "Bahçe/Taşıt", oncelik: 87 },
-    { name: "BÜYÜK HAVA KOMPRESÖRÜ (Dikey Tanklı)", desi: 220.0, kategori: "Endüstriyel Cihaz", oncelik: 87 },
-    { name: "CNC ROUTER (Küçük Masaüstü Model)", desi: 90.0, kategori: "Sanayi Makine", oncelik: 88 },
-    { name: "LAZER KESİM CİHAZI (Mini Tip)", desi: 75.0, kategori: "Sanayi Makine", oncelik: 88 },
-    { name: "3D YAZICI (Endüstriyel Boyut)", desi: 110.0, kategori: "Sanayi Makine", oncelik: 89 },
-    { name: "BÜYÜK BASKI KAĞIDI RULOSU (5 Adet)", desi: 48.0, kategori: "Ofis/Hacimli", oncelik: 89 },
-    { name: "SERVER SUNUCU KABİNİ (Boş)", desi: 60.0, kategori: "Elektronik/Hacimli", oncelik: 90 },
-    { name: "UPS GÜÇ KAYNAĞI (Büyük Sanayi)", desi: 130.0, kategori: "Elektronik/Ağır", oncelik: 90 },
-    { name: "TELEFON SANTRALİ (Büyük İşletme)", desi: 50.0, kategori: "Elektronik/Cihaz", oncelik: 91 },
-    { name: "SES SİSTEMİ HOPARLÖRÜ (Stadyum Tipi, Tek)", desi: 105.0, kategori: "Elektronik/Hacimli", oncelik: 91 },
-    { name: "AYDINLATMA DİREĞİ (6 Metre)", desi: 75.0, kategori: "Yapı/Hacimli", oncelik: 92 },
-    { name: "GÜVENLİK KAMERASI SİSTEMİ (NVR Kayıt Cihazı)", desi: 28.0, kategori: "Elektronik/Cihaz", oncelik: 92 },
-    { name: "OFİS KİTAPLIK (Raflı, Demonre)", desi: 45.0, kategori: "Mobilya", oncelik: 93 },
-    { name: "ÇALIŞMA KOLTUĞU (Ergonomik, Kutusunda)", desi: 38.0, kategori: "Mobilya", oncelik: 93 },
-    { name: "BEKLEME KOLTUĞU (2'li, Demonre)", desi: 50.0, kategori: "Mobilya", oncelik: 94 },
-    { name: "CAFE MASA SANDALYE SETİ (4 Kişilik)", desi: 65.0, kategori: "Mobilya", oncelik: 94 },
-    { name: "PLASTİK SU DEPOSU (1 Tonluk, Boş)", desi: 110.0, kategori: "Hacimli", oncelik: 95 },
-    { name: "ENDÜSTRİYEL YAĞ VARİLİ (200 Litre, Dolu)", desi: 220.0, kategori: "Kimyasal/Ağır", oncelik: 95 },
-    { name: "TEHLİKELİ ATIK SAKLAMA KABI (Büyük)", desi: 95.0, kategori: "Kimyasal/Hacimli", oncelik: 96 },
-    { name: "AĞIR HİZMET TİPİ TAŞIMA KONTEYNERİ (Boş)", desi: 160.0, kategori: "Ambalaj/Hacimli", oncelik: 96 },
-    { name: "PALET ÜSTÜ KARTON KUTU STOĞU (100 Adet)", desi: 42.0, kategori: "Ambalaj/Hacimli", oncelik: 97 },
-    { name: "BÜYÜK BOY ÖZEL TAŞIMA SANDIĞI (Ahşap)", desi: 78.0, kategori: "Ambalaj", oncelik: 97 },
-    { name: "KOLİ İÇİ KORUYUCU KÖPÜK BALYASI", desi: 30.0, kategori: "Ambalaj/Hacimli", oncelik: 98 },
-    { name: "OTOMATİK KAPATMA MAKİNESİ (Ambalaj)", desi: 120.0, kategori: "Ambalaj Makine", oncelik: 98 },
-    { name: "TARTIM KÖPRÜSÜ SENSÖRÜ (Büyük Parça)", desi: 65.0, kategori: "Endüstriyel Parça", oncelik: 99 },
-    { name: "FABRİKA OTOMASYON PANELİ (Büyük)", desi: 85.0, kategori: "Endüstriyel Sistem", oncelik: 99 },
-    { name: "ENDÜSTRİYEL ISITICI FAN (Geniş Alan)", desi: 55.0, kategori: "Isıtma/Soğutma", oncelik: 100 },
-    { name: "HAVALANDIRMA FİLTRE ÜNİTESİ (Büyük)", desi: 48.0, kategori: "Isıtma/Soğutma", oncelik: 100 },
-    { name: "YANGIN SÖNDÜRME SİSTEMİ MERKEZİ ÜNİTE", desi: 60.0, kategori: "Güvenlik/Cihaz", oncelik: 101 },
-    { name: "İLK YARDIM DOLABI (Büyük Duvar Tipi)", desi: 32.0, kategori: "Güvenlik", oncelik: 101 },
-    { name: "İŞ GÜVENLİK BARİYERİ (Modüler, 5 Adet)", desi: 40.0, kategori: "Güvenlik/Hacimli", oncelik: 102 },
-    { name: "METAL İŞÇİLİK TEZGAHI (Sabit Tip)", desi: 110.0, kategori: "Sanayi Mobilya", oncelik: 102 },
-    { name: "HAVALI EL ALETİ KOMPLE SET (Büyük Çanta)", desi: 45.0, kategori: "Sanayi Alet", oncelik: 103 },
-    { name: "KAYNAK MASASI (Döner Tablalı)", desi: 70.0, kategori: "Sanayi Mobilya", oncelik: 103 },
-    { name: "CNC YEDEK PARÇA STOK DOLABI", desi: 52.0, kategori: "Sanayi Mobilya", oncelik: 104 },
-    { name: "İŞ ÖNLÜĞÜ VE İŞ AYAKKABISI KUTUSU (10 Set)", desi: 38.0, kategori: "Tekstil/Güvenlik", oncelik: 104 },
-    { name: "BÜYÜK ENDÜSTRİYEL BASKI KALIBI", desi: 90.0, kategori: "Sanayi Alet", oncelik: 105 },
-    { name: "HAVALANDIRMA KANALI (Spiral Boru, 6 Metre)", desi: 55.0, kategori: "Yapı/Hacimli", oncelik: 105 },
-    { name: "ÇATI İZOLASYON MALZEMESİ (Balya)", desi: 40.0, kategori: "Yapı Malzemesi", oncelik: 106 },
-    { name: "DUVAR KAĞIDI RULOSU (Ticari Boyut, 10 Adet)", desi: 30.0, kategori: "Yapı Malzemesi", oncelik: 106 },
-    { name: "BANYO DOLABI (Çift Lavabolu, Demonre)", desi: 75.0, kategori: "Mobilya", oncelik: 107 },
-    { name: "DUŞ TEKNESİ (Akrilik, Büyük Boy)", desi: 45.0, kategori: "Yapı/Hacimli", oncelik: 107 },
-    { name: "JAKUZİ MOTOR VE POMPA SİSTEMİ", desi: 60.0, kategori: "Tesisat/Cihaz", oncelik: 108 },
-    { name: "KLOZET TAKIMI (Rezervuar Dahil, Kutusunda)", desi: 35.0, kategori: "Yapı/Hacimli", oncelik: 108 },
-    { name: "MUTFAK TEZGAHI (Granit, 2 Metre)", desi: 95.0, kategori: "Yapı/Ağır", oncelik: 109 },
-    { name: "MUTFAK ASPİRATÖRÜ (Ada Tipi, Büyük)", desi: 48.0, kategori: "Mutfak Cihazı", oncelik: 109 },
-    { name: "OCAK (Ankastre, 5 Gözlü)", desi: 22.0, kategori: "Mutfak Cihazı", oncelik: 110 },
-    { name: "FIRIN (Mini Boy, Ticari)", desi: 30.0, kategori: "Mutfak Cihazı", oncelik: 110 },
-    { name: "TİCARİ KAHVE ÖĞÜTÜCÜ", desi: 25.0, kategori: "Mutfak Cihazı", oncelik: 111 },
-    { name: "BÜYÜK BOY DİKEY DERİN DONDURUCU", desi: 90.0, kategori: "Beyaz Eşya", oncelik: 111 },
-    { name: "ÇAMAŞIR KURUTMA MAKİNESİ", desi: 65.0, kategori: "Beyaz Eşya", oncelik: 112 },
-    { name: "BULAŞIK MAKİNESİ (Sanayi Tipi, Bardak)", desi: 120.0, kategori: "Mutfak Ekipman", oncelik: 112 },
-    { name: "ÇAY KAZANI (Büyük Kapasiteli)", desi: 55.0, kategori: "Mutfak Ekipman", oncelik: 113 },
-    { name: "TOST MAKİNESİ (Sanayi Tipi, Çift Plakalı)", desi: 40.0, kategori: "Mutfak Ekipman", oncelik: 113 },
-    { name: "TİCARİ MİKSER (Büyük Hazneli)", desi: 60.0, kategori: "Mutfak Ekipman", oncelik: 114 },
-    { name: "BÜYÜK BOY AKVARYUM (Boş, Cam)", desi: 85.0, kategori: "Hacimli/Hassas", oncelik: 114 },
-    { name: "GİYİNME ODASI DOLABI (Modüler, 3 Kutu)", desi: 110.0, kategori: "Mobilya", oncelik: 115 },
-    { name: "GENÇ ODASI TAKIMI (Yatak+Dolap+Çalışma Masası)", desi: 150.0, kategori: "Mobilya Seti", oncelik: 115 },
-    { name: "BEBEK KARYOLASI (Büyük Model, Demonre)", desi: 40.0, kategori: "Mobilya", oncelik: 116 },
-    { name: "TV KOLTUĞU/SİNEMA KOLTUĞU (Tekli)", desi: 55.0, kategori: "Mobilya", oncelik: 116 },
-    { name: "PUF KOLTUK (Büyük, 2 Adet)", desi: 30.0, kategori: "Mobilya", oncelik: 117 },
-    { name: "SEHPA SETİ (3'lü, Büyük)", desi: 25.0, kategori: "Mobilya", oncelik: 117 },
-    { name: "BAHÇE ŞEMSİYESİ (Büyük Çap, Ayaklı)", desi: 70.0, kategori: "Bahçe Ekipman", oncelik: 118 },
-    { name: "KATLANIR KAMÇI YATAK (2 Kişilik)", desi: 35.0, kategori: "Kamp Ekipman", oncelik: 118 },
-    { name: "KAMÇI ÇADIRI (8 Kişilik, Kutusunda)", desi: 45.0, kategori: "Kamp Ekipman", oncelik: 119 },
-    { name: "KANO/KAYAK (Tek Kişilik, Sert Gövde)", desi: 55.0, kategori: "Spor Ekipman", oncelik: 119 },
-    { name: "KOŞU BANDI (Motorlu, Büyük Model)", desi: 85.0, kategori: "Spor Ekipman", oncelik: 120 },
-    { name: "AĞIRLIK SEHPASI (Ayarlanabilir)", desi: 50.0, kategori: "Spor Ekipman", oncelik: 120 },
-    { name: "BİSİKLET TAMİR STANDI (Profesyonel)", desi: 20.0, kategori: "Spor Ekipman", oncelik: 121 },
-    { name: "ATV LASTİĞİ (4 Adet, Koli)", desi: 65.0, kategori: "Taşıt Parça", oncelik: 121 },
-    { name: "DENİZ MOTORU (Küçük Dıştan Takma)", desi: 55.0, kategori: "Taşıt Parça", oncelik: 122 },
-    { name: "OTOMOBİL ÇEKİ DEMİRİ (Komple Kit)", desi: 40.0, kategori: "Taşıt Parça", oncelik: 122 },
-    { name: "OTOMOBİL ŞASİ PARÇASI (Ön Panel)", desi: 75.0, kategori: "Taşıt Parça", oncelik: 123 },
-    { name: "OTOMOBİL GÖVDE PANELİ (Kaput/Bagaj Kapağı)", desi: 60.0, kategori: "Taşıt Parça", oncelik: 123 },
-    { name: "MOTORLU BİSİKLET KASASI (Kutulu)", desi: 45.0, kategori: "Taşıt Parça", oncelik: 124 },
-    { name: "TARIM MAKİNESİ YEDEK TEKERLEK", desi: 90.0, kategori: "Tarım Parça", oncelik: 124 },
-    { name: "TARIM EKİPMANLARI KAZANCI (Büyük)", desi: 110.0, kategori: "Tarım Ekipman", oncelik: 125 },
-    { name: "ZİRAAT İLAÇLAMA POMPASI (Sırt Tipi, 10 Adet)", desi: 40.0, kategori: "Tarım Ekipman", oncelik: 125 },
-    { name: "TOHUM EKME MAKİNESİ (Küçük Manuel)", desi: 60.0, kategori: "Tarım Ekipman", oncelik: 126 },
-    { name: "MİNERAL GÜBRE ÇUVALI PALETİ (20 Adet)", desi: 150.0, kategori: "Tarım/Ağır", oncelik: 126 },
-    { name: "BÜYÜK TİP SU POMPASI (Dizel Motorlu)", desi: 140.0, kategori: "Endüstriyel Cihaz", oncelik: 127 },
-    { name: "ELEKTRİKLİ FORKLİFT AKÜSÜ (Ağır)", desi: 220.0, kategori: "Endüstriyel Parça", oncelik: 127 },
-    { name: "SANAYİ TİPİ VAKUM MAKİNESİ", desi: 95.0, kategori: "Endüstriyel Cihaz", oncelik: 128 },
-    { name: "TARTI SİSTEMİ KALİBRASYON AĞIRLIĞI (100 Kg)", desi: 110.0, kategori: "Endüstriyel Alet", oncelik: 128 },
-    { name: "FABRİKA TİPİ KAYAN KAPI MOTORU", desi: 50.0, kategori: "Endüstriyel Parça", oncelik: 129 },
-    { name: "ENDÜSTRİYEL KANALİZASYON BORUSU (3 Metre)", desi: 75.0, kategori: "Tesisat/Hacimli", oncelik: 129 },
-    { name: "PETROL BORU HATTI VANA MEKANİZMASI", desi: 120.0, kategori: "Tesisat/Ağır", oncelik: 130 },
-    { name: "DOĞAL GAZ DAĞITIM REGÜLATÖRÜ (Büyük Tip)", desi: 60.0, kategori: "Tesisat/Ağır", oncelik: 130 },
-    { name: "SICAK SU KAZANI (Büyük Kapasiteli)", desi: 190.0, kategori: "Isıtma/Ağır", oncelik: 131 },
-    { name: "YERDEN ISITMA KOLEKTÖR DOLABI (Büyük)", desi: 45.0, kategori: "Tesisat", oncelik: 131 },
-    { name: "HAVALANDIRMA SUSTURUCU ÜNİTESİ", desi: 80.0, kategori: "Isıtma/Soğutma", oncelik: 132 },
-    { name: "KLİMA DIŞ ÜNİTESİ (VRF Sistemi)", desi: 150.0, kategori: "Isıtma/Soğutma", oncelik: 132 },
-    { name: "ELEKTRİK PANOSU (Ana Dağıtım, Büyük)", desi: 95.0, kategori: "Elektrik/Ağır", oncelik: 133 },
-    { name: "YANGIN SUYU DEPOSU (Fiberglas, 2 Tonluk)", desi: 220.0, kategori: "Güvenlik/Hacimli", oncelik: 133 },
-    { name: "TRAFO (Orta Gerilim, Yağlı Tip)", desi: 400.0, kategori: "Elektrik/Ağır", oncelik: 134 },
-    { name: "ENERJİ KABLOSU RULOSU (1000 Metre, Ağır)", desi: 180.0, kategori: "Elektrik/Ağır", oncelik: 134 },
-    { name: "AYDINLATMA ARMÜRÜ (Ticari Alan, Koli 10 Adet)", desi: 40.0, kategori: "Elektrik", oncelik: 135 },
-    { name: "GÜVENLİK BARİYER SİSTEMİ (Otomobil Park)", desi: 55.0, kategori: "Güvenlik/Yapı", oncelik: 135 },
-    { name: "YÜKSEK HIZLI FOTOĞRAF MAKİNESİ (Endüstriyel)", desi: 70.0, kategori: "Elektronik/Cihaz", oncelik: 136 },
-    { name: "BÜYÜK DUVAR TİPİ SERVER KABİNİ (Dolu)", desi: 110.0, kategori: "Elektronik/Ağır", oncelik: 136 },
-    { name: "BİLGİSAYAR MONİTÖRÜ (Ultra Geniş, Koli)", desi: 35.0, kategori: "Elektronik", oncelik: 137 },
-    { name: "OFİS DOSYA DOLABI (Yüksek, Çelik)", desi: 60.0, kategori: "Mobilya", oncelik: 137 },
-    { name: "OFİS KANEPE (3 Kişilik)", desi: 85.0, kategori: "Mobilya", oncelik: 138 },
-    { name: "OTEL ODA MİNİBARI (Kutulu)", desi: 28.0, kategori: "Beyaz Eşya", oncelik: 138 },
-    { name: "VALİZ TAŞIMA ARABASI (Otel Tipi)", desi: 32.0, kategori: "Mobilya", oncelik: 139 },
-    { name: "HAVLU KURUTUCU RADYATÖR (Büyük)", desi: 18.0, kategori: "Isıtma", oncelik: 139 },
-    { name: "ENDÜSTRİYEL ASPİRATÖR MOTORU (Büyük)", desi: 50.0, kategori: "Mutfak Ekipman", oncelik: 140 },
-    { name: "PASLANMAZ ÇELİK TEZGAH (2 Metre)", desi: 75.0, kategori: "Mutfak Ekipman", oncelik: 140 },
-    { name: "ENDÜSTRİYEL GIDA MİKSERİ (Ayaklı)", desi: 130.0, kategori: "Mutfak Ekipman", oncelik: 141 },
-    { name: "BÜYÜK ENDÜSTRİYEL DAVLUMBAZ (Parça)", desi: 65.0, kategori: "Mutfak Ekipman", oncelik: 141 },
-    { name: "TİCARİ KAHVE KAVURMA MAKİNESİ", desi: 180.0, kategori: "Mutfak Ekipman", oncelik: 142 },
-    { name: "GIDA AMBALAJ MAKİNESİ (Vakum)", desi: 90.0, kategori: "Ambalaj Makine", oncelik: 142 },
-    { name: "KONSERVE YAPMA MAKİNESİ (Manuel)", desi: 55.0, kategori: "Mutfak Ekipman", oncelik: 143 },
-    { name: "BÜYÜK BOY ÖZEL YAPIM AKVARYUM (Boş)", desi: 120.0, kategori: "Hacimli/Hassas", oncelik: 143 },
-    { name: "CAM BALKON SİSTEMİ (Raylı Panel Seti)", desi: 135.0, kategori: "Yapı/Hacimli", oncelik: 144 },
-    { name: "ÇELİK KAPI (Giriş Tipi, Kutusunda)", desi: 95.0, kategori: "Yapı/Ağır", oncelik: 144 },
-    { name: "PVC PENCERE SETİ (Isıcamlı, Büyük)", desi: 70.0, kategori: "Yapı/Hacimli", oncelik: 145 },
-    { name: "ALÜMİNYUM KORKULUK (3 Metre)", desi: 48.0, kategori: "Yapı/Hacimli", oncelik: 145 },
-    { name: "MERMER MERDİVEN BASAMAĞI (5 Adet)", desi: 110.0, kategori: "Yapı/Ağır", oncelik: 146 },
-    { name: "DEKORATİF TAŞ PANEL (10 m² Kutu)", desi: 90.0, kategori: "Yapı Malzemesi", oncelik: 146 },
-    { name: "İNŞAAT VİBRASYON MAKİNESİ (Büyük)", desi: 65.0, kategori: "İnşaat Aleti", oncelik: 147 },
-    { name: "ELEKTRİKLİ ZEMİN KIRICI (Hilti Tipi)", desi: 40.0, kategori: "İnşaat Aleti", oncelik: 147 },
-    { name: "KUM SAÇMA MAKİNESİ (Küçük Basınçlı)", desi: 55.0, kategori: "İnşaat Aleti", oncelik: 148 },
-    { name: "İNŞAAT İSKELE DEMİRİ (10 Adet Boy)", desi: 80.0, kategori: "İnşaat/Yapı", oncelik: 148 },
-    { name: "BETON DÖKME POMPASI (Mobil Parça)", desi: 140.0, kategori: "İnşaat/Ağır", oncelik: 149 },
-    { name: "SU YALITIMI MEMBRANI RULOSU (Kalın)", desi: 50.0, kategori: "Yapı Malzemesi", oncelik: 149 },
-    { name: "HAVUZ KAPLAMA MALZEMESİ BALYASI", desi: 45.0, kategori: "Yapı Malzemesi", oncelik: 150 },
-    { name: "SERAMİK YAPIŞTIRICI HARÇ (Palet 20 Torba)", desi: 100.0, kategori: "Yapı/Ağır", oncelik: 150 },
-    { name: "SİLİKON CEPHE PROFİLİ (6 Metre)", desi: 35.0, kategori: "Yapı Malzemesi", oncelik: 151 },
-    { name: "DUVAR YALITIM KÖPÜĞÜ (Balya 10 Adet)", desi: 42.0, kategori: "Yapı Malzemesi", oncelik: 151 },
-    { name: "ÇATI SANDVİÇ PANELİ (2m x 1m)", desi: 60.0, kategori: "Yapı/Hacimli", oncelik: 152 },
-    { name: "ZEMİN KAPLAMA VİNİL RULOSU (Büyük)", desi: 55.0, kategori: "Yapı Malzemesi", oncelik: 152 },
-    { name: "BAHÇE ÇİM RULOSU (Palet, 20 m²)", desi: 120.0, kategori: "Bahçe/Ağır", oncelik: 153 },
-    { name: "PEYZAJ SULAMA KONTROL ÜNİTESİ", desi: 30.0, kategori: "Bahçe/Cihaz", oncelik: 153 },
-    { name: "AĞAÇ BUDAMA MAKİNESİ (Motorlu)", desi: 48.0, kategori: "Bahçe/Alet", oncelik: 154 },
-    { name: "TARIM SULAMA BORUSU (Büyük Rulo)", desi: 70.0, kategori: "Tarım/Hacimli", oncelik: 154 },
-    { name: "SU POMPASI DİZEL MOTORU", desi: 95.0, kategori: "Endüstriyel Parça", oncelik: 155 },
-    { name: "HAVALANDIRMA FAN PERVANESİ (Büyük Çap)", desi: 40.0, kategori: "Endüstriyel Parça", oncelik: 155 },
-    { name: "FABRİKA ISITMA KALORİFER KAZANI (Demonte)", desi: 280.0, kategori: "Isıtma/Ağır", oncelik: 156 },
-    { name: "BÜYÜK BOY REZİSTANS (Endüstriyel)", desi: 50.0, kategori: "Endüstriyel Parça", oncelik: 156 },
-    { name: "BUHAR KAZANI YEDEK PARÇASI (Basınçlı Kap)", desi: 110.0, kategori: "Endüstriyel Parça", oncelik: 157 },
-    { name: "SINAİ TİP KOMPRESÖR YAĞI VARİLİ (100 L)", desi: 105.0, kategori: "Kimyasal/Ağır", oncelik: 157 },
-    { name: "MAKİNE TAŞIMA VİNÇ YEDEK PARÇASI (Halat)", desi: 85.0, kategori: "Endüstriyel Parça", oncelik: 158 },
-    { name: "ENDÜSTRİYEL TAŞIMA ARABASI (Platform)", desi: 70.0, kategori: "Depo Ekipman", oncelik: 158 },
-    { name: "HİDROLİK TRANSLPALET (Manuel)", desi: 90.0, kategori: "Depo Ekipman", oncelik: 159 },
-    { name: "PALET ÜSTÜ ETİKET YAZICI (Endüstriyel)", desi: 40.0, kategori: "Ambalaj Makine", oncelik: 159 },
-    { name: "OTOMATİK STREÇ FİLM KESME CİHAZI", desi: 35.0, kategori: "Ambalaj Makine", oncelik: 160 },
-    { name: "BÜYÜK BOY AHŞAP KABLO MAKARASI (Boş)", desi: 60.0, kategori: "Elektrik/Hacimli", oncelik: 160 },
-    { name: "TELEKOMÜNİKASYON KABİNİ (Dış Ortam)", desi: 80.0, kategori: "Elektronik/Hacimli", oncelik: 161 },
-    { name: "SERVER RAFI (42U, Kilitli Kabin)", desi: 120.0, kategori: "Elektronik/Hacimli", oncelik: 161 },
-    { name: "GÜVENLİK BARİYERİ (Kolçaklı Geçiş Sistemi)", desi: 45.0, kategori: "Güvenlik/Yapı", oncelik: 162 },
-    { name: "YOL ÇİZGİ BOYASI KOVASI (5 Adet)", desi: 30.0, kategori: "Yapı/Kimyasal", oncelik: 162 },
-    { name: "TARAÇA SU YALITIMI MALZEMESİ (Balya)", desi: 40.0, kategori: "Yapı Malzemesi", oncelik: 163 },
-    { name: "BANYO AKSESUAR SETİ (Toptan Koli)", desi: 20.0, kategori: "Yapı/Hacimli", oncelik: 163 },
-    { name: "DUŞ KABİNİ CAM PANELİ (Büyük Boy)", desi: 35.0, kategori: "Yapı/Hassas", oncelik: 164 },
-    { name: "AYNALI DOLAP (Banyo, Büyük)", desi: 25.0, kategori: "Mobilya/Hassas", oncelik: 164 },
-    { name: "WC TAŞI (Asma Klozet, Kutusunda)", desi: 28.0, kategori: "Yapı/Hacimli", oncelik: 165 },
-    { name: "MUTFAK EVYESİ (Çift Gözlü, Paslanmaz)", desi: 22.0, kategori: "Yapı/Hacimli", oncelik: 165 },
-    { name: "ANKASTRE DAVLUMBAZ (Geniş Model)", desi: 32.0, kategori: "Mutfak Cihazı", oncelik: 166 },
-    { name: "MİKRODALGA FIRIN (Dahili Tip, Ankastre)", desi: 25.0, kategori: "Mutfak Cihazı", oncelik: 166 },
-    { name: "DERİN DONDURUCU (Sandık Tipi, Büyük)", desi: 110.0, kategori: "Beyaz Eşya", oncelik: 167 },
-    { name: "ÇAMAŞIR MAKİNESİ (Kurutmalı Model)", desi: 70.0, kategori: "Beyaz Eşya", oncelik: 167 },
-    { name: "KLİMA İÇ ÜNİTE (Salon Tipi, Büyük)", desi: 45.0, kategori: "Isıtma/Soğutma", oncelik: 168 },
-    { name: "BUZ YAPMA MAKİNESİ (Büyük Ticari)", desi: 110.0, kategori: "Mutfak Ekipman", oncelik: 168 },
-    { name: "SÜT SOĞUTMA TANKI (Küçük Çiftlik Tipi)", desi: 180.0, kategori: "Mutfak Ekipman", oncelik: 169 },
-    { name: "BÜYÜK SANAYİ TİPİ ASPİRATÖR (Metal)", desi: 95.0, kategori: "Mutfak Ekipman", oncelik: 169 },
-    { name: "TİCARİ BAR BLENDERI (3 Adet Kutu)", desi: 30.0, kategori: "Mutfak Ekipman", oncelik: 170 },
-    { name: "HASTANE TEKERLEKLİ SEDYE", desi: 60.0, kategori: "Medikal/Hacimli", oncelik: 170 },
-    { name: "TIBBİ CİHAZ (Ultrasonografi Cihazı, Kutulu)", desi: 85.0, kategori: "Medikal/Cihaz", oncelik: 171 },
-    { name: "TEKERLEKLİ OFİS SANDALYESİ (5 Adet Kutu)", desi: 45.0, kategori: "Mobilya", oncelik: 171 },
-    { name: "METAL ALET DOLABI (Çekmeceli, Büyük)", desi: 80.0, kategori: "Mobilya", oncelik: 172 },
-    { name: "MODÜLER RAF SİSTEMİ (4 Kutu Parça)", desi: 70.0, kategori: "Mobilya", oncelik: 172 },
-    { name: "ÇELİK MASA AYAĞI (4 Adet, Ağır)", desi: 35.0, kategori: "Mobilya Parça", oncelik: 173 },
-    { name: "BAHÇE DEPO KUTUSU (Plastik, Büyük)", desi: 50.0, kategori: "Bahçe Ekipman", oncelik: 173 },
-    { name: "HAVUZ TEMİZLEME ROBOTU (Kutulu)", desi: 28.0, kategori: "Bahçe Ekipman", oncelik: 174 },
-    { name: "BÜYÜK BOY ÇİM BİÇME MAKİNESİ (Sürücülü)", desi: 150.0, kategori: "Bahçe/Taşıt", oncelik: 174 },
-    { name: "TARIM İLAÇLAMA MAKİNESİ (Tekerlekli)", desi: 75.0, kategori: "Tarım Ekipman", oncelik: 175 },
-    { name: "DİNAMO (Büyük Güç, Yedek Parça)", desi: 60.0, kategori: "Endüstriyel Parça", oncelik: 175 },
-    { name: "PANO İÇİ AYDINLATMA TRAFOSU", desi: 25.0, kategori: "Elektrik", oncelik: 176 },
-    { name: "GÜVENLİK KAMERASI SİSTEMİ (Dome Kamera, 10 Adet)", desi: 30.0, kategori: "Elektronik", oncelik: 176 },
-    { name: "LED EKRAN (Büyük Reklam Panosu, Tek Panel)", desi: 70.0, kategori: "Elektronik/Yapı", oncelik: 177 },
-    { name: "DATA KABİNİ (Açık Tip, Büyük)", desi: 55.0, kategori: "Elektronik/Hacimli", oncelik: 177 },
-    { name: "ELEKTRONİK ÖLÇÜM CİHAZI (Endüstriyel)", desi: 40.0, kategori: "Endüstriyel Alet", oncelik: 178 },
-    { name: "PLASTİK BORU DÖŞEME MAKİNESİ (El Tipi)", desi: 35.0, kategori: "İnşaat Aleti", oncelik: 178 },
-    { name: "ÇİT TELİ RULOSU (100 Metre, Ağır)", desi: 75.0, kategori: "Yapı Malzemesi", oncelik: 179 },
-    { name: "DUVAR YALITIM PANELİ (5 Adet)", desi: 60.0, kategori: "Yapı Malzemesi", oncelik: 179 },
-    { name: "İÇ CEPHE BOYA PALETİ (20 Kova)", desi: 70.0, kategori: "Kimyasal/Ağır", oncelik: 180 },
-    { name: "EPOKSİ ZEMİN KAPLAMA KİTİ (Büyük Set)", desi: 85.0, kategori: "Kimyasal/Ağır", oncelik: 180 },
-    { name: "SU DEPOSU İÇİN ŞAMANDIRA SİSTEMİ (Büyük)", desi: 20.0, kategori: "Tesisat", oncelik: 181 },
-    { name: "KLİMA VEYA KOMBİ MONTAJ KİTİ (Boru Seti)", desi: 30.0, kategori: "Tesisat", oncelik: 181 },
-    { name: "BÜYÜK BOY MUTFAK RAF SİSTEMİ (Paslanmaz)", desi: 65.0, kategori: "Mutfak Ekipman", oncelik: 182 },
-    { name: "TİCARİ OCAK (4 Gözlü, Ayaklı)", desi: 75.0, kategori: "Mutfak Ekipman", oncelik: 182 },
-    { name: "SANAYİ TİPİ EKMEK DİLİMLEME MAKİNESİ", desi: 110.0, kategori: "Mutfak Ekipman", oncelik: 183 },
-    { name: "HAMUR YOĞURMA MAKİNESİ (Küçük Ticari)", desi: 50.0, kategori: "Mutfak Ekipman", oncelik: 183 },
-    { name: "SOĞUK SALATA BAR (Küçük Mobil)", desi: 80.0, kategori: "Mutfak Ekipman", oncelik: 184 },
-    { name: "YEMEK SEHPASI (Katlanabilir, 10 Adet)", desi: 45.0, kategori: "Mobilya", oncelik: 184 },
-    { name: "OFİS KANEPE TAKIMI (3+1, Demonre)", desi: 130.0, kategori: "Mobilya", oncelik: 185 },
-    { name: "TV SEHPASI (Büyük, Demonre)", desi: 40.0, kategori: "Mobilya", oncelik: 185 },
-    { name: "YÜKLÜK DOLABI (Boydan Boya, Demonre)", desi: 65.0, kategori: "Mobilya", oncelik: 186 },
-    { name: "KİLİTLİ ÇEKMECELİ DOLAP (5 Çekmece)", desi: 55.0, kategori: "Mobilya", oncelik: 186 },
-    { name: "GİYİNME ODASI AYNASI (Büyük Boy, Kutusunda)", desi: 35.0, kategori: "Mobilya/Hassas", oncelik: 187 },
-    { name: "OTOMOBİL LASTİK DEPOLAMA RAFI (Demonre)", desi: 70.0, kategori: "Taşıt/Depo", oncelik: 187 },
-    { name: "OTOMOBİL YEDEK PARÇA KUTUSU (Ağır)", desi: 40.0, kategori: "Taşıt Parça", oncelik: 188 },
-    { name: "JANT KORUYUCU KAPAK SETİ (5 Adet)", desi: 25.0, kategori: "Taşıt Parça", oncelik: 188 },
-    { name: "MOTORLU ARAÇ AKÜSÜ (Büyük Kamyon Tipi)", desi: 60.0, kategori: "Taşıt Parça/Ağır", oncelik: 189 },
-    { name: "ÇELİK TAMPON (Ağır Hizmet Tipi)", desi: 50.0, kategori: "Taşıt Parça", oncelik: 189 },
-    { name: "TARIM TRAKTÖRÜ KABİN CAMI (Büyük)", desi: 45.0, kategori: "Tarım Parça/Hassas", oncelik: 190 },
-    { name: "ZİRAAT GÜBRE SERPME MAKİNESİ (Küçük Manuel)", desi: 65.0, kategori: "Tarım Ekipman", oncelik: 190 },
-    { name: "BÜYÜK TARIM SULAMA FİLTRE TANKI", desi: 90.0, kategori: "Tarım Ekipman", oncelik: 191 },
-    { name: "ENDÜSTRİYEL FAN MOTORU (Ağır)", desi: 85.0, kategori: "Endüstriyel Parça", oncelik: 191 },
-    { name: "FABRİKA OTOMASYON SENSÖRÜ (Büyük Kutu)", desi: 30.0, kategori: "Endüstriyel Parça", oncelik: 192 },
-    { name: "BÜYÜK BOY KİMYASAL POMPA", desi: 70.0, kategori: "Endüstriyel Cihaz", oncelik: 192 },
-    { name: "ELEKTRİKLİ ISITICI PANEL (Büyük Sanayi)", desi: 55.0, kategori: "Isıtma/Soğutma", oncelik: 193 },
-    { name: "BÜYÜK TİP SU SAYACI (Endüstriyel)", desi: 40.0, kategori: "Tesisat", oncelik: 193 },
-    { name: "ELEKTRİK KABLOSU TOPLAMA MAKARASI (Sanayi)", desi: 60.0, kategori: "Elektrik/Hacimli", oncelik: 194 },
-    { name: "JENERATÖR YAKIT TANKI (Boş)", desi: 75.0, kategori: "Enerji/Hacimli", oncelik: 194 },
-    { name: "GÜVENLİK KAMERASI DİKİŞ DİREĞİ (4 Metre)", desi: 50.0, kategori: "Yapı/Hacimli", oncelik: 195 },
-    { name: "YANGIN SÖNDÜRME CİHAZI (12 Kg, 5 Adet)", desi: 35.0, kategori: "Güvenlik/Ağır", oncelik: 195 },
-    { name: "BÜYÜK İŞARET LEVHASI (Metal, 2 Metre)", desi: 40.0, kategori: "Yapı/Hacimli", oncelik: 196 },
-    { name: "BÜYÜK BOY KARTON KUTU STOĞU (50 Adet)", desi: 30.0, kategori: "Ambalaj/Hacimli", oncelik: 196 },
-    { name: "KÖPÜK AMBALAJ MALZEMESİ (Büyük Hacim)", desi: 25.0, kategori: "Ambalaj/Hacimli", oncelik: 197 },
-    { name: "PALET (Ahşap, Euro Tip, 5 Adet)", desi: 45.0, kategori: "Ambalaj/Hacimli", oncelik: 197 },
-    { name: "ÇELİK TEL İP RULOSU (200 Metre)", desi: 70.0, kategori: "Metal/Ağır", oncelik: 198 },
-    { name: "ALÜMİNYUM MERDİVEN (Teleskopik, Büyük)", desi: 48.0, kategori: "Yapı/Hacimli", oncelik: 198 },
-    { name: "İNŞAAT MALZEMESİ TAŞIMA ARABASI (2 Tekerlekli)", desi: 55.0, kategori: "İnşaat Aleti", oncelik: 199 },
-    { name: "BETON KESME DİSKİ (Büyük Çap, 10 Adet)", desi: 40.0, kategori: "İnşaat Aleti", oncelik: 199 },
-    { name: "HARÇ KARIŞTIRMA MİKSERİ (Endüstriyel)", desi: 65.0, kategori: "İnşaat Aleti", oncelik: 200 },
-    { name: "İNŞAAT KİREMİTİ BALYASI (100 Adet)", desi: 110.0, kategori: "Yapı/Ağır", oncelik: 200 },
-    { name: "KALIP YAĞI VARİLİ (100 Litre)", desi: 95.0, kategori: "Kimyasal/Ağır", oncelik: 201 },
-    { name: "DUVAR BOYASI (Plastik, 5 Kova)", desi: 35.0, kategori: "Kimyasal/Ağır", oncelik: 201 },
-    { name: "BÜYÜK BOY BANYO KÜVETİ (Akrilik)", desi: 60.0, kategori: "Yapı/Hacimli", oncelik: 202 },
-    { name: "DUŞAKABİN CAM KAPI (Sürgülü Sistem)", desi: 40.0, kategori: "Yapı/Hassas", oncelik: 202 },
-    { name: "BANYO TERMOSTATİK BATARYA SETİ (Koli)", desi: 20.0, kategori: "Tesisat", oncelik: 203 },
-    { name: "MUTFAK TEZGAH ARASI CAM PANELİ", desi: 25.0, kategori: "Yapı/Hassas", oncelik: 203 },
-    { name: "ANKASTRE MİKRODALGA FIRIN", desi: 30.0, kategori: "Mutfak Cihazı", oncelik: 204 },
-    { name: "BÜYÜK BOY BUZDOLABI (Tek Kapılı)", desi: 85.0, kategori: "Beyaz Eşya", oncelik: 204 },
-    { name: "EV TİPİ SU SEBİLİ (Alttan Damacanalı)", desi: 28.0, kategori: "Beyaz Eşya", oncelik: 205 },
-    { name: "DERİN DONDURUCU (Dikey, Orta Boy)", desi: 70.0, kategori: "Beyaz Eşya", oncelik: 205 },
-    { name: "ÇAMAŞIR MAKİNESİ (Ticari, 10 Kg)", desi: 80.0, kategori: "Beyaz Eşya", oncelik: 206 },
-    { name: "KLİMA DIŞ ÜNİTESİ (Büyük Ticari)", desi: 110.0, kategori: "Isıtma/Soğutma", oncelik: 206 },
-    { name: "ENDÜSTRİYEL KAHVE MAKİNESİ (Otomatik)", desi: 95.0, kategori: "Mutfak Ekipman", oncelik: 207 },
-    { name: "TİCARİ IZGARA (LPG'li, Büyük)", desi: 75.0, kategori: "Mutfak Ekipman", oncelik: 207 },
-    { name: "PASLANMAZ ÇELİK RAF (Mutfak, 4 Katlı)", desi: 45.0, kategori: "Mutfak Ekipman", oncelik: 208 },
-    { name: "OKUL SIRASI (2 Kişilik, 5 Adet Paket)", desi: 60.0, kategori: "Mobilya", oncelik: 208 },
-    { name: "OFİS KANEPE (Tekli, Deri)", desi: 45.0, kategori: "Mobilya", oncelik: 209 },
-    { name: "SEHPA (Orta Boy, Metal Ayaklı)", desi: 20.0, kategori: "Mobilya", oncelik: 209 },
-    { name: "ÇOCUK DOLABI (2 Kapılı, Demonre)", desi: 35.0, kategori: "Mobilya", oncelik: 210 },
-    { name: "BAHÇE BAR MASASI (Katlanır, Büyük)", desi: 50.0, kategori: "Bahçe Mobilya", oncelik: 210 },
-    { name: "KAMÇI SANDALYESİ (Katlanır, 10 Adet)", desi: 30.0, kategori: "Kamp Ekipman", oncelik: 211 },
-    { name: "DENİZ BOTU (Şişme, Büyük Boy)", desi: 40.0, kategori: "Spor Ekipman", oncelik: 211 },
-    { name: "YATAK ODASI KOMODİNİ (2 Adet Kutu)", desi: 25.0, kategori: "Mobilya", oncelik: 212 },
-    { name: "MASA TENİSİ MASASI (Katlanır)", desi: 75.0, kategori: "Spor Ekipman", oncelik: 212 },
-    { name: "BASKETBOL POTASI (Duvar Tipi, Büyük)", desi: 40.0, kategori: "Spor Ekipman", oncelik: 213 },
-    { name: "BİSİKLET TAŞIMA RAFI (Oto Arkası)", desi: 30.0, kategori: "Taşıt Ekipman", oncelik: 213 },
-    { name: "OTOMOBİL TEKERLEK JANT SETİ (4 Adet)", desi: 55.0, kategori: "Taşıt Parça", oncelik: 214 },
-    { name: "BÜYÜK KAMYON SİNYALİZASYON LAMBASI (10 Adet)", desi: 20.0, kategori: "Taşıt Parça", oncelik: 214 },
-    { name: "OTOMOBİL SÜSPANSİYON KİTİ (4 Amortisör)", desi: 45.0, kategori: "Taşıt Parça", oncelik: 215 },
-    { name: "TARIM MAKİNESİ DİŞLİ KUTUSU", desi: 80.0, kategori: "Tarım Parça/Ağır", oncelik: 215 },
-    { name: "ELEKTRİKLİ TRAKTÖR ŞARJ ÜNİTESİ", desi: 70.0, kategori: "Tarım Ekipman", oncelik: 216 },
-    { name: "ZİRAAT SULAMA VALF KUTUSU (Büyük)", desi: 30.0, kategori: "Tarım Ekipman", oncelik: 216 },
-    { name: "ENDÜSTRİYEL REDÜKTÖR (Büyük Tip)", desi: 95.0, kategori: "Endüstriyel Parça", oncelik: 217 },
-    { name: "BÜYÜK PANO İÇİ ANA ŞALTER", desi: 40.0, kategori: "Elektrik/Ağır", oncelik: 217 },
-    { name: "KABLO TAŞIMA KANALI (Metal, 3 Metre, 10 Adet)", desi: 60.0, kategori: "Yapı/Hacimli", oncelik: 218 },
-    { name: "ENERJİ DAĞITIM SİSTEMİ PARÇASI (Baralar)", desi: 50.0, kategori: "Elektrik/Ağır", oncelik: 218 },
-    { name: "BÜYÜK BOY İNŞAAT VİDASI PALETİ", desi: 85.0, kategori: "Yapı/Ağır", oncelik: 219 },
-    { name: "MİNERAL YÜN İZOLASYON BALYASI (Kalın)", desi: 45.0, kategori: "Yapı Malzemesi", oncelik: 219 },
-    { name: "ASMA TAVAN PANELİ (10 m² Kutu)", desi: 30.0, kategori: "Yapı Malzemesi", oncelik: 220 },
-    { name: "ÇELİK KAPI KASA VE KANAT SETİ", desi: 120.0, kategori: "Yapı/Ağır", oncelik: 220 },
-    { name: "PENCERE SİNEKLİK SİSTEMİ (10 Adet Kutu)", desi: 20.0, kategori: "Yapı/Hacimli", oncelik: 221 },
-    { name: "SU BORUSU (PVC, 6 Metre, 5 Adet)", desi: 40.0, kategori: "Tesisat/Hacimli", oncelik: 221 },
-    { name: "KOMBİ RADYATÖRÜ (Büyük Boy, 5 Adet)", desi: 55.0, kategori: "Isıtma", oncelik: 222 },
-    { name: "DUŞAKABİN KÜVET ALTLIĞI (Büyük)", desi: 45.0, kategori: "Yapı/Hacimli", oncelik: 222 },
-    { name: "MUTFAK DOLABI KAPAK SETİ (Demonre, 10 Adet)", desi: 35.0, kategori: "Mobilya Parça", oncelik: 223 },
-    { name: "BÜYÜK ENDÜSTRİYEL ASPİRATÖR (Duvar Tipi)", desi: 65.0, kategori: "Mutfak Ekipman", oncelik: 223 },
-    { name: "TİCARİ FRİTÖZ (Çift Sepetli)", desi: 50.0, kategori: "Mutfak Ekipman", oncelik: 224 },
-    { name: "SU ISITICISI (Büyük Termos, Ticari)", desi: 30.0, kategori: "Mutfak Ekipman", oncelik: 224 },
-    { name: "BUHAR JENERATÖRÜ (Küçük Boy)", desi: 40.0, kategori: "Endüstriyel Cihaz", oncelik: 225 },
-    { name: "HASTANE KİLİTLİ İLAÇ DOLABI", desi: 50.0, kategori: "Medikal/Güvenlik", oncelik: 225 },
-    { name: "OFİS KANEPE (Tekli, Kumaş)", desi: 38.0, kategori: "Mobilya", oncelik: 226 },
-    { name: "ÇOCUK OYUN ÇADIRI (Büyük)", desi: 20.0, kategori: "Hacimli", oncelik: 226 },
-    { name: "MİNDER (Büyük Boy, 5 Adet)", desi: 25.0, kategori: "Mobilya", oncelik: 227 },
-    { name: "BAHÇE ÇİTİ PANOSU (Ahşap, 2 Metre, 5 Adet)", desi: 45.0, kategori: "Bahçe/Hacimli", oncelik: 227 },
-    { name: "ATV LASTİĞİ (Tek Adet, Büyük)", desi: 30.0, kategori: "Taşıt Parça", oncelik: 228 },
-    { name: "DENİZ MOTORU YEDEK PERVANE (5 Adet Koli)", desi: 20.0, kategori: "Taşıt Parça", oncelik: 228 },
-    { name: "OTOMOBİL ŞASİ BAĞLANTI PARÇASI (Ağır)", desi: 30.0, kategori: "Taşıt Parça", oncelik: 229 },
-    { name: "TARIM EKİPMANI DİŞLİ SETİ (Kutulu)", desi: 40.0, kategori: "Tarım Parça/Ağır", oncelik: 229 },
-    { name: "ZİRAAT İLAÇLAMA TABANCASI (Profesyonel, 5 Adet)", desi: 20.0, kategori: "Tarım Ekipman", oncelik: 230 },
-    { name: "FABRİKA OTOMASYON VALFİ (Büyük)", desi: 35.0, kategori: "Endüstriyel Parça", oncelik: 230 },
-    { name: "ISI YALITIM MALZEMESİ (Taş Yünü, Balya)", desi: 40.0, kategori: "Yapı Malzemesi", oncelik: 231 },
-    { name: "SU YALITIMI BİTÜM RULOSU (Kalın, Ağır)", desi: 60.0, kategori: "Yapı Malzemesi", oncelik: 231 },
-    { name: "BETON KIRICI UÇ SETİ (Büyük)", desi: 30.0, kategori: "İnşaat Aleti", oncelik: 232 },
-    { name: "ENDÜSTRİYEL SU FİLTRESİ (Büyük Gövde)", desi: 45.0, kategori: "Tesisat", oncelik: 232 },
-    { name: "ELEKTRİK PANOSU İÇ DÜZENLEME KİTİ", desi: 25.0, kategori: "Elektrik", oncelik: 233 },
-    { name: "GÜVENLİK KAMERASI SİSTEMİ (Kablo Rulosu, Büyük)", desi: 20.0, kategori: "Elektronik", oncelik: 233 },
-    { name: "AMBALAJ KÖPÜĞÜ GRANÜL TORBASI (Büyük)", desi: 25.0, kategori: "Ambalaj/Hacimli", oncelik: 234 },
-    { name: "JANT LASTİK (Otomobil)", desi: 35.0, kategori: "Taşıt Parça", oncelik: 234 },
-    { name: "KAMYON LAST", desi: 65.0, kategori: "Lastik", oncelik: 235 },
-    { name: "JEEP LAST", desi: 55.0, kategori: "Lastik", oncelik: 235 },
-    { name: "BEYAZ LASTİK (Oto Lastiği)", desi: 28.0, kategori: "Lastik", oncelik: 236 },
-    { name: "JANTLI BİNK.LAST. (Oto Lastiği)", desi: 28.0, kategori: "Lastik", oncelik: 236 },
-    { name: "BİNEK LASTİK", desi: 28.0, kategori: "Lastik", oncelik: 237 },
-    { name: "Otomobil Tipi Kış Lastiği (1 Adet)", desi: 28.0, kategori: "Lastik", oncelik: 237 },
-    { name: "JANT KAPAĞI (Toptan Koli)", desi: 10.0, kategori: "Jant", oncelik: 238 },
-    { name: "50cc Scooter (Moped, Kutulu)", desi: 38.0, kategori: "Motorlu Taşıt", oncelik: 238 },
-    { name: "100cc Mini Motosiklet (Crated, Demonre)", desi: 52.0, kategori: "Motorlu Taşıt", oncelik: 239 },
-    { name: "50cc Scooter Yedek Gövde Paneli Seti", desi: 14.5, kategori: "Yedek Parça", oncelik: 239 },
-    { name: "Oto Klima Kompresörü (Yedek Parça)", desi: 18.5, kategori: "Taşıt Parça", oncelik: 240 },
-    { name: "Oto Motor Takozu (4 Adet)", desi: 11.0, kategori: "Taşıt Parça", oncelik: 240 },
-    { name: "MOTOR. (Yedek Motor/Büyük)", desi: 88.0, kategori: "Yedek Parça", oncelik: 241 },
-    { name: "SEDAN OTOMOBİL (Kutulu/Taşıma Kasası)", desi: 550.0, kategori: "Gerçek Otomobil", oncelik: 242 },
-    { name: "HATCHBACK OTOMOBİL (Kutulu/Taşıma Kasası)", desi: 480.0, kategori: "Gerçek Otomobil", oncelik: 242 },
-    { name: "GERÇEK MOTORSİKLET (Racing/Sport)", desi: 180.0, kategori: "Gerçek Motor", oncelik: 243 },
-    { name: "GERÇEK MOTORSİKLET (Enduro/Adventure)", desi: 220.0, kategori: "Gerçek Motor", oncelik: 243 },
-    { name: "GERÇEK MOTORSİKLET (Chopper/Cruiser)", desi: 250.0, kategori: "Gerçek Motor", oncelik: 244 },
-    { name: "50cc MOTOR SİKLET (Kutulu)", desi: 75.0, kategori: "Motorlu Taşıt", oncelik: 244 },
-    { name: "100cc MOTOR SİKLET (Kutulu)", desi: 110.0, kategori: "Motorlu Taşıt", oncelik: 245 },
-    { name: "KOLTUK TAKIMI (3+2+1, Set Kutulu)", desi: 250.0, kategori: "Oturma Grubu", oncelik: 245 },
-    { name: "YEMEK ODASI TAKIMI (Masa+6 Sandalye, Demonre)", desi: 180.0, kategori: "Mobilya Seti", oncelik: 246 },
-    { name: "YATAK ODASI TAKIMI (Gardırop Hariç, Demonre)", desi: 160.0, kategori: "Mobilya Seti", oncelik: 246 },
-    { name: "KÖŞE KOLTUK TAKIMI (L Tipi, 2 Kutu)", desi: 190.0, kategori: "Oturma Grubu", oncelik: 247 },
-    { name: "GARDROP (6 Kapılı, Demonre)", desi: 120.0, kategori: "Mobilya", oncelik: 247 },
-    { name: "TV ÜNİTESİ (Büyük Boy, Demonre)", desi: 85.0, kategori: "Mobilya", oncelik: 248 },
-    { name: "TEKLİ BERJER (Hacimli Model)", desi: 48.0, kategori: "Mobilya", oncelik: 248 },
-    { name: "BAZA VE BAŞLIK SETİ (Çift Kişilik)", desi: 70.0, kategori: "Mobilya/Yatak", oncelik: 249 },
-    { name: "ÇAMAŞIR MAKİNESİ", desi: 60.0, kategori: "Beyaz Eşya", oncelik: 249 },
-    { name: "BULAŞIK MAKİNESİ", desi: 55.0, kategori: "Beyaz Eşya", oncelik: 250 },
-    { name: "BÜYÜK BOY BUZDOLABI (Çift Kapılı)", desi: 110.0, kategori: "Beyaz Eşya", oncelik: 250 },
-    { name: "KLİMA DIŞ ÜNİTESİ (Standart)", desi: 45.0, kategori: "Cihaz", oncelik: 251 },
-    { name: "ŞOFBEN/TERMOSİFON (Duvar Tipi, Büyük)", desi: 20.0, kategori: "Cihaz/Tesisat", oncelik: 251 },
-    { name: "KOMBİ KAZANI (Bireysel Tip)", desi: 55.0, kategori: "Isıtma Cihazı", oncelik: 252 },
-    { name: "MODÜLER OFİS BÖLME SİSTEMİ (1 Adet Panel)", desi: 55.0, kategori: "Yapı/Mobilya", oncelik: 252 },
-    { name: "MAKAM MÜDÜR TAKIMI (Masa+Koltuk+Sehpa)", desi: 185.0, kategori: "Mobilya Seti", oncelik: 253 },
-    { name: "TOPLANTI MASASI (8 Kişilik, Demonre)", desi: 150.0, kategori: "Mobilya", oncelik: 253 },
-    { name: "KÜTÜPHANE RAF ÜNİTESİ (Büyük Boy, Demonre)", desi: 95.0, kategori: "Mobilya", oncelik: 254 },
-    { name: "ÇELİK PARA KASASI (Orta Boy)", desi: 110.0, kategori: "Güvenlik/Ağır", oncelik: 254 },
-    { name: "KLİMA SANTRALİ (Büyük Ticari Tip)", desi: 350.0, kategori: "Isıtma/Soğutma", oncelik: 255 },
-    { name: "ISI POMPASI DIŞ ÜNİTESİ", desi: 120.0, kategori: "Isıtma/Soğutma", oncelik: 255 },
-    { name: "JENERATÖR (5 KVA, Tekerlekli)", desi: 180.0, kategori: "Enerji/Cihaz", oncelik: 256 },
-    { name: "KOMPRESÖR (200 Litre Hava Tankı)", desi: 160.0, kategori: "Endüstriyel Cihaz", oncelik: 256 },
-    { name: "HİDROLİK İŞ MAKİNESİ SİLİNDİRİ", desi: 78.0, kategori: "Sanayi Parça", oncelik: 257 },
-    { name: "BÜYÜK BOY FORKLİFT LASTİĞİ (1 Adet)", desi: 92.0, kategori: "İş Makinesi Parça", oncelik: 257 },
-    { name: "CNC MAKİNE PARÇASI (Göde)", desi: 220.0, kategori: "Sanayi Parça", oncelik: 258 },
-    { name: "PALET ÜSTÜ AĞIR KİMYASAL KOVASI (100 L)", desi: 110.0, kategori: "Kimyasal/Tehlikeli", oncelik: 258 },
-    { name: "FABRİKA TİPİ VİNÇ RAYI (3 Metre)", desi: 140.0, kategori: "Yapı/Ağır Metal", oncelik: 259 },
-    { name: "GIDA SOĞUK HAVA DEPOSU PANELİ (2m x 3m)", desi: 85.0, kategori: "Soğutma/Yapı", oncelik: 259 },
-    { name: "ENDÜSTRİYEL FIRIN (Ticari)", desi: 280.0, kategori: "Mutfak Ekipman", oncelik: 260 },
-    { name: "ENDÜSTRİYEL BULAŞIK MAKİNESİ (Kapüşonlu Tip)", desi: 155.0, kategori: "Mutfak Ekipman", oncelik: 260 },
-    { name: "BÜYÜK TİCARİ BUZDOLABI (2 Kapılı, Paslanmaz)", desi: 190.0, kategori: "Mutfak Ekipman", oncelik: 261 },
-    { name: "KAFETERYA TİPİ SALAT BAR ÜNİTESİ", desi: 135.0, kategori: "Mutfak Ekipman", oncelik: 261 },
-    { name: "TİCARİ OCAK BAŞI ÜNİTESİ", desi: 165.0, kategori: "Mutfak Ekipman", oncelik: 262 },
-    { name: "HASTANE YATAĞI (Ayarlanabilir, Kutusunda)", desi: 90.0, kategori: "Medikal/Mobilya", oncelik: 262 },
-    { name: "AMELİYATHANE MASASI (Demonte Parça)", desi: 125.0, kategori: "Medikal/Ağır", oncelik: 263 },
-    { name: "LABORATUVAR SANTRİFÜJ CİHAZI (Zemin Tipi)", desi: 75.0, kategori: "Medikal/Cihaz", oncelik: 263 },
-    { name: "TIBBİ ATIK KONTEYNERİ (Büyük)", desi: 45.0, kategori: "Medikal/Hacimli", oncelik: 264 },
-    { name: "RÖNTGEN CİHAZI (Taşınabilir Model, Kutulu)", desi: 55.0, kategori: "Medikal/Cihaz", oncelik: 264 },
-    { name: "MASİF AHŞAP KONSOL (Büyük Boy)", desi: 75.0, kategori: "Mobilya", oncelik: 265 },
-    { name: "AYAKKABI DOLABI (Çok Kapılı)", desi: 52.0, kategori: "Mobilya", oncelik: 265 },
-    { name: "DEKORATİF BÜFE/VİTRİN (Camlı)", desi: 68.0, kategori: "Mobilya", oncelik: 266 },
-    { name: "GİRİŞ PORTMANTO (Büyük, Askılıklı)", desi: 72.0, kategori: "Mobilya", oncelik: 266 },
-    { name: "ÇALIŞMA MASASI (L Tipi, Demonre)", desi: 65.0, kategori: "Mobilya", oncelik: 267 },
-    { name: "BAHÇE SALINCAK SETİ (3 Kişilik)", desi: 85.0, kategori: "Bahçe Mobilya", oncelik: 267 },
-    { name: "AHŞAP DECK PANELİ (1m x 2m, 10 Adet)", desi: 115.0, kategori: "Yapı/Bahçe", oncelik: 268 },
-    { name: "BÜYÜK BOY BARBEKÜ IZGARASI (Gazlı)", desi: 60.0, kategori: "Bahçe Ekipman", oncelik: 268 },
-    { name: "DÖKÜM BAHÇE MASA SETİ (4 Kişilik)", desi: 145.0, kategori: "Bahçe Mobilya/Ağır", oncelik: 269 },
-    { name: "HAVUZ POMPA SİSTEMİ (Komple)", desi: 58.0, kategori: "Yapı/Tesisat", oncelik: 269 },
-    { name: "SU ARITMA CİHAZI (Merkezi Sistem)", desi: 78.0, kategori: "Tesisat", oncelik: 270 },
-    { name: "GÜNEŞ ENERJİSİ SU ISITICISI (Kollektör Paneli)", desi: 82.0, kategori: "Enerji/Yapı", oncelik: 270 },
-    { name: "YERDEN ISITMA BORU RULOSU (500 Metre)", desi: 55.0, kategori: "Tesisat", oncelik: 271 },
-    { name: "BETON KESME MAKİNESİ (Büyük El Tipi)", desi: 35.0, kategori: "İnşaat Aleti", oncelik: 271 },
-    { name: "İNŞAAT KALIP MALZEMESİ (5 Adet Panel)", desi: 130.0, kategori: "İnşaat/Yapı", oncelik: 272 },
-    { name: "BÜYÜK BOY VİNÇ KANCASI", desi: 68.0, kategori: "İnşaat/Ağır", oncelik: 272 },
-    { name: "İSKELE KURULUM DİREĞİ (10 Adet)", desi: 90.0, kategori: "İnşaat/Yapı", oncelik: 273 },
-    { name: "DEMİR BAĞLAMA TELİ BALYASI", desi: 45.0, kategori: "İnşaat/Metal", oncelik: 273 },
-    { name: "MİMARİ MODEL (Büyük Hacimli, Koruma Kutulu)", desi: 30.0, kategori: "Hacimli/Hassas", oncelik: 274 },
-    { name: "DİJİTAL BASKI MAKİNESİ (Büyük Format)", desi: 210.0, kategori: "Ticari Cihaz", oncelik: 274 },
-    { name: "KUMAŞ KESME MAKİNESİ (Endüstriyel)", desi: 140.0, kategori: "Tekstil Makine", oncelik: 275 },
-    { name: "PLASTİK ENJEKSİYON KALIBI (Orta Boy)", desi: 110.0, kategori: "Sanayi Alet", oncelik: 275 },
-    { name: "MATBAA MAKİNESİ YEDEK PARÇASI (Silindir)", desi: 95.0, kategori: "Sanayi Parça", oncelik: 276 },
-    { name: "OTOMATİK KAPI SİSTEMİ (Motorlu)", desi: 42.0, kategori: "Yapı/Cihaz", oncelik: 276 },
-    { name: "HAVALANDIRMA FAN ÜNİTESİ (Büyük Sanayi)", desi: 105.0, kategori: "Yapı/Cihaz", oncelik: 277 },
-    { name: "YANGIN ALARM SANTRALİ (Büyük Ticari)", desi: 38.0, kategori: "Güvenlik/Cihaz", oncelik: 277 },
-    { name: "GÜVENLİK KAMERA DİREĞİ (5 Metre)", desi: 70.0, kategori: "Yapı/Hacimli", oncelik: 278 },
-    { name: "AĞIR HİZMET TİPİ DEPO RAFI (Demonre, 2m)", desi: 80.0, kategori: "Depo Ekipman", oncelik: 278 },
-    { name: "MALZEME TAŞIMA ARABASI (Tekerlekli Platform)", desi: 62.0, kategori: "Depo Ekipman", oncelik: 279 },
-    { name: "PALETLİ STREÇ SARMA MAKİNESİ (Yarı Otomatik)", desi: 130.0, kategori: "Ambalaj Makine", oncelik: 279 },
-    { name: "AHŞAP AMBALAJ KASASI (Büyük, Boş)", desi: 48.0, kategori: "Ambalaj", oncelik: 280 },
-    { name: "PLASTİK PALET (Ağır Hizmet Tipi, 10 Adet)", desi: 105.0, kategori: "Ambalaj", oncelik: 280 },
-    { name: "KONVEYÖR BANT MODÜLÜ (2 Metre)", desi: 95.0, kategori: "Endüstriyel Sistem", oncelik: 281 },
-    { name: "OTOMATİK KAYAR KAPI MEKANİZMASI", desi: 50.0, kategori: "Yapı/Cihaz", oncelik: 281 },
-    { name: "ASANSÖR KABİN PANELİ (Tek Adet)", desi: 115.0, kategori: "Yapı/Ağır", oncelik: 282 },
-    { name: "PARKE CİLA MAKİNESİ (Endüstriyel Tip)", desi: 65.0, kategori: "Temizlik Cihazı", oncelik: 282 },
-    { name: "BÜYÜK ENDÜSTRİYEL SÜPÜRGE MAKİNESİ", desi: 120.0, kategori: "Temizlik Cihazı", oncelik: 283 },
-    { name: "ÇELİK TEL HALAT RULOSU (100 Metre)", desi: 45.0, kategori: "Metal/Ağır", oncelik: 283 },
-    { name: "ALÜMİNYUM MERDİVEN (8 Basamaklı)", desi: 32.0, kategori: "Yapı/Hacimli", oncelik: 284 },
-    { name: "TİCARİ KAHVE MAKİNESİ (2 Gruplu)", desi: 40.0, kategori: "Mutfak Cihazı", oncelik: 284 },
-    { name: "SU SEBİLİ (Otel Tipi, Büyük)", desi: 25.0, kategori: "Mutfak Cihazı", oncelik: 285 },
-    { name: "MİKRODALGA FIRIN (Ticari, Hızlı Pişirme)", desi: 38.0, kategori: "Mutfak Cihazı", oncelik: 285 },
-    { name: "OFİS KESON DOLABI (Çekmeceli)", desi: 35.0, kategori: "Mobilya", oncelik: 286 },
-    { name: "ÇELİK SOYUNMA DOLABI (3 Gözlü)", desi: 49.0, kategori: "Mobilya", oncelik: 286 },
-    { name: "KONFERANS SANDALYESİ (10 Adet Paket)", desi: 40.0, kategori: "Mobilya", oncelik: 287 },
-    { name: "PLASTİK ÇÖP KONTEYNERİ (Tekerlekli, 240 Litre)", desi: 55.0, kategori: "Hacimli", oncelik: 287 },
-    { name: "BÜYÜK BOY TUVALET KABİNİ (Demonte)", desi: 90.0, kategori: "Yapı/Hacimli", oncelik: 288 },
-    { name: "BETON KARIŞTIRICI (Küçük Tip, Tekerlekli)", desi: 70.0, kategori: "İnşaat Aleti", oncelik: 288 },
-    { name: "DEMİR İNŞAAT KALIP DESTEĞİ (10 Adet)", desi: 85.0, kategori: "İnşaat/Metal", oncelik: 289 },
-    { name: "TRAFİK SİNYALİZASYON DİREĞİ (4 Metre)", desi: 62.0, kategori: "Yapı/Hacimli", oncelik: 289 },
-    { name: "REKLAM PANOSU LED EKRAN PANELİ", desi: 58.0, kategori: "Elektronik/Yapı", oncelik: 290 },
-    { name: "YOL ÇİZGİ MAKİNESİ (Manuel İtmeli)", desi: 50.0, kategori: "İnşaat/Alet", oncelik: 290 },
-    { name: "TEKSTİL KESİM MASASI (Demonte Parça)", desi: 110.0, kategori: "Sanayi Mobilya", oncelik: 291 },
-    { name: "SERAMİK FAYANS PALETİ (50m²)", desi: 180.0, kategori: "Yapı/Ağır", oncelik: 291 },
-    { name: "ALÜMİNYUM KOMPOZİT PANEL (10 Adet)", desi: 75.0, kategori: "Yapı Malzemesi", oncelik: 292 },
-    { name: "BÜYÜK BOY VANA VE FİTİNG SETİ (Kutulu)", desi: 40.0, kategori: "Tesisat/Ağır", oncelik: 292 },
-    { name: "ENDÜSTRİYEL KAZAN POMPASI", desi: 68.0, kategori: "Tesisat/Ağır", oncelik: 293 },
-    { name: "SU TANKI (Fiberglas, 500 Litre)", desi: 72.0, kategori: "Tesisat/Hacimli", oncelik: 293 },
-    { name: "ISI YALITIM LEVHASI BALYASI (Kalın Tip)", desi: 45.0, kategori: "Yapı Malzemesi", oncelik: 294 },
-    { name: "ÇATI KİREMİT PALETİ (Büyük)", desi: 150.0, kategori: "Yapı/Ağır", oncelik: 294 },
-    { name: "YAPIŞTIRICI HARÇ TORBASI PALETİ (40 Adet)", desi: 120.0, kategori: "Yapı/Ağır", oncelik: 295 },
-    { name: "DIŞ CEPHE BOYASI KOVASI PALETİ (20 Kova)", desi: 85.0, kategori: "Kimyasal/Ağır", oncelik: 295 },
-    { name: "OTOMATİK SULAMA SİSTEMİ SANTRALİ", desi: 35.0, kategori: "Bahçe/Cihaz", oncelik: 296 },
-    { name: "AĞAÇ BUDAMA MAKİNESİ (Profesyonel)", desi: 42.0, kategori: "Bahçe/Alet", oncelik: 296 },
-    { name: "ÇİM BİÇME MAKİNESİ (Benzinli, Büyük)", desi: 55.0, kategori: "Bahçe/Alet", oncelik: 297 },
-    { name: "BAHÇE TRAKTÖRÜ (Küçük Model, Kutulu)", desi: 150.0, kategori: "Bahçe/Taşıt", oncelik: 297 },
-    { name: "BÜYÜK HAVA KOMPRESÖRÜ (Dikey Tanklı)", desi: 220.0, kategori: "Endüstriyel Cihaz", oncelik: 298 },
-    { name: "CNC ROUTER (Küçük Masaüstü Model)", desi: 90.0, kategori: "Sanayi Makine", oncelik: 298 },
-    { name: "LAZER KESİM CİHAZI (Mini Tip)", desi: 75.0, kategori: "Sanayi Makine", oncelik: 299 },
-    { name: "3D YAZICI (Endüstriyel Boyut)", desi: 110.0, kategori: "Sanayi Makine", oncelik: 299 },
-    { name: "BÜYÜK BASKI KAĞIDI RULOSU (5 Adet)", desi: 48.0, kategori: "Ofis/Hacimli", oncelik: 300 },
-    { name: "SERVER SUNUCU KABİNİ (Boş)", desi: 60.0, kategori: "Elektronik/Hacimli", oncelik: 300 },
-    { name: "UPS GÜÇ KAYNAĞI (Büyük Sanayi)", desi: 130.0, kategori: "Elektronik/Ağır", oncelik: 301 },
-    { name: "TELEFON SANTRALİ (Büyük İşletme)", desi: 50.0, kategori: "Elektronik/Cihaz", oncelik: 301 },
-    { name: "SES SİSTEMİ HOPARLÖRÜ (Stadyum Tipi, Tek)", desi: 105.0, kategori: "Elektronik/Hacimli", oncelik: 302 },
-    { name: "AYDINLATMA DİREĞİ (6 Metre)", desi: 75.0, kategori: "Yapı/Hacimli", oncelik: 302 },
-    { name: "GÜVENLİK KAMERASI SİSTEMİ (NVR Kayıt Cihazı)", desi: 28.0, kategori: "Elektronik/Cihaz", oncelik: 303 },
-    { name: "OFİS KİTAPLIK (Raflı, Demonre)", desi: 45.0, kategori: "Mobilya", oncelik: 303 },
-    { name: "ÇALIŞMA KOLTUĞU (Ergonomik, Kutusunda)", desi: 38.0, kategori: "Mobilya", oncelik: 304 },
-    { name: "BEKLEME KOLTUĞU (2'li, Demonre)", desi: 50.0, kategori: "Mobilya", oncelik: 304 },
-    { name: "CAFE MASA SANDALYE SETİ (4 Kişilik)", desi: 65.0, kategori: "Mobilya", oncelik: 305 },
-    { name: "PLASTİK SU DEPOSU (1 Tonluk, Boş)", desi: 110.0, kategori: "Hacimli", oncelik: 305 },
-    { name: "ENDÜSTRİYEL YAĞ VARİLİ (200 Litre, Dolu)", desi: 220.0, kategori: "Kimyasal/Ağır", oncelik: 306 },
-    { name: "TEHLİKELİ ATIK SAKLAMA KABI (Büyük)", desi: 95.0, kategori: "Kimyasal/Hacimli", oncelik: 306 },
-    { name: "AĞIR HİZMET TİPİ TAŞIMA KONTEYNERİ (Boş)", desi: 160.0, kategori: "Ambalaj/Hacimli", oncelik: 307 },
-    { name: "PALET ÜSTÜ KARTON KUTU STOĞU (100 Adet)", desi: 42.0, kategori: "Ambalaj/Hacimli", oncelik: 307 },
-    { name: "BÜYÜK BOY ÖZEL TAŞIMA SANDIĞI (Ahşap)", desi: 78.0, kategori: "Ambalaj", oncelik: 308 },
-    { name: "KOLİ İÇİ KORUYUCU KÖPÜK BALYASI", desi: 30.0, kategori: "Ambalaj/Hacimli", oncelik: 308 },
-    { name: "OTOMATİK KAPATMA MAKİNESİ (Ambalaj)", desi: 120.0, kategori: "Ambalaj Makine", oncelik: 309 },
-    { name: "TARTIM KÖPRÜSÜ SENSÖRÜ (Büyük Parça)", desi: 65.0, kategori: "Endüstriyel Parça", oncelik: 309 },
-    { name: "FABRİKA OTOMASYON PANELİ (Büyük)", desi: 85.0, kategori: "Endüstriyel Sistem", oncelik: 310 },
-    { name: "ENDÜSTRİYEL ISITICI FAN (Geniş Alan)", desi: 55.0, kategori: "Isıtma/Soğutma", oncelik: 310 },
-    { name: "HAVALANDIRMA FİLTRE ÜNİTESİ (Büyük)", desi: 48.0, kategori: "Isıtma/Soğutma", oncelik: 311 },
-    { name: "YANGIN SÖNDÜRME SİSTEMİ MERKEZİ ÜNİTE", desi: 60.0, kategori: "Güvenlik/Cihaz", oncelik: 311 },
-    { name: "İLK YARDIM DOLABI (Büyük Duvar Tipi)", desi: 32.0, kategori: "Güvenlik", oncelik: 312 },
-    { name: "İŞ GÜVENLİK BARİYERİ (Modüler, 5 Adet)", desi: 40.0, kategori: "Güvenlik/Hacimli", oncelik: 312 },
-    { name: "METAL İŞÇİLİK TEZGAHI (Sabit Tip)", desi: 110.0, kategori: "Sanayi Mobilya", oncelik: 313 },
-    { name: "HAVALI EL ALETİ KOMPLE SET (Büyük Çanta)", desi: 45.0, kategori: "Sanayi Alet", oncelik: 313 },
-    { name: "KAYNAK MASASI (Döner Tablalı)", desi: 70.0, kategori: "Sanayi Mobilya", oncelik: 314 },
-    { name: "CNC YEDEK PARÇA STOK DOLABI", desi: 52.0, kategori: "Sanayi Mobilya", oncelik: 314 },
-    { name: "İŞ ÖNLÜĞÜ VE İŞ AYAKKABISI KUTUSU (10 Set)", desi: 38.0, kategori: "Tekstil/Güvenlik", oncelik: 315 },
-    { name: "BÜYÜK ENDÜSTRİYEL BASKI KALIBI", desi: 90.0, kategori: "Sanayi Alet", oncelik: 315 },
-    { name: "HAVALANDIRMA KANALI (Spiral Boru, 6 Metre)", desi: 55.0, kategori: "Yapı/Hacimli", oncelik: 316 },
-    { name: "ÇATI İZOLASYON MALZEMESİ (Balya)", desi: 40.0, kategori: "Yapı Malzemesi", oncelik: 316 },
-    { name: "DUVAR KAĞIDI RULOSU (Ticari Boyut, 10 Adet)", desi: 30.0, kategori: "Yapı Malzemesi", oncelik: 317 },
-    { name: "BANYO DOLABI (Çift Lavabolu, Demonre)", desi: 75.0, kategori: "Mobilya", oncelik: 317 },
-    { name: "DUŞ TEKNESİ (Akrilik, Büyük Boy)", desi: 45.0, kategori: "Yapı/Hacimli", oncelik: 318 },
-    { name: "JAKUZİ MOTOR VE POMPA SİSTEMİ", desi: 60.0, kategori: "Tesisat/Cihaz", oncelik: 318 },
-    { name: "KLOZET TAKIMI (Rezervuar Dahil, Kutusunda)", desi: 35.0, kategori: "Yapı/Hacimli", oncelik: 319 },
-    { name: "MUTFAK TEZGAHI (Granit, 2 Metre)", desi: 95.0, kategori: "Yapı/Ağır", oncelik: 319 },
-    { name: "MUTFAK ASPİRATÖRÜ (Ada Tipi, Büyük)", desi: 48.0, kategori: "Mutfak Cihazı", oncelik: 320 },
-    { name: "OCAK (Ankastre, 5 Gözlü)", desi: 22.0, kategori: "Mutfak Cihazı", oncelik: 320 },
-    { name: "FIRIN (Mini Boy, Ticari)", desi: 30.0, kategori: "Mutfak Cihazı", oncelik: 321 },
-    { name: "TİCARİ KAHVE ÖĞÜTÜCÜ", desi: 25.0, kategori: "Mutfak Cihazı", oncelik: 321 },
-    { name: "BÜYÜK BOY DİKEY DERİN DONDURUCU", desi: 90.0, kategori: "Beyaz Eşya", oncelik: 322 },
-    { name: "ÇAMAŞIR KURUTMA MAKİNESİ", desi: 65.0, kategori: "Beyaz Eşya", oncelik: 322 },
-    { name: "BULAŞIK MAKİNESİ (Sanayi Tipi, Bardak)", desi: 120.0, kategori: "Mutfak Ekipman", oncelik: 323 },
-    { name: "ÇAY KAZANI (Büyük Kapasiteli)", desi: 55.0, kategori: "Mutfak Ekipman", oncelik: 323 },
-    { name: "TOST MAKİNESİ (Sanayi Tipi, Çift Plakalı)", desi: 40.0, kategori: "Mutfak Ekipman", oncelik: 324 },
-    { name: "TİCARİ MİKSER (Büyük Hazneli)", desi: 60.0, kategori: "Mutfak Ekipman", oncelik: 324 },
-    { name: "BÜYÜK BOY AKVARYUM (Boş, Cam)", desi: 85.0, kategori: "Hacimli/Hassas", oncelik: 325 },
-    { name: "GİYİNME ODASI DOLABI (Modüler, 3 Kutu)", desi: 110.0, kategori: "Mobilya", oncelik: 325 },
-    { name: "GENÇ ODASI TAKIMI (Yatak+Dolap+Çalışma Masası)", desi: 150.0, kategori: "Mobilya Seti", oncelik: 326 },
-    { name: "BEBEK KARYOLASI (Büyük Model, Demonre)", desi: 40.0, kategori: "Mobilya", oncelik: 326 },
-    { name: "TV KOLTUĞU/SİNEMA KOLTUĞU (Tekli)", desi: 55.0, kategori: "Mobilya", oncelik: 327 },
-    { name: "PUF KOLTUK (Büyük, 2 Adet)", desi: 30.0, kategori: "Mobilya", oncelik: 327 },
-    { name: "SEHPA SETİ (3'lü, Büyük)", desi: 25.0, kategori: "Mobilya", oncelik: 328 },
-    { name: "BAHÇE ŞEMSİYESİ (Büyük Çap, Ayaklı)", desi: 70.0, kategori: "Bahçe Ekipman", oncelik: 328 },
-    { name: "KATLANIR KAMÇI YATAK (2 Kişilik)", desi: 35.0, kategori: "Kamp Ekipman", oncelik: 329 },
-    { name: "KAMÇI ÇADIRI (8 Kişilik, Kutusunda)", desi: 45.0, kategori: "Kamp Ekipman", oncelik: 329 },
-    { name: "KANO/KAYAK (Tek Kişilik, Sert Gövde)", desi: 55.0, kategori: "Spor Ekipman", oncelik: 330 },
-    { name: "KOŞU BANDI (Motorlu, Büyük Model)", desi: 85.0, kategori: "Spor Ekipman", oncelik: 330 },
-    { name: "AĞIRLIK SEHPASI (Ayarlanabilir)", desi: 50.0, kategori: "Spor Ekipman", oncelik: 331 },
-    { name: "BİSİKLET TAMİR STANDI (Profesyonel)", desi: 20.0, kategori: "Spor Ekipman", oncelik: 331 },
-    { name: "ATV LASTİĞİ (4 Adet, Koli)", desi: 65.0, kategori: "Taşıt Parça", oncelik: 332 },
-    { name: "DENİZ MOTORU (Küçük Dıştan Takma)", desi: 55.0, kategori: "Taşıt Parça", oncelik: 332 },
-    { name: "OTOMOBİL ÇEKİ DEMİRİ (Komple Kit)", desi: 40.0, kategori: "Taşıt Parça", oncelik: 333 },
-    { name: "OTOMOBİL ŞASİ PARÇASI (Ön Panel)", desi: 75.0, kategori: "Taşıt Parça", oncelik: 333 },
-    { name: "OTOMOBİL GÖVDE PANELİ (Kaput/Bagaj Kapağı)", desi: 60.0, kategori: "Taşıt Parça", oncelik: 334 },
-    { name: "MOTORLU BİSİKLET KASASI (Kutulu)", desi: 45.0, kategori: "Taşıt Parça", oncelik: 334 },
-    { name: "TARIM MAKİNESİ YEDEK TEKERLEK", desi: 90.0, kategori: "Tarım Parça", oncelik: 335 },
-    { name: "TARIM EKİPMANLARI KAZANCI (Büyük)", desi: 110.0, kategori: "Tarım Ekipman", oncelik: 335 },
-    { name: "ZİRAAT İLAÇLAMA POMPASI (Sırt Tipi, 10 Adet)", desi: 40.0, kategori: "Tarım Ekipman", oncelik: 336 },
-    { name: "TOHUM EKME MAKİNESİ (Küçük Manuel)", desi: 60.0, kategori: "Tarım Ekipman", oncelik: 336 },
-    { name: "MİNERAL GÜBRE ÇUVALI PALETİ (20 Adet)", desi: 150.0, kategori: "Tarım/Ağır", oncelik: 337 },
-    { name: "BÜYÜK TİP SU POMPASI (Dizel Motorlu)", desi: 140.0, kategori: "Endüstriyel Cihaz", oncelik: 337 },
-    { name: "ELEKTRİKLİ FORKLİFT AKÜSÜ (Ağır)", desi: 220.0, kategori: "Endüstriyel Parça", oncelik: 338 },
-    { name: "SANAYİ TİPİ VAKUM MAKİNESİ", desi: 95.0, kategori: "Endüstriyel Cihaz", oncelik: 338 },
-    { name: "TARTI SİSTEMİ KALİBRASYON AĞIRLIĞI (100 Kg)", desi: 110.0, kategori: "Endüstriyel Alet", oncelik: 339 },
-    { name: "FABRİKA TİPİ KAYAN KAPI MOTORU", desi: 50.0, kategori: "Endüstriyel Parça", oncelik: 339 },
-    { name: "ENDÜSTRİYEL KANALİZASYON BORUSU (3 Metre)", desi: 75.0, kategori: "Tesisat/Hacimli", oncelik: 340 },
-    { name: "PETROL BORU HATTI VANA MEKANİZMASI", desi: 120.0, kategori: "Tesisat/Ağır", oncelik: 340 },
-    { name: "DOĞAL GAZ DAĞITIM REGÜLATÖRÜ (Büyük Tip)", desi: 60.0, kategori: "Tesisat/Ağır", oncelik: 341 },
-    { name: "SICAK SU KAZANI (Büyük Kapasiteli)", desi: 190.0, kategori: "Isıtma/Ağır", oncelik: 341 },
-    { name: "YERDEN ISITMA KOLEKTÖR DOLABI (Büyük)", desi: 45.0, kategori: "Tesisat", oncelik: 342 },
-    { name: "HAVALANDIRMA SUSTURUCU ÜNİTESİ", desi: 80.0, kategori: "Isıtma/Soğutma", oncelik: 342 },
-    { name: "KLİMA DIŞ ÜNİTESİ (VRF Sistemi)", desi: 150.0, kategori: "Isıtma/Soğutma", oncelik: 343 },
-    { name: "ELEKTRİK PANOSU (Ana Dağıtım, Büyük)", desi: 95.0, kategori: "Elektrik/Ağır", oncelik: 343 },
-    { name: "YANGIN SUYU DEPOSU (Fiberglas, 2 Tonluk)", desi: 220.0, kategori: "Güvenlik/Hacimli", oncelik: 344 },
-    { name: "TRAFO (Orta Gerilim, Yağlı Tip)", desi: 400.0, kategori: "Elektrik/Ağır", oncelik: 344 },
-    { name: "ENERJİ KABLOSU RULOSU (1000 Metre, Ağır)", desi: 180.0, kategori: "Elektrik/Ağır", oncelik: 345 },
-    { name: "AYDINLATMA ARMÜRÜ (Ticari Alan, Koli 10 Adet)", desi: 40.0, kategori: "Elektrik", oncelik: 345 },
-    { name: "GÜVENLİK BARİYER SİSTEMİ (Otomobil Park)", desi: 55.0, kategori: "Güvenlik/Yapı", oncelik: 346 },
-    { name: "YÜKSEK HIZLI FOTOĞRAF MAKİNESİ (Endüstriyel)", desi: 70.0, kategori: "Elektronik/Cihaz", oncelik: 346 },
-    { name: "BÜYÜK DUVAR TİPİ SERVER KABİNİ (Dolu)", desi: 110.0, kategori: "Elektronik/Ağır", oncelik: 347 },
-    { name: "BİLGİSAYAR MONİTÖRÜ (Ultra Geniş, Koli)", desi: 35.0, kategori: "Elektronik", oncelik: 347 },
-    { name: "OFİS DOSYA DOLABI (Yüksek, Çelik)", desi: 60.0, kategori: "Mobilya", oncelik: 348 },
-    { name: "OFİS KANEPE (3 Kişilik)", desi: 85.0, kategori: "Mobilya", oncelik: 348 },
-    { name: "OTEL ODA MİNİBARI (Kutulu)", desi: 28.0, kategori: "Beyaz Eşya", oncelik: 349 },
-    { name: "VALİZ TAŞIMA ARABASI (Otel Tipi)", desi: 32.0, kategori: "Mobilya", oncelik: 349 },
-    { name: "HAVLU KURUTUCU RADYATÖR (Büyük)", desi: 18.0, kategori: "Isıtma", oncelik: 350 },
-    { name: "ENDÜSTRİYEL ASPİRATÖR MOTORU (Büyük)", desi: 50.0, kategori: "Mutfak Ekipman", oncelik: 350 },
-    { name: "PASLANMAZ ÇELİK TEZGAH (2 Metre)", desi: 75.0, kategori: "Mutfak Ekipman", oncelik: 351 },
-    { name: "ENDÜSTRİYEL GIDA MİKSERİ (Ayaklı)", desi: 130.0, kategori: "Mutfak Ekipman", oncelik: 351 },
-    { name: "BÜYÜK ENDÜSTRİYEL DAVLUMBAZ (Parça)", desi: 65.0, kategori: "Mutfak Ekipman", oncelik: 352 },
-    { name: "TİCARİ KAHVE KAVURMA MAKİNESİ", desi: 180.0, kategori: "Mutfak Ekipman", oncelik: 352 },
-    { name: "GIDA AMBALAJ MAKİNESİ (Vakum)", desi: 90.0, kategori: "Ambalaj Makine", oncelik: 353 },
-    { name: "KONSERVE YAPMA MAKİNESİ (Manuel)", desi: 55.0, kategori: "Mutfak Ekipman", oncelik: 353 },
-    { name: "BÜYÜK BOY ÖZEL YAPIM AKVARYUM (Boş)", desi: 120.0, kategori: "Hacimli/Hassas", oncelik: 354 },
-    { name: "CAM BALKON SİSTEMİ (Raylı Panel Seti)", desi: 135.0, kategori: "Yapı/Hacimli", oncelik: 354 },
-    { name: "ÇELİK KAPI (Giriş Tipi, Kutusunda)", desi: 95.0, kategori: "Yapı/Ağır", oncelik: 355 },
-    { name: "PVC PENCERE SETİ (Isıcamlı, Büyük)", desi: 70.0, kategori: "Yapı/Hacimli", oncelik: 355 },
-    { name: "ALÜMİNYUM KORKULUK (3 Metre)", desi: 48.0, kategori: "Yapı/Hacimli", oncelik: 356 },
-    { name: "MERMER MERDİVEN BASAMAĞI (5 Adet)", desi: 110.0, kategori: "Yapı/Ağır", oncelik: 356 },
-    { name: "DEKORATİF TAŞ PANEL (10 m² Kutu)", desi: 90.0, kategori: "Yapı Malzemesi", oncelik: 357 },
-    { name: "İNŞAAT VİBRASYON MAKİNESİ (Büyük)", desi: 65.0, kategori: "İnşaat Aleti", oncelik: 357 },
-    { name: "ELEKTRİKLİ ZEMİN KIRICI (Hilti Tipi)", desi: 40.0, kategori: "İnşaat Aleti", oncelik: 358 },
-    { name: "KUM SAÇMA MAKİNESİ (Küçük Basınçlı)", desi: 55.0, kategori: "İnşaat Aleti", oncelik: 358 },
-    { name: "İNŞAAT İSKELE DEMİRİ (10 Adet Boy)", desi: 80.0, kategori: "İnşaat/Yapı", oncelik: 359 },
-    { name: "BETON DÖKME POMPASI (Mobil Parça)", desi: 140.0, kategori: "İnşaat/Ağır", oncelik: 359 },
-    { name: "SU YALITIMI MEMBRANI RULOSU (Kalın)", desi: 50.0, kategori: "Yapı Malzemesi", oncelik: 360 },
-    { name: "HAVUZ KAPLAMA MALZEMESİ BALYASI", desi: 45.0, kategori: "Yapı Malzemesi", oncelik: 360 },
-    { name: "SERAMİK YAPIŞTIRICI HARÇ (Palet 20 Torba)", desi: 100.0, kategori: "Yapı/Ağır", oncelik: 361 },
-    { name: "SİLİKON CEPHE PROFİLİ (6 Metre)", desi: 35.0, kategori: "Yapı Malzemesi", oncelik: 361 },
-    { name: "DUVAR YALITIM KÖPÜĞÜ (Balya 10 Adet)", desi: 42.0, kategori: "Yapı Malzemesi", oncelik: 362 },
-    { name: "ÇATI SANDVİÇ PANELİ (2m x 1m)", desi: 60.0, kategori: "Yapı/Hacimli", oncelik: 362 },
-    { name: "ZEMİN KAPLAMA VİNİL RULOSU (Büyük)", desi: 55.0, kategori: "Yapı Malzemesi", oncelik: 363 },
-    { name: "BAHÇE ÇİM RULOSU (Palet, 20 m²)", desi: 120.0, kategori: "Bahçe/Ağır", oncelik: 363 },
-    { name: "PEYZAJ SULAMA KONTROL ÜNİTESİ", desi: 30.0, kategori: "Bahçe/Cihaz", oncelik: 364 },
-    { name: "AĞAÇ BUDAMA MAKİNESİ (Motorlu)", desi: 48.0, kategori: "Bahçe/Alet", oncelik: 364 },
-    { name: "TARIM SULAMA BORUSU (Büyük Rulo)", desi: 70.0, kategori: "Tarım/Hacimli", oncelik: 365 },
-    { name: "SU POMPASI DİZEL MOTORU", desi: 95.0, kategori: "Endüstriyel Parça", oncelik: 365 },
-    { name: "HAVALANDIRMA FAN PERVANESİ (Büyük Çap)", desi: 40.0, kategori: "Endüstriyel Parça", oncelik: 366 },
-    { name: "FABRİKA ISITMA KALORİFER KAZANI (Demonte)", desi: 280.0, kategori: "Isıtma/Ağır", oncelik: 366 },
-    { name: "BÜYÜK BOY REZİSTANS (Endüstriyel)", desi: 50.0, kategori: "Endüstriyel Parça", oncelik: 367 },
-    { name: "BUHAR KAZANI YEDEK PARÇASI (Basınçlı Kap)", desi: 110.0, kategori: "Endüstriyel Parça", oncelik: 367 },
-    { name: "SINAİ TİP KOMPRESÖR YAĞI VARİLİ (100 L)", desi: 105.0, kategori: "Kimyasal/Ağır", oncelik: 368 },
-    { name: "MAKİNE TAŞIMA VİNÇ YEDEK PARÇASI (Halat)", desi: 85.0, kategori: "Endüstriyel Parça", oncelik: 368 },
-    { name: "ENDÜSTRİYEL TAŞIMA ARABASI (Platform)", desi: 70.0, kategori: "Depo Ekipman", oncelik: 369 },
-    { name: "HİDROLİK TRANSLPALET (Manuel)", desi: 90.0, kategori: "Depo Ekipman", oncelik: 369 },
-    { name: "PALET ÜSTÜ ETİKET YAZICI (Endüstriyel)", desi: 40.0, kategori: "Ambalaj Makine", oncelik: 370 },
-    { name: "OTOMATİK STREÇ FİLM KESME CİHAZI", desi: 35.0, kategori: "Ambalaj Makine", oncelik: 370 },
-    { name: "BÜYÜK BOY AHŞAP KABLO MAKARASI (Boş)", desi: 60.0, kategori: "Elektrik/Hacimli", oncelik: 371 },
-    { name: "TELEKOMÜNİKASYON KABİNİ (Dış Ortam)", desi: 80.0, kategori: "Elektronik/Hacimli", oncelik: 371 },
-    { name: "SERVER RAFI (42U, Kilitli Kabin)", desi: 120.0, kategori: "Elektronik/Hacimli", oncelik: 372 },
-    { name: "GÜVENLİK BARİYERİ (Kolçaklı Geçiş Sistemi)", desi: 45.0, kategori: "Güvenlik/Yapı", oncelik: 372 },
-    { name: "YOL ÇİZGİ BOYASI KOVASI (5 Adet)", desi: 30.0, kategori: "Yapı/Kimyasal", oncelik: 373 },
-    { name: "TARAÇA SU YALITIMI MALZEMESİ (Balya)", desi: 40.0, kategori: "Yapı Malzemesi", oncelik: 373 },
-    { name: "BANYO AKSESUAR SETİ (Toptan Koli)", desi: 20.0, kategori: "Yapı/Hacimli", oncelik: 374 },
-    { name: "DUŞ KABİNİ CAM PANELİ (Büyük Boy)", desi: 35.0, kategori: "Yapı/Hassas", oncelik: 374 },
-    { name: "AYNALI DOLAP (Banyo, Büyük)", desi: 25.0, kategori: "Mobilya/Hassas", oncelik: 375 },
-    { name: "WC TAŞI (Asma Klozet, Kutusunda)", desi: 28.0, kategori: "Yapı/Hacimli", oncelik: 375 },
-    { name: "MUTFAK EVYESİ (Çift Gözlü, Paslanmaz)", desi: 22.0, kategori: "Yapı/Hacimli", oncelik: 376 },
-    { name: "ANKASTRE DAVLUMBAZ (Geniş Model)", desi: 32.0, kategori: "Mutfak Cihazı", oncelik: 376 },
-    { name: "MİKRODALGA FIRIN (Dahili Tip, Ankastre)", desi: 25.0, kategori: "Mutfak Cihazı", oncelik: 377 },
-    { name: "DERİN DONDURUCU (Sandık Tipi, Büyük)", desi: 110.0, kategori: "Beyaz Eşya", oncelik: 377 },
-    { name: "ÇAMAŞIR MAKİNESİ (Kurutmalı Model)", desi: 70.0, kategori: "Beyaz Eşya", oncelik: 378 },
-    { name: "KLİMA İÇ ÜNİTE (Salon Tipi, Büyük)", desi: 45.0, kategori: "Isıtma/Soğutma", oncelik: 378 },
-    { name: "BUZ YAPMA MAKİNESİ (Büyük Ticari)", desi: 110.0, kategori: "Mutfak Ekipman", oncelik: 379 },
-    { name: "SÜT SOĞUTMA TANKI (Küçük Çiftlik Tipi)", desi: 180.0, kategori: "Mutfak Ekipman", oncelik: 379 },
-    { name: "BÜYÜK SANAYİ TİPİ ASPİRATÖR (Metal)", desi: 95.0, kategori: "Mutfak Ekipman", oncelik: 380 },
-    { name: "TİCARİ BAR BLENDERI (3 Adet Kutu)", desi: 30.0, kategori: "Mutfak Ekipman", oncelik: 380 },
-    { name: "HASTANE TEKERLEKLİ SEDYE", desi: 60.0, kategori: "Medikal/Hacimli", oncelik: 381 },
-    { name: "TIBBİ CİHAZ (Ultrasonografi Cihazı, Kutulu)", desi: 85.0, kategori: "Medikal/Cihaz", oncelik: 381 },
-    { name: "TEKERLEKLİ OFİS SANDALYESİ (5 Adet Kutu)", desi: 45.0, kategori: "Mobilya", oncelik: 382 },
-    { name: "METAL ALET DOLABI (Çekmeceli, Büyük)", desi: 80.0, kategori: "Mobilya", oncelik: 382 },
-    { name: "MODÜLER RAF SİSTEMİ (4 Kutu Parça)", desi: 70.0, kategori: "Mobilya", oncelik: 383 },
-    { name: "ÇELİK MASA AYAĞI (4 Adet, Ağır)", desi: 35.0, kategori: "Mobilya Parça", oncelik: 383 },
-    { name: "BAHÇE DEPO KUTUSU (Plastik, Büyük)", desi: 50.0, kategori: "Bahçe Ekipman", oncelik: 384 },
-    { name: "HAVUZ TEMİZLEME ROBOTU (Kutulu)", desi: 28.0, kategori: "Bahçe Ekipman", oncelik: 384 },
-    { name: "BÜYÜK BOY ÇİM BİÇME MAKİNESİ (Sürücülü)", desi: 150.0, kategori: "Bahçe/Taşıt", oncelik: 385 },
-    { name: "TARIM İLAÇLAMA MAKİNESİ (Tekerlekli)", desi: 75.0, kategori: "Tarım Ekipman", oncelik: 385 },
-    { name: "DİNAMO (Büyük Güç, Yedek Parça)", desi: 60.0, kategori: "Endüstriyel Parça", oncelik: 386 },
-    { name: "PANO İÇİ AYDINLATMA TRAFOSU", desi: 25.0, kategori: "Elektrik", oncelik: 386 },
-    { name: "GÜVENLİK KAMERASI SİSTEMİ (Dome Kamera, 10 Adet)", desi: 30.0, kategori: "Elektronik", oncelik: 387 },
-    { name: "LED EKRAN (Büyük Reklam Panosu, Tek Panel)", desi: 70.0, kategori: "Elektronik/Yapı", oncelik: 387 },
-    { name: "DATA KABİNİ (Açık Tip, Büyük)", desi: 55.0, kategori: "Elektronik/Hacimli", oncelik: 388 },
-    { name: "ELEKTRONİK ÖLÇÜM CİHAZI (Endüstriyel)", desi: 40.0, kategori: "Endüstriyel Alet", oncelik: 388 },
-    { name: "PLASTİK BORU DÖŞEME MAKİNESİ (El Tipi)", desi: 35.0, kategori: "İnşaat Aleti", oncelik: 389 },
-    { name: "ÇİT TELİ RULOSU (100 Metre, Ağır)", desi: 75.0, kategori: "Yapı Malzemesi", oncelik: 389 },
-    { name: "DUVAR YALITIM PANELİ (5 Adet)", desi: 60.0, kategori: "Yapı Malzemesi", oncelik: 390 },
-    { name: "İÇ CEPHE BOYA PALETİ (20 Kova)", desi: 70.0, kategori: "Kimyasal/Ağır", oncelik: 390 },
-    { name: "EPOKSİ ZEMİN KAPLAMA KİTİ (Büyük Set)", desi: 85.0, kategori: "Kimyasal/Ağır", oncelik: 391 },
-    { name: "SU DEPOSU İÇİN ŞAMANDIRA SİSTEMİ (Büyük)", desi: 20.0, kategori: "Tesisat", oncelik: 391 },
-    { name: "KLİMA VEYA KOMBİ MONTAJ KİTİ (Boru Seti)", desi: 30.0, kategori: "Tesisat", oncelik: 392 },
-    { name: "BÜYÜK BOY MUTFAK RAF SİSTEMİ (Paslanmaz)", desi: 65.0, kategori: "Mutfak Ekipman", oncelik: 392 },
-    { name: "TİCARİ OCAK (4 Gözlü, Ayaklı)", desi: 75.0, kategori: "Mutfak Ekipman", oncelik: 393 },
-    { name: "SANAYİ TİPİ EKMEK DİLİMLEME MAKİNESİ", desi: 110.0, kategori: "Mutfak Ekipman", oncelik: 393 },
-    { name: "HAMUR YOĞURMA MAKİNESİ (Küçük Ticari)", desi: 50.0, kategori: "Mutfak Ekipman", oncelik: 394 },
-    { name: "SOĞUK SALATA BAR (Küçük Mobil)", desi: 80.0, kategori: "Mutfak Ekipman", oncelik: 394 },
-    { name: "YEMEK SEHPASI (Katlanabilir, 10 Adet)", desi: 45.0, kategori: "Mobilya", oncelik: 395 },
-    { name: "OFİS KANEPE TAKIMI (3+1, Demonre)", desi: 130.0, kategori: "Mobilya", oncelik: 395 },
-    { name: "TV SEHPASI (Büyük, Demonre)", desi: 40.0, kategori: "Mobilya", oncelik: 396 },
-    { name: "YÜKLÜK DOLABI (Boydan Boya, Demonre)", desi: 65.0, kategori: "Mobilya", oncelik: 396 },
-    { name: "KİLİTLİ ÇEKMECELİ DOLAP (5 Çekmece)", desi: 55.0, kategori: "Mobilya", oncelik: 397 },
-    { name: "GİYİNME ODASI AYNASI (Büyük Boy, Kutusunda)", desi: 35.0, kategori: "Mobilya/Hassas", oncelik: 397 },
-    { name: "OTOMOBİL LASTİK DEPOLAMA RAFI (Demonre)", desi: 70.0, kategori: "Taşıt/Depo", oncelik: 398 },
-    { name: "OTOMOBİL YEDEK PARÇA KUTUSU (Ağır)", desi: 40.0, kategori: "Taşıt Parça", oncelik: 398 },
-    { name: "JANT KORUYUCU KAPAK SETİ (5 Adet)", desi: 25.0, kategori: "Taşıt Parça", oncelik: 399 },
-    { name: "MOTORLU ARAÇ AKÜSÜ (Büyük Kamyon Tipi)", desi: 60.0, kategori: "Taşıt Parça/Ağır", oncelik: 399 },
-    { name: "ÇELİK TAMPON (Ağır Hizmet Tipi)", desi: 50.0, kategori: "Taşıt Parça", oncelik: 400 },
-    { name: "TARIM TRAKTÖRÜ KABİN CAMI (Büyük)", desi: 45.0, kategori: "Tarım Parça/Hassas", oncelik: 400 },
-    { name: "ZİRAAT GÜBRE SERPME MAKİNESİ (Küçük Manuel)", desi: 65.0, kategori: "Tarım Ekipman", oncelik: 401 },
-    { name: "BÜYÜK TARIM SULAMA FİLTRE TANKI", desi: 90.0, kategori: "Tarım Ekipman", oncelik: 401 },
-    { name: "ENDÜSTRİYEL FAN MOTORU (Ağır)", desi: 85.0, kategori: "Endüstriyel Parça", oncelik: 402 },
-    { name: "FABRİKA OTOMASYON SENSÖRÜ (Büyük Kutu)", desi: 30.0, kategori: "Endüstriyel Parça", oncelik: 402 },
-    { name: "BÜYÜK BOY KİMYASAL POMPA", desi: 70.0, kategori: "Endüstriyel Cihaz", oncelik: 403 },
-    { name: "ELEKTRİKLİ ISITICI PANEL (Büyük Sanayi)", desi: 55.0, kategori: "Isıtma/Soğutma", oncelik: 403 },
-    { name: "BÜYÜK TİP SU SAYACI (Endüstriyel)", desi: 40.0, kategori: "Tesisat", oncelik: 404 },
-    { name: "ELEKTRİK KABLOSU TOPLAMA MAKARASI (Sanayi)", desi: 60.0, kategori: "Elektrik/Hacimli", oncelik: 404 },
-    { name: "JENERATÖR YAKIT TANKI (Boş)", desi: 75.0, kategori: "Enerji/Hacimli", oncelik: 405 },
-    { name: "GÜVENLİK KAMERASI DİKİŞ DİREĞİ (4 Metre)", desi: 50.0, kategori: "Yapı/Hacimli", oncelik: 405 },
-    { name: "YANGIN SÖNDÜRME CİHAZI (12 Kg, 5 Adet)", desi: 35.0, kategori: "Güvenlik/Ağır", oncelik: 406 },
-    { name: "BÜYÜK İŞARET LEVHASI (Metal, 2 Metre)", desi: 40.0, kategori: "Yapı/Hacimli", oncelik: 406 },
-    { name: "BÜYÜK BOY KARTON KUTU STOĞU (50 Adet)", desi: 30.0, kategori: "Ambalaj/Hacimli", oncelik: 407 },
-    { name: "KÖPÜK AMBALAJ MALZEMESİ (Büyük Hacim)", desi: 25.0, kategori: "Ambalaj/Hacimli", oncelik: 407 },
-    { name: "PALET (Ahşap, Euro Tip, 5 Adet)", desi: 45.0, kategori: "Ambalaj/Hacimli", oncelik: 408 },
-    { name: "ÇELİK TEL İP RULOSU (200 Metre)", desi: 70.0, kategori: "Metal/Ağır", oncelik: 408 },
-    { name: "ALÜMİNYUM MERDİVEN (Teleskopik, Büyük)", desi: 48.0, kategori: "Yapı/Hacimli", oncelik: 409 },
-    { name: "İNŞAAT MALZEMESİ TAŞIMA ARABASI (2 Tekerlekli)", desi: 55.0, kategori: "İnşaat Aleti", oncelik: 409 },
-    { name: "BETON KESME DİSKİ (Büyük Çap, 10 Adet)", desi: 40.0, kategori: "İnşaat Aleti", oncelik: 410 },
-    { name: "HARÇ KARIŞTIRMA MİKSERİ (Endüstriyel)", desi: 65.0, kategori: "İnşaat Aleti", oncelik: 410 },
-    { name: "İNŞAAT KİREMİTİ BALYASI (100 Adet)", desi: 110.0, kategori: "Yapı/Ağır", oncelik: 411 },
-    { name: "KALIP YAĞI VARİLİ (100 Litre)", desi: 95.0, kategori: "Kimyasal/Ağır", oncelik: 411 },
-    { name: "DUVAR BOYASI (Plastik, 5 Kova)", desi: 35.0, kategori: "Kimyasal/Ağır", oncelik: 412 },
-    { name: "BÜYÜK BOY BANYO KÜVETİ (Akrilik)", desi: 60.0, kategori: "Yapı/Hacimli", oncelik: 412 },
-    { name: "DUŞAKABİN CAM KAPI (Sürgülü Sistem)", desi: 40.0, kategori: "Yapı/Hassas", oncelik: 413 },
-    { name: "BANYO TERMOSTATİK BATARYA SETİ (Koli)", desi: 20.0, kategori: "Tesisat", oncelik: 413 },
-    { name: "MUTFAK TEZGAH ARASI CAM PANELİ", desi: 25.0, kategori: "Yapı/Hassas", oncelik: 414 },
-    { name: "ANKASTRE MİKRODALGA FIRIN", desi: 30.0, kategori: "Mutfak Cihazı", oncelik: 414 },
-    { name: "BÜYÜK BOY BUZDOLABI (Tek Kapılı)", desi: 85.0, kategori: "Beyaz Eşya", oncelik: 415 },
-    { name: "EV TİPİ SU SEBİLİ (Alttan Damacanalı)", desi: 28.0, kategori: "Beyaz Eşya", oncelik: 415 },
-    { name: "DERİN DONDURUCU (Dikey, Orta Boy)", desi: 70.0, kategori: "Beyaz Eşya", oncelik: 416 },
-    { name: "ÇAMAŞIR MAKİNESİ (Ticari, 10 Kg)", desi: 80.0, kategori: "Beyaz Eşya", oncelik: 416 },
-    { name: "KLİMA DIŞ ÜNİTESİ (Büyük Ticari)", desi: 110.0, kategori: "Isıtma/Soğutma", oncelik: 417 },
-    { name: "ENDÜSTRİYEL KAHVE MAKİNESİ (Otomatik)", desi: 95.0, kategori: "Mutfak Ekipman", oncelik: 417 },
-    { name: "TİCARİ IZGARA (LPG'li, Büyük)", desi: 75.0, kategori: "Mutfak Ekipman", oncelik: 418 },
-    { name: "PASLANMAZ ÇELİK RAF (Mutfak, 4 Katlı)", desi: 45.0, kategori: "Mutfak Ekipman", oncelik: 418 },
-    { name: "OKUL SIRASI (2 Kişilik, 5 Adet Paket)", desi: 60.0, kategori: "Mobilya", oncelik: 419 },
-    { name: "OFİS KANEPE (Tekli, Deri)", desi: 45.0, kategori: "Mobilya", oncelik: 419 },
-    { name: "SEHPA (Orta Boy, Metal Ayaklı)", desi: 20.0, kategori: "Mobilya", oncelik: 420 },
-    { name: "ÇOCUK DOLABI (2 Kapılı, Demonre)", desi: 35.0, kategori: "Mobilya", oncelik: 420 },
-    { name: "BAHÇE BAR MASASI (Katlanır, Büyük)", desi: 50.0, kategori: "Bahçe Mobilya", oncelik: 421 },
-    { name: "KAMÇI SANDALYESİ (Katlanır, 10 Adet)", desi: 30.0, kategori: "Kamp Ekipman", oncelik: 421 },
-    { name: "DENİZ BOTU (Şişme, Büyük Boy)", desi: 40.0, kategori: "Spor Ekipman", oncelik: 422 },
-    { name: "YATAK ODASI KOMODİNİ (2 Adet Kutu)", desi: 25.0, kategori: "Mobilya", oncelik: 422 },
-    { name: "MASA TENİSİ MASASI (Katlanır)", desi: 75.0, kategori: "Spor Ekipman", oncelik: 423 },
-    { name: "BASKETBOL POTASI (Duvar Tipi, Büyük)", desi: 40.0, kategori: "Spor Ekipman", oncelik: 423 },
-    { name: "BİSİKLET TAŞIMA RAFI (Oto Arkası)", desi: 30.0, kategori: "Taşıt Ekipman", oncelik: 424 },
-    { name: "OTOMOBİL TEKERLEK JANT SETİ (4 Adet)", desi: 55.0, kategori: "Taşıt Parça", oncelik: 424 },
-    { name: "BÜYÜK KAMYON SİNYALİZASYON LAMBASI (10 Adet)", desi: 20.0, kategori: "Taşıt Parça", oncelik: 425 },
-    { name: "OTOMOBİL SÜSPANSİYON KİTİ (4 Amortisör)", desi: 45.0, kategori: "Taşıt Parça", oncelik: 425 },
-    { name: "TARIM MAKİNESİ DİŞLİ KUTUSU", desi: 80.0, kategori: "Tarım Parça/Ağır", oncelik: 426 },
-    { name: "ELEKTRİKLİ TRAKTÖR ŞARJ ÜNİTESİ", desi: 70.0, kategori: "Tarım Ekipman", oncelik: 426 },
-    { name: "ZİRAAT SULAMA VALF KUTUSU (Büyük)", desi: 30.0, kategori: "Tarım Ekipman", oncelik: 427 },
-    { name: "ENDÜSTRİYEL REDÜKTÖR (Büyük Tip)", desi: 95.0, kategori: "Endüstriyel Parça", oncelik: 427 },
-    { name: "BÜYÜK PANO İÇİ ANA ŞALTER", desi: 40.0, kategori: "Elektrik/Ağır", oncelik: 428 },
-    { name: "KABLO TAŞIMA KANALI (Metal, 3 Metre, 10 Adet)", desi: 60.0, kategori: "Yapı/Hacimli", oncelik: 428 },
-    { name: "ENERJİ DAĞITIM SİSTEMİ PARÇASI (Baralar)", desi: 50.0, kategori: "Elektrik/Ağır", oncelik: 429 },
-    { name: "BÜYÜK BOY İNŞAAT VİDASI PALETİ", desi: 85.0, kategori: "Yapı/Ağır", oncelik: 429 },
-    { name: "MİNERAL YÜN İZOLASYON BALYASI (Kalın)", desi: 45.0, kategori: "Yapı Malzemesi", oncelik: 430 },
-    { name: "ASMA TAVAN PANELİ (10 m² Kutu)", desi: 30.0, kategori: "Yapı Malzemesi", oncelik: 430 },
-    { name: "ÇELİK KAPI KASA VE KANAT SETİ", desi: 120.0, kategori: "Yapı/Ağır", oncelik: 431 },
-    { name: "PENCERE SİNEKLİK SİSTEMİ (10 Adet Kutu)", desi: 20.0, kategori: "Yapı/Hacimli", oncelik: 431 },
-    { name: "SU BORUSU (PVC, 6 Metre, 5 Adet)", desi: 40.0, kategori: "Tesisat/Hacimli", oncelik: 432 },
-    { name: "KOMBİ RADYATÖRÜ (Büyük Boy, 5 Adet)", desi: 55.0, kategori: "Isıtma", oncelik: 432 },
-    { name: "DUŞAKABİN KÜVET ALTLIĞI (Büyük)", desi: 45.0, kategori: "Yapı/Hacimli", oncelik: 433 },
-    { name: "MUTFAK DOLABI KAPAK SETİ (Demonre, 10 Adet)", desi: 35.0, kategori: "Mobilya Parça", oncelik: 433 },
-    { name: "BÜYÜK ENDÜSTRİYEL ASPİRATÖR (Duvar Tipi)", desi: 65.0, kategori: "Mutfak Ekipman", oncelik: 434 },
-    { name: "TİCARİ FRİTÖZ (Çift Sepetli)", desi: 50.0, kategori: "Mutfak Ekipman", oncelik: 434 },
-    { name: "SU ISITICISI (Büyük Termos, Ticari)", desi: 30.0, kategori: "Mutfak Ekipman", oncelik: 435 },
-    { name: "BUHAR JENERATÖRÜ (Küçük Boy)", desi: 40.0, kategori: "Endüstriyel Cihaz", oncelik: 435 },
-    { name: "HASTANE KİLİTLİ İLAÇ DOLABI", desi: 50.0, kategori: "Medikal/Güvenlik", oncelik: 436 },
-    { name: "OFİS KANEPE (Tekli, Kumaş)", desi: 38.0, kategori: "Mobilya", oncelik: 436 },
-    { name: "ÇOCUK OYUN ÇADIRI (Büyük)", desi: 20.0, kategori: "Hacimli", oncelik: 437 },
-    { name: "MİNDER (Büyük Boy, 5 Adet)", desi: 25.0, kategori: "Mobilya", oncelik: 437 },
-    { name: "BAHÇE ÇİTİ PANOSU (Ahşap, 2 Metre, 5 Adet)", desi: 45.0, kategori: "Bahçe/Hacimli", oncelik: 438 },
-    { name: "ATV LASTİĞİ (Tek Adet, Büyük)", desi: 30.0, kategori: "Taşıt Parça", oncelik: 438 },
-    { name: "DENİZ MOTORU YEDEK PERVANE (5 Adet Koli)", desi: 20.0, kategori: "Taşıt Parça", oncelik: 439 },
-    { name: "OTOMOBİL ŞASİ BAĞLANTI PARÇASI (Ağır)", desi: 30.0, kategori: "Taşıt Parça", oncelik: 439 },
-    { name: "TARIM EKİPMANI DİŞLİ SETİ (Kutulu)", desi: 40.0, kategori: "Tarım Parça/Ağır", oncelik: 440 },
-    { name: "ZİRAAT İLAÇLAMA TABANCASI (Profesyonel, 5 Adet)", desi: 20.0, kategori: "Tarım Ekipman", oncelik: 440 },
-    { name: "FABRİKA OTOMASYON VALFİ (Büyük)", desi: 35.0, kategori: "Endüstriyel Parça", oncelik: 441 },
-    { name: "ISI YALITIM MALZEMESİ (Taş Yünü, Balya)", desi: 40.0, kategori: "Yapı Malzemesi", oncelik: 441 },
-    { name: "SU YALITIMI BİTÜM RULOSU (Kalın, Ağır)", desi: 60.0, kategori: "Yapı Malzemesi", oncelik: 442 },
-    { name: "BETON KIRICI UÇ SETİ (Büyük)", desi: 30.0, kategori: "İnşaat Aleti", oncelik: 442 },
-    { name: "ENDÜSTRİYEL SU FİLTRESİ (Büyük Gövde)", desi: 45.0, kategori: "Tesisat", oncelik: 443 },
-    { name: "ELEKTRİK PANOSU İÇ DÜZENLEME KİTİ", desi: 25.0, kategori: "Elektrik", oncelik: 443 },
-    { name: "GÜVENLİK KAMERASI SİSTEMİ (Kablo Rulosu, Büyük)", desi: 20.0, kategori: "Elektronik", oncelik: 444 },
-    { name: "AMBALAJ KÖPÜĞÜ GRANÜL TORBASI (Büyük)", desi: 25.0, kategori: "Ambalaj/Hacimli", oncelik: 444 },
-    { name: "JANT LASTİK (Otomobil)", desi: 35.0, kategori: "Taşıt Parça", oncelik: 445 },
-    { name: "KAMYON LAST", desi: 65.0, kategori: "Lastik", oncelik: 445 },
-    { name: "JEEP LAST", desi: 55.0, kategori: "Lastik", oncelik: 446 },
-    { name: "BEYAZ LASTİK (Oto Lastiği)", desi: 28.0, kategori: "Lastik", oncelik: 446 },
-    { name: "JANTLI BİNK.LAST. (Oto Lastiği)", desi: 28.0, kategori: "Lastik", oncelik: 447 },
-    { name: "BİNEK LASTİK", desi: 28.0, kategori: "Lastik", oncelik: 447 },
-    { name: "Otomobil Tipi Kış Lastiği (1 Adet)", desi: 28.0, kategori: "Lastik", oncelik: 448 },
-    { name: "JANT KAPAĞI (Toptan Koli)", desi: 10.0, kategori: "Jant", oncelik: 448 },
-    { name: "50cc Scooter (Moped, Kutulu)", desi: 38.0, kategori: "Motorlu Taşıt", oncelik: 449 },
-    { name: "100cc Mini Motosiklet (Crated, Demonre)", desi: 52.0, kategori: "Motorlu Taşıt", oncelik: 449 },
-    { name: "50cc Scooter Yedek Gövde Paneli Seti", desi: 14.5, kategori: "Yedek Parça", oncelik: 450 },
-    { name: "Oto Klima Kompresörü (Yedek Parça)", desi: 18.5, kategori: "Taşıt Parça", oncelik: 450 },
-    { name: "Oto Motor Takozu (4 Adet)", desi: 11.0, kategori: "Taşıt Parça", oncelik: 451 },
-    { name: "MOTOR. (Yedek Motor/Büyük)", desi: 88.0, kategori: "Yedek Parça", oncelik: 451 },
-    { name: "SEDAN OTOMOBİL (Kutulu/Taşıma Kasası)", desi: 550.0, kategori: "Gerçek Otomobil", oncelik: 452 },
-    { name: "HATCHBACK OTOMOBİL (Kutulu/Taşıma Kasası)", desi: 480.0, kategori: "Gerçek Otomobil", oncelik: 452 },
-    { name: "GERÇEK MOTORSİKLET (Racing/Sport)", desi: 180.0, kategori: "Gerçek Motor", oncelik: 453 },
-    { name: "GERÇEK MOTORSİKLET (Enduro/Adventure)", desi: 220.0, kategori: "Gerçek Motor", oncelik: 453 },
-    { name: "GERÇEK MOTORSİKLET (Chopper/Cruiser)", desi: 250.0, kategori: "Gerçek Motor", oncelik: 454 },
-    { name: "50cc MOTOR SİKLET (Kutulu)", desi: 75.0, kategori: "Motorlu Taşıt", oncelik: 454 },
-    { name: "100cc MOTOR SİKLET (Kutulu)", desi: 110.0, kategori: "Motorlu Taşıt", oncelik: 455 },
-    { name: "KOLTUK TAKIMI (3+2+1, Set Kutulu)", desi: 250.0, kategori: "Oturma Grubu", oncelik: 455 },
-    { name: "YEMEK ODASI TAKIMI (Masa+6 Sandalye, Demonre)", desi: 180.0, kategori: "Mobilya Seti", oncelik: 456 },
-    { name: "YATAK ODASI TAKIMI (Gardırop Hariç, Demonre)", desi: 160.0, kategori: "Mobilya Seti", oncelik: 456 },
-    { name: "KÖŞE KOLTUK TAKIMI (L Tipi, 2 Kutu)", desi: 190.0, kategori: "Oturma Grubu", oncelik: 457 },
-    { name: "GARDROP (6 Kapılı, Demonre)", desi: 120.0, kategori: "Mobilya", oncelik: 457 },
-    { name: "TV ÜNİTESİ (Büyük Boy, Demonre)", desi: 85.0, kategori: "Mobilya", oncelik: 458 },
-    { name: "TEKLİ BERJER (Hacimli Model)", desi: 48.0, kategori: "Mobilya", oncelik: 458 },
-    { name: "BAZA VE BAŞLIK SETİ (Çift Kişilik)", desi: 70.0, kategori: "Mobilya/Yatak", oncelik: 459 },
-    { name: "ÇAMAŞIR MAKİNESİ", desi: 60.0, kategori: "Beyaz Eşya", oncelik: 459 },
-    { name: "BULAŞIK MAKİNESİ", desi: 55.0, kategori: "Beyaz Eşya", oncelik: 460 },
-    { name: "BÜYÜK BOY BUZDOLABI (Çift Kapılı)", desi: 110.0, kategori: "Beyaz Eşya", oncelik: 460 },
-    { name: "KLİMA DIŞ ÜNİTESİ (Standart)", desi: 45.0, kategori: "Cihaz", oncelik: 461 },
-    { name: "ŞOFBEN/TERMOSİFON (Duvar Tipi, Büyük)", desi: 20.0, kategori: "Cihaz/Tesisat", oncelik: 461 },
-    { name: "KOMBİ KAZANI (Bireysel Tip)", desi: 55.0, kategori: "Isıtma Cihazı", oncelik: 462 },
-    { name: "MODÜLER OFİS BÖLME SİSTEMİ (1 Adet Panel)", desi: 55.0, kategori: "Yapı/Mobilya", oncelik: 462 },
-    { name: "MAKAM MÜDÜR TAKIMI (Masa+Koltuk+Sehpa)", desi: 185.0, kategori: "Mobilya Seti", oncelik: 463 },
-    { name: "TOPLANTI MASASI (8 Kişilik, Demonre)", desi: 150.0, kategori: "Mobilya", oncelik: 463 },
-    { name: "KÜTÜPHANE RAF ÜNİTESİ (Büyük Boy, Demonre)", desi: 95.0, kategori: "Mobilya", oncelik: 464 },
-    { name: "ÇELİK PARA KASASI (Orta Boy)", desi: 110.0, kategori: "Güvenlik/Ağır", oncelik: 464 },
-    { name: "KLİMA SANTRALİ (Büyük Ticari Tip)", desi: 350.0, kategori: "Isıtma/Soğutma", oncelik: 465 },
-    { name: "ISI POMPASI DIŞ ÜNİTESİ", desi: 120.0, kategori: "Isıtma/Soğutma", oncelik: 465 },
-    { name: "JENERATÖR (5 KVA, Tekerlekli)", desi: 180.0, kategori: "Enerji/Cihaz", oncelik: 466 },
-    { name: "KOMPRESÖR (200 Litre Hava Tankı)", desi: 160.0, kategori: "Endüstriyel Cihaz", oncelik: 466 },
-    { name: "HİDROLİK İŞ MAKİNESİ SİLİNDİRİ", desi: 78.0, kategori: "Sanayi Parça", oncelik: 467 },
-    { name: "BÜYÜK BOY FORKLİFT LASTİĞİ (1 Adet)", desi: 92.0, kategori: "İş Makinesi Parça", oncelik: 467 },
-    { name: "CNC MAKİNE PARÇASI (Göde)", desi: 220.0, kategori: "Sanayi Parça", oncelik: 468 },
-    { name: "PALET ÜSTÜ AĞIR KİMYASAL KOVASI (100 L)", desi: 110.0, kategori: "Kimyasal/Tehlikeli", oncelik: 468 },
-    { name: "FABRİKA TİPİ VİNÇ RAYI (3 Metre)", desi: 140.0, kategori: "Yapı/Ağır Metal", oncelik: 469 },
-    { name: "GIDA SOĞUK HAVA DEPOSU PANELİ (2m x 3m)", desi: 85.0, kategori: "Soğutma/Yapı", oncelik: 469 },
-    { name: "ENDÜSTRİYEL FIRIN (Ticari)", desi: 280.0, kategori: "Mutfak Ekipman", oncelik: 470 },
-    { name: "ENDÜSTRİYEL BULAŞIK MAKİNESİ (Kapüşonlu Tip)", desi: 155.0, kategori: "Mutfak Ekipman", oncelik: 470 },
-    { name: "BÜYÜK TİCARİ BUZDOLABI (2 Kapılı, Paslanmaz)", desi: 190.0, kategori: "Mutfak Ekipman", oncelik: 471 },
-    { name: "KAFETERYA TİPİ SALAT BAR ÜNİTESİ", desi: 135.0, kategori: "Mutfak Ekipman", oncelik: 471 },
-    { name: "TİCARİ OCAK BAŞI ÜNİTESİ", desi: 165.0, kategori: "Mutfak Ekipman", oncelik: 472 },
-    { name: "HASTANE YATAĞI (Ayarlanabilir, Kutusunda)", desi: 90.0, kategori: "Medikal/Mobilya", oncelik: 472 },
-    { name: "AMELİYATHANE MASASI (Demonte Parça)", desi: 125.0, kategori: "Medikal/Ağır", oncelik: 473 },
-    { name: "LABORATUVAR SANTRİFÜJ CİHAZI (Zemin Tipi)", desi: 75.0, kategori: "Medikal/Cihaz", oncelik: 473 },
-    { name: "TIBBİ ATIK KONTEYNERİ (Büyük)", desi: 45.0, kategori: "Medikal/Hacimli", oncelik: 474 },
-    { name: "RÖNTGEN CİHAZI (Taşınabilir Model, Kutulu)", desi: 55.0, kategori: "Medikal/Cihaz", oncelik: 474 },
-    { name: "MASİF AHŞAP KONSOL (Büyük Boy)", desi: 75.0, kategori: "Mobilya", oncelik: 475 },
-    { name: "AYAKKABI DOLABI (Çok Kapılı)", desi: 52.0, kategori: "Mobilya", oncelik: 475 },
-    { name: "DEKORATİF BÜFE/VİTRİN (Camlı)", desi: 68.0, kategori: "Mobilya", oncelik: 476 },
-    { name: "GİRİŞ PORTMANTO (Büyük, Askılıklı)", desi: 72.0, kategori: "Mobilya", oncelik: 476 },
-    { name: "ÇALIŞMA MASASI (L Tipi, Demonre)", desi: 65.0, kategori: "Mobilya", oncelik: 477 },
-    { name: "BAHÇE SALINCAK SETİ (3 Kişilik)", desi: 85.0, kategori: "Bahçe Mobilya", oncelik: 477 },
-    { name: "AHŞAP DECK PANELİ (1m x 2m, 10 Adet)", desi: 115.0, kategori: "Yapı/Bahçe", oncelik: 478 },
-    { name: "BÜYÜK BOY BARBEKÜ IZGARASI (Gazlı)", desi: 60.0, kategori: "Bahçe Ekipman", oncelik: 478 },
-    { name: "DÖKÜM BAHÇE MASA SETİ (4 Kişilik)", desi: 145.0, kategori: "Bahçe Mobilya/Ağır", oncelik: 479 },
-    { name: "HAVUZ POMPA SİSTEMİ (Komple)", desi: 58.0, kategori: "Yapı/Tesisat", oncelik: 479 },
-    { name: "SU ARITMA CİHAZI (Merkezi Sistem)", desi: 78.0, kategori: "Tesisat", oncelik: 480 },
-    { name: "GÜNEŞ ENERJİSİ SU ISITICISI (Kollektör Paneli)", desi: 82.0, kategori: "Enerji/Yapı", oncelik: 480 },
-    { name: "YERDEN ISITMA BORU RULOSU (500 Metre)", desi: 55.0, kategori: "Tesisat", oncelik: 481 },
-    { name: "BETON KESME MAKİNESİ (Büyük El Tipi)", desi: 35.0, kategori: "İnşaat Aleti", oncelik: 481 },
-    { name: "İNŞAAT KALIP MALZEMESİ (5 Adet Panel)", desi: 130.0, kategori: "İnşaat/Yapı", oncelik: 482 },
-    { name: "BÜYÜK BOY VİNÇ KANCASI", desi: 68.0, kategori: "İnşaat/Ağır", oncelik: 482 },
-    { name: "İSKELE KURULUM DİREĞİ (10 Adet)", desi: 90.0, kategori: "İnşaat/Yapı", oncelik: 483 },
-    { name: "DEMİR BAĞLAMA TELİ BALYASI", desi: 45.0, kategori: "İnşaat/Metal", oncelik: 483 },
-    { name: "MİMARİ MODEL (Büyük Hacimli, Koruma Kutulu)", desi: 30.0, kategori: "Hacimli/Hassas", oncelik: 484 },
-    { name: "DİJİTAL BASKI MAKİNESİ (Büyük Format)", desi: 210.0, kategori: "Ticari Cihaz", oncelik: 484 },
-    { name: "KUMAŞ KESME MAKİNESİ (Endüstriyel)", desi: 140.0, kategori: "Tekstil Makine", oncelik: 485 },
-    { name: "PLASTİK ENJEKSİYON KALIBI (Orta Boy)", desi: 110.0, kategori: "Sanayi Alet", oncelik: 485 },
-    { name: "MATBAA MAKİNESİ YEDEK PARÇASI (Silindir)", desi: 95.0, kategori: "Sanayi Parça", oncelik: 486 },
-    { name: "OTOMATİK KAPI SİSTEMİ (Motorlu)", desi: 42.0, kategori: "Yapı/Cihaz", oncelik: 486 },
-    { name: "HAVALANDIRMA FAN ÜNİTESİ (Büyük Sanayi)", desi: 105.0, kategori: "Yapı/Cihaz", oncelik: 487 },
-    { name: "YANGIN ALARM SANTRALİ (Büyük Ticari)", desi: 38.0, kategori: "Güvenlik/Cihaz", oncelik: 487 },
-    { name: "GÜVENLİK KAMERA DİREĞİ (5 Metre)", desi: 70.0, kategori: "Yapı/Hacimli", oncelik: 488 },
-    { name: "AĞIR HİZMET TİPİ DEPO RAFI (Demonre, 2m)", desi: 80.0, kategori: "Depo Ekipman", oncelik: 488 },
-    { name: "MALZEME TAŞIMA ARABASI (Tekerlekli Platform)", desi: 62.0, kategori: "Depo Ekipman", oncelik: 489 },
-    { name: "PALETLİ STREÇ SARMA MAKİNESİ (Yarı Otomatik)", desi: 130.0, kategori: "Ambalaj Makine", oncelik: 489 },
-    { name: "AHŞAP AMBALAJ KASASI (Büyük, Boş)", desi: 48.0, kategori: "Ambalaj", oncelik: 490 },
-    { name: "PLASTİK PALET (Ağır Hizmet Tipi, 10 Adet)", desi: 105.0, kategori: "Ambalaj", oncelik: 490 },
-    { name: "KONVEYÖR BANT MODÜLÜ (2 Metre)", desi: 95.0, kategori: "Endüstriyel Sistem", oncelik: 491 },
-    { name: "OTOMATİK KAYAR KAPI MEKANİZMASI", desi: 50.0, kategori: "Yapı/Cihaz", oncelik: 491 },
-    { name: "ASANSÖR KABİN PANELİ (Tek Adet)", desi: 115.0, kategori: "Yapı/Ağır", oncelik: 492 },
-    { name: "PARKE CİLA MAKİNESİ (Endüstriyel Tip)", desi: 65.0, kategori: "Temizlik Cihazı", oncelik: 492 },
-    { name: "BÜYÜK ENDÜSTRİYEL SÜPÜRGE MAKİNESİ", desi: 120.0, kategori: "Temizlik Cihazı", oncelik: 493 },
-    { name: "ÇELİK TEL HALAT RULOSU (100 Metre)", desi: 45.0, kategori: "Metal/Ağır", oncelik: 493 },
-    { name: "ALÜMİNYUM MERDİVEN (8 Basamaklı)", desi: 32.0, kategori: "Yapı/Hacimli", oncelik: 494 },
-    { name: "TİCARİ KAHVE MAKİNESİ (2 Gruplu)", desi: 40.0, kategori: "Mutfak Cihazı", oncelik: 494 },
-    { name: "SU SEBİLİ (Otel Tipi, Büyük)", desi: 25.0, kategori: "Mutfak Cihazı", oncelik: 495 },
-    { name: "MİKRODALGA FIRIN (Ticari, Hızlı Pişirme)", desi: 38.0, kategori: "Mutfak Cihazı", oncelik: 495 },
-    { name: "OFİS KESON DOLABI (Çekmeceli)", desi: 35.0, kategori: "Mobilya", oncelik: 496 },
-    { name: "ÇELİK SOYUNMA DOLABI (3 Gözlü)", desi: 49.0, kategori: "Mobilya", oncelik: 496 },
-    { name: "KONFERANS SANDALYESİ (10 Adet Paket)", desi: 40.0, kategori: "Mobilya", oncelik: 497 },
-    { name: "PLASTİK ÇÖP KONTEYNERİ (Tekerlekli, 240 Litre)", desi: 55.0, kategori: "Hacimli", oncelik: 497 },
-    { name: "BÜYÜK BOY TUVALET KABİNİ (Demonte)", desi: 90.0, kategori: "Yapı/Hacimli", oncelik: 498 },
-    { name: "BETON KARIŞTIRICI (Küçük Tip, Tekerlekli)", desi: 70.0, kategori: "İnşaat Aleti", oncelik: 498 },
-    { name: "DEMİR İNŞAAT KALIP DESTEĞİ (10 Adet)", desi: 85.0, kategori: "İnşaat/Metal", oncelik: 499 },
-    { name: "TRAFİK SİNYALİZASYON DİREĞİ (4 Metre)", desi: 62.0, kategori: "Yapı/Hacimli", oncelik: 499 },
-    { name: "REKLAM PANOSU LED EKRAN PANELİ", desi: 58.0, kategori: "Elektronik/Yapı", oncelik: 500 },
-    { name: "YOL ÇİZGİ MAKİNESİ (Manuel İtmeli)", desi: 50.0, kategori: "İnşaat/Alet", oncelik: 500 }
-];
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ORDU Kargo Hesaplama ve Hazır Ürün Sepeti</title>
 
-const menuler = [
-    { name: "Anasayfa", slug: "anasayfa", icon: "home", component: "Home" },
-    { name: "Ürünler", slug: "urunler", icon: "box", component: "Products" },
-    { name: "Hizmetler", slug: "hizmetler", icon: "tool", component: "Services" },
-    { name: "İletişim", slug: "iletisim", icon: "mail", component: "Contact" }
-];
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS: YENİ MAVİ-KIRMIZI KURUMSAL TEMA (GÖLGELİ VE MODERN) */
+        :root{
+            --primary: #003366; 
+            --accent: #CC0000; 
+            --light-bg: #FFFFFF; 
+            --text-color: #333;
+            --input-border: #ADD8E6;
+            --hover-dark: #002244;
+            --light-gray: #f5f5f5;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 20px; 
+            background-color: var(--primary);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .app {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background-color: var(--accent);
+            padding: 15px 0;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 12px 12px 0 0;
+            /* GÖLGE BURADA: 3D etkiyi verir. */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); 
+        }
+        .header a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+        .container {
+            margin: 0 auto;
+            padding: 25px;
+            background-color: var(--light-bg);
+            border-radius: 0 0 12px 12px;
+            /* GÖLGE BURADA: 3D etkiyi verir. */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); 
+            text-align: left;
+            position: relative;
+            min-height: 500px; 
+        }
+        
+        /* ... Geri Kalan CSS Kodları ... */
+        h2 {
+            color: var(--primary);
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 14px;
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 18px;
+        }
+        .input-group:not(.desi-input-group)::before {
+            content: '📐';
+            font-size: 20px;
+            position: absolute;
+            left: 12px;
+            top: 10px;
+            z-index: 10;
+        }
+        .desi-input-group::before {
+            content: '🔢';
+            font-size: 20px;
+            position: absolute;
+            left: 12px;
+            top: 10px;
+            z-index: 10;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 14px 14px 14px 45px;
+            border: 2px solid var(--input-border);
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+            -webkit-appearance: none;
+            transition: border-color .2s;
+        }
+        input[type="number"]:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 16px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color .18s, transform .1s;
+            touch-action: manipulation;
+            /* GÖLGE BURADA: 3D etkiyi verir. */
+            box-shadow: 0 4px 12px rgba(204, 0, 0, 0.4); 
+            margin-top: 5px;
+        }
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(204, 0, 0, 0.4);
+        }
+        button:hover { background-color: var(--hover-dark); } 
 
-/* * İşleyiş Mantığı: 
-* urunler dizisinde tüm 500 ürün bulunur. 
-* Anasayfada (Home component) yalnızca desi değeri 45.0 ve üzeri olan 2 ürün (örneğin ilk 2 ürün) gösterilir. 
-* Ürünler sayfasında (Products component) filtreleme/arama ile tüm 500 ürüne erişim sağlanır.
-*/
+        .hazir-urunler-tablo {
+            margin-top: 25px;
+            background-color: var(--light-gray);
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .hazir-urunler-tablo h3 {
+            color: var(--primary);
+            margin: 0 0 15px 0;
+            text-align: center;
+        }
+        .urun-listesi-kapsayici {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+        }
+        .urun-tablosu {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        .urun-tablosu th, .urun-tablosu td {
+            padding: 8px 5px;
+            border-bottom: 1px solid #eee;
+            text-align: right;
+        }
+        .urun-tablosu th:nth-child(1), .urun-tablosu td:nth-child(1) {
+            text-align: left;
+            font-weight: 600;
+        }
+        .urun-tablosu th {
+            background-color: var(--primary);
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+        .urun-tablosu tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+        .urun-tablosu input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            margin: 0;
+        }
+        .result-box {
+            margin-top: 22px;
+            padding: 18px;
+            border: 2px solid var(--accent);
+            background-color: #fff;
+            border-radius: 10px;
+            text-align: center;
+            /* GÖLGE BURADA: 3D etkiyi verir. */
+            box-shadow: 0 0 15px rgba(204, 0, 0, 0.2); 
+        }
+        .sonuc-gosterge {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        .sonuc-gosterge:last-child {
+            border-bottom: none;
+            margin-top: 10px;
+        }
+        .sonuc-gosterge span {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 16px;
+        }
+        .result-box h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent);
+            text-align: left;
+        }
+        .manuel-hesap-sonuc, .sepet-hesap-sonuc {
+            display: none;
+            text-align: left;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--input-border);
+        }
+        .sepet-hesap-sonuc {
+            border-bottom: none;
+        }
+        .footer {
+            margin-top: 14px;
+            padding: 6px;
+            color: #ddd;
+            font-size: 12px;
+            text-align: center;
+        }
+        @media (max-width:420px) {
+            .container { padding: 20px; }
+            button { padding: 14px; font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app" role="application" aria-label="Kargo Ücreti Hesaplayıcı">
+        <div class="header">
+            <a href="http://www.ordutasimacilik.com" target="_blank">www.ordutasimacilik.com</a>
+        </div>
 
-// Kullanılan JavaScript işlevleri:
-// 1. urunler.filter(...) ile arama ve filtreleme yapılır.
-// 2. urunler.sort(...) ile sıralama yapılır.
-// 3. Anasayfa için urunler.filter(u => u.desi >= 45.0).slice(0, 2) kullanılır.
+        <div class="container" role="main">
+            
+            <p style="font-size:18px; font-weight: 700; text-align:center; margin-bottom:20px; color:var(--primary);">
+                ORDU TAŞIMACILIK
+            </p>
 
-export { urunler, menuler };
+            <div id="lwh-group">
+                <div class="input-group">
+                    <label for="en">En (cm)</label>
+                    <input type="number" id="en" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
+                </div>
+
+                <div class="input-group">
+                    <label for="boy">Boy (cm)</label>
+                    <input type="number" id="boy" placeholder="Örn: 30" inputmode="numeric" min="0" step="any">
+                </div>
+
+                <div class="input-group">
+                    <label for="yukseklik">Yükseklik (cm)</label>
+                    <input type="number" id="yukseklik" placeholder="Örn: 40" inputmode="numeric" min="0" step="any">
+                </div>
+
+                <button id="hesapBtnLWH">Hacim ile Fiyatı Hesapla</button>
+            </div>
+
+            <hr style="margin:25px 0; border-top:1px solid var(--input-border);">
+            <h3 style="text-align:center; color:var(--primary); margin-bottom:15px; font-weight:600;">🔢 Ya da Desiyi Direkt Girin</h3>
+
+            <div class="input-group desi-input-group">
+                <label for="desi">Desi Değeri (Adet)</label>
+                <input type="number" id="desi" placeholder="Örn: 12" inputmode="numeric" min="0" step="1">
+            </div>
+            
+            <button id="hesapBtnDesi">Desi ile Fiyatı Hesapla</button>
+
+            <div class="hazir-urunler-tablo">
+                <hr style="margin:25px 0; border-top:1px solid var(--input-border); border-color:var(--primary);">
+                <h3>📦 Hazır Ürün Seçimi - Ekipman ve Tekstil (3000 Bölen)</h3>
+                <div class="urun-listesi-kapsayici">
+                    <table id="urun-tablosu" class="urun-tablosu">
+                        <thead>
+                            <tr>
+                                <th style="width: 45%;">Ürün Adı</th>
+                                <th style="width: 20%;">Desi</th>
+                                <th style="width: 20%;">Fiyat</th>
+                                <th style="width: 15%;">Seç</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="result-box" aria-live="polite">
+                
+                <div class="manuel-hesap-sonuc" id="manuelSonuc">
+                    <h3>Manuel Hesap Sonucu</h3>
+                    <div class="sonuc-gosterge">
+                        <span>Desi Değeri:</span>
+                        <span id="desiSonuc">-</span>
+                    </div>
+                    <div class="sonuc-gosterge">
+                        <span>Tahmini Kargo Ücreti:</span>
+                        <span id="ucretSonuc">-</span>
+                    </div>
+                </div>
+
+                <div class="sepet-hesap-sonuc" id="sepetSonuc">
+                    <h3>🛒 Sepet Toplamı</h3>
+                    <div class="sonuc-gosterge">
+                        <span>Toplam Desi:</span>
+                        <span id="toplam-desi">0.0</span>
+                    </div>
+                    <div class="sonuc-gosterge">
+                        <span>Toplam Fiyat:</span>
+                        <span id="toplam-fiyat">0.00 TL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">Tasarım: Melih Bilal Öztürk | Ordu Taşımacılık</div>
+    </div>
+    
+    <script>
+        const DESI_BOLENI = 3000;
+        const DESI_FIYAT = 9.17; 
+
+        const urunVerileri = [
+            { ad: "hava kompresörü (büyük sanayi tipi)", desi: 320.0 },
+            { ad: "çelik kapı (paket)", desi: 105.0 },
+            { ad: "termosifon / şofben", desi: 64.0 },
+            { ad: "mutfak tezgahı (1.5m, paket)", desi: 30.0 },
+            { ad: "kamera tripodı (profesyonel)", desi: 16.0 },
+            { ad: "ses sistemi subwoofer", desi: 41.7 },
+            { ad: "koşu bandı (kutu 1)", desi: 144.0 },
+            { ad: "bisiklet tamir sehpası", desi: 16.0 },
+            { ad: "trambolin filesi ve yayları (kutu)", desi: 24.0 },
+            { ad: "kamp çadırı (6 kişilik)", desi: 24.0 },
+            { ad: "uyku tulumu (4 adet paket)", desi: 20.0 },
+            { ad: "büyük oyuncak araba (akü)", desi: 66.7 },
+            { ad: "tekstil kolisi (geniş, hafif)", desi: 64.0 },
+            { ad: "ayakkabı kolisi (10 çift)", desi: 32.0 },
+            { ad: "deri ceket (askılı kutu)", desi: 10.0 },
+            { ad: "havlu seti (50 adet, paket)", desi: 33.3 },
+            { ad: "oto tampon (ön/arka)", desi: 144.0 },
+            { ad: "far takımı (sağ/sol)", desi: 24.0 },
+            { ad: "egzoz sistemi (uzun parça)", desi: 30.0 },
+            { ad: "çim biçme makinesi", desi: 53.3 },
+            { ad: "ağaç kesme motoru (zincirli)", desi: 26.7 },
+            { ad: "valiz (büyük boy, boş)", desi: 51.3 },
+            { ad: "tabak/bardak seti (porselen, kutu)", desi: 20.0 },
+            { ad: "tencere seti (büyük kutu)", desi: 24.0 },
+            { ad: "kahve makinesi (filtre)", desi: 8.75 },
+            { ad: "lcd televizyon", desi: 18.0 },
+            { ad: "buzdolabı (tek kapı)", desi: 45.0 },
+            { ad: "çamaşır makinesi", desi: 60.0 },
+            { ad: "fırın (set üstü)", desi: 22.0 },
+            { ad: "oturma grubu (3+1+1)", desi: 120.0 },
+            { ad: "yemek masası (6 kişilik)", desi: 55.0 },
+            { ad: "gardırop (demonte)", desi: 80.0 },
+            { ad: "ofis koltuğu", desi: 15.0 },
+            { ad: "spor salonu ekipmanları", desi: 90.0 },
+            { ad: "bahçe mobilyası seti", desi: 70.0 },
+            { ad: "bisiklet (yetişkin)", desi: 12.0 },
+            { ad: "çocuk bisikleti", desi: 8.0 },
+            { ad: "jant seti (otomobil)", desi: 40.0 },
+            { ad: "lastik (otomobil)", desi: 25.0 },
+            { ad: "kombi cihazı", desi: 30.0 },
+            { ad: "klima iç ünite", desi: 15.0 },
+            { ad: "büyük boy kitaplık", desi: 50.0 },
+            { ad: "sanayi tipi süpürge", desi: 35.0 },
+            { ad: "yazıcı (lazer, büyük)", desi: 20.0 },
+            { ad: "projeksiyon cihazı", desi: 10.0 },
+            { ad: "kapı (iç mekan)", desi: 28.0 },
+            { ad: "pencere (pvc çerçeveli)", desi: 32.0 },
+            { ad: "mermer tezgah parçası", desi: 40.0 },
+            { ad: "seramik karo paleti (küçük)", desi: 60.0 },
+            { ad: "ısıtıcı (endüstriyel fan)", desi: 45.0 },
+            { ad: "su pompası (büyük bahçe)", desi: 25.0 },
+            { ad: "hali (büyük boy)", desi: 15.0 },
+            { ad: "perde mekanizması (toptan koli)", desi: 10.0 },
+            { ad: "oyuncak araba (uzaktan kumandalı, büyük kutu)", desi: 12.0 },
+            { ad: "bebek arabası (çift yönlü)", desi: 14.0 },
+            { ad: "kamera sistemi (güvenlik, koli)", desi: 16.0 },
+            { ad: "akü (otomobil)", desi: 20.0 },
+            { ad: "50cc scooter (moped, kutulu)", desi: 38.0 },
+            { ad: "100cc mini motosiklet (crated, demonre)", desi: 52.0 },
+            { ad: "otomobil tipi kış lastiği (1 adet)", desi: 28.0 },
+            { ad: "jant kapağı (toptan koli)", desi: 10.0 },
+            { ad: "buzdolabı (çift kapı)", desi: 85.0 },
+            { ad: "bulaşık makinesi", desi: 55.0 },
+            { ad: "kurutma makinesi", desi: 65.0 },
+            { ad: "şofben/termosifon", desi: 20.0 },
+            { ad: "klima dış ünite", desi: 45.0 },
+            { ad: "kombine fırın (ankastre)", desi: 30.0 },
+            { ad: "yatak baza seti (çift kişilik)", desi: 70.0 },
+            { ad: "çalışma masası (büyük)", desi: 40.0 },
+            { ad: "tv ünitesi", desi: 50.0 },
+            { ad: "kütüphane (modüler)", desi: 60.0 },
+            { ad: "yürüyüş bandı", desi: 75.0 },
+            { ad: "elips bisiklet", desi: 55.0 },
+            { ad: "kayak/kano (tek kişilik)", desi: 35.0 },
+            { ad: "kamp çadırı (6 kişilik)", desi: 18.0 },
+            { ad: "kamyon lastiği (büyük boy)", desi: 65.0 },
+            { ad: "jeep lastiği", desi: 55.0 },
+            { ad: "oto motor takozu (4 adet)", desi: 11.0 },
+            { ad: "oto klima kompresörü", desi: 18.5 },
+            { ad: "motor. (yedek motor/büyük)", desi: 88.0 },
+            { ad: "50cc scooter yedek gövde paneli seti", desi: 14.5 },
+            { ad: "beyaz lastik (oto lastiği)", desi: 28.0 },
+            { ad: "jantli bink.last. (oto lastiği)", desi: 28.0 },
+            { ad: "binek lastik", desi: 28.0 },
+            { ad: "sedan otomobil (kutulu/taşıma kasası)", desi: 550.0 },
+            { ad: "hatchback otomobil (kutulu/taşıma kasası)", desi: 480.0 },
+            { ad: "gerçek motorsiklet (racing/sport)", desi: 180.0 },
+            { ad: "gerçek motorsiklet (enduro/adventure)", desi: 220.0 },
+            { ad: "gerçek motorsiklet (chopper/cruiser)", desi: 250.0 },
+            { ad: "50cc motor siklet (kutulu)", desi: 75.0 },
+            { ad: "100cc motor siklet (kutulu)", desi: 110.0 },
+            { ad: "koltuk takımı (3+2+1, set kutulu)", desi: 250.0 },
+            { ad: "yemek odası takımı (masa+6 sandalye, demonre)", desi: 180.0 },
+            { ad: "yatak odası takımı (gardırop hariç, demonre)", desi: 160.0 },
+            { ad: "köşe koltuk takımı (l tipi, 2 kutu)", desi: 190.0 },
+            { ad: "gardrop (6 kapılı, demonre)", desi: 120.0 },
+            { ad: "tv ünitesi (büyük boy, demonre)", desi: 85.0 },
+            { ad: "tekli berjer (hacimli model)", desi: 48.0 },
+            { ad: "baza ve başlık seti (çift kişilik)", desi: 70.0 },
+            { ad: "çamaşır makinesi", desi: 60.0 },
+            { ad: "bulaşık makinesi", desi: 55.0 },
+            { ad: "büyük boy buzdolabı (çift kapılı)", desi: 110.0 },
+            { ad: "klima dış ünitesi (standart)", desi: 45.0 },
+            { ad: "şofben/termosifon (duvar tipi, büyük)", desi: 20.0 },
+            { ad: "kombi kazanı (bireysel tip)", desi: 55.0 },
+            { ad: "modüler ofis bölme sistemi (1 adet panel)", desi: 55.0 },
+            { ad: "makam müdür takımı (masa+koltuk+sehpa)", desi: 185.0 },
+            { ad: "toplantı masası (8 kişilik, demonre)", desi: 150.0 },
+            { ad: "kütüphane raf ünitesi (büyük boy, demonre)", desi: 95.0 },
+            { ad: "çelik para kasası (orta boy)", desi: 110.0 },
+            { ad: "klima santrali (büyük ticari tip)", desi: 350.0 },
+            { ad: "ısı pompası dış ünitesi", desi: 120.0 },
+            { ad: "jeneratör (5 kva, tekerlekli)", desi: 180.0 },
+            { ad: "kompresör (200 litre hava tankı)", desi: 160.0 },
+            { ad: "hidrolik iş makinesi silindiri", desi: 78.0 },
+            { ad: "büyük boy forklift lastiği (1 adet)", desi: 92.0 },
+            { ad: "cnc makine parçası (göde)", desi: 220.0 },
+            { ad: "palet üstü ağır kimyasal kovası (100 l)", desi: 110.0 },
+            { ad: "fabrika tipi vinç rayı (3 metre)", desi: 140.0 },
+            { ad: "gıda soğuk hava deposu paneli (2m x 3m)", desi: 85.0 },
+            { ad: "endüstriyel firin (ticari)", desi: 280.0 },
+            { ad: "endüstriyel bulaşık makinesi (kapüşonlu tip)", desi: 155.0 },
+            { ad: "büyük ticari buzdolabı (2 kapılı, paslanmaz)", desi: 190.0 },
+            { ad: "kafeterya tipi salat bar ünitesi", desi: 135.0 },
+            { ad: "ticari ocak başı ünitesi", desi: 165.0 },
+            { ad: "hastane yatağı (ayarlanabilir, kutusunda)", desi: 90.0 },
+            { ad: "ameliyathane masası (demonte parça)", desi: 125.0 },
+            { ad: "laboratuvar santrifüj cihazı (zemin tipi)", desi: 75.0 },
+            { ad: "tıbbi atık konteyneri (büyük)", desi: 45.0 },
+            { ad: "röntgen cihazı (taşınabilir model, kutulu)", desi: 55.0 },
+            { ad: "masif ahşap konsol (büyük boy)", desi: 75.0 },
+            { ad: "ayakkabı dolabı (çok kapılı)", desi: 52.0 },
+            { ad: "dekoratif büfe/vitrin (camlı)", desi: 68.0 },
+            { ad: "giriş portmanto (büyük, askılıklı)", desi: 72.0 },
+            { ad: "çalışma masası (l tipi, demonre)", desi: 65.0 },
+            { ad: "bahçe salıncak seti (3 kişilik)", desi: 85.0 },
+            { ad: "ahşap deck paneli (1m x 2m, 10 adet)", desi: 115.0 },
+            { ad: "büyük boy barbekü ızgarası (gazlı)", desi: 60.0 },
+            { ad: "döküm bahçe masa seti (4 kişilik)", desi: 145.0 },
+            { ad: "havuz pompa sistemi (komple)", desi: 58.0 },
+            { ad: "su arıtma cihazı (merkezi sistem)", desi: 78.0 },
+            { ad: "güneş enerjisi su isitici (kollektör paneli)", desi: 82.0 },
+            { ad: "yerden isitma boru rulosu (500 metre)", desi: 55.0 },
+            { ad: "beton kesme makinesi (büyük el tipi)", desi: 35.0 },
+            { ad: "inşaat kalip malzemesi (5 adet panel)", desi: 130.0 },
+            { ad: "büyük boy vinç kancası", desi: 68.0 },
+            { ad: "iskele kurulum direği (10 adet)", desi: 90.0 },
+            { ad: "demir bağlama teli balyası", desi: 45.0 },
+            { ad: "mimari model (büyük hacimli, koruma kutulu)", desi: 30.0 },
+            { ad: "dijital baskı makinesi (büyük format)", desi: 210.0 },
+            { ad: "kumaş kesme makinesı (endüstriyel)", desi: 140.0 },
+            { ad: "plastik enjeksiyon kalıbı (orta boy)", desi: 110.0 },
+            { ad: "matbaa makinesi yedek parçası (silindir)", desi: 95.0 },
+            { ad: "otomatik kapı sistemi (motorlu)", desi: 42.0 },
+            { ad: "havalandirma fan ünitesi (büyük sanayi)", desi: 105.0 },
+            { ad: "yangın alarm santrali (büyük ticari)", desi: 38.0 },
+            { ad: "güvenlik kamera direği (5 metre)", desi: 70.0 },
+            { ad: "agir hizmet tipi depo rafı (demonre, 2m)", desi: 80.0 },
+            { ad: "malzeme taşıma arabası (tekerlekli platform)", desi: 62.0 },
+            { ad: "paletli streç sarma makinesi (yarı otomatik)", desi: 130.0 },
+            { ad: "ahşap ambalaj kasası (büyük, boş)", desi: 48.0 },
+            { ad: "plastik palet (ağır hizmet tipi, 10 adet)", desi: 105.0 },
+            { ad: "konveyör bant modülü (2 metre)", desi: 95.0 },
+            { ad: "otomatik kayar kapı mekanizması", desi: 50.0 },
+            { ad: "asansör kabin paneli (tek adet)", desi: 115.0 },
+            { ad: "parke cila makinesi (endüstriyel tip)", desi: 65.0 },
+            { ad: "büyük endüstriyel süpürge makinesi", desi: 120.0 },
+            { ad: "çelik tel halat rulosu (100 metre)", desi: 45.0 },
+            { ad: "alüminyum merdiven (8 basamaklı)", desi: 32.0 },
+            { ad: "ticari kahve makinesi (2 gruplu)", desi: 40.0 },
+            { ad: "su sebili (otel tipi, büyük)", desi: 25.0 },
+            { ad: "mikrodalga firin (ticari, hızlı pişirme)", desi: 38.0 },
+            { ad: "ofis keson dolabı (çekmeceli)", desi: 35.0 },
+            { ad: "çelik soyunma dolabı (3 gözlü)", desi: 49.0 },
+            { ad: "konferans sandalyesi (10 adet paket)", desi: 40.0 },
+            { ad: "plastik çöp konteyneri (tekerlekli, 240 litre)", desi: 55.0 },
+            { ad: "büyük boy tuvalet kabini (demonte)", desi: 90.0 },
+            { ad: "beton karıştırıcı (küçük tip, tekerlekli)", desi: 70.0 },
+            { ad: "demir inşaat kalıp desteği (10 adet)", desi: 85.0 },
+            { ad: "trafik sinyalizasyon direği (4 metre)", desi: 62.0 },
+            { ad: "reklam panosu led ekran paneli", desi: 58.0 },
+            { ad: "yol çizgi makinesi (manuel itmeli)", desi: 50.0 },
+            { ad: "tekstil kesim masası (demonte parça)", desi: 110.0 },
+            { ad: "seramik fayans paleti (50m²)", desi: 180.0 },
+            { ad: "alüminyum kompozit panel (10 adet)", desi: 75.0 },
+            { ad: "büyük boy vana ve fitting seti (kutulu)", desi: 40.0 },
+            { ad: "endüstriyel kazan pompası", desi: 68.0 },
+            { ad: "su tankı (fiberglas, 500 litre)", desi: 72.0 },
+            { ad: "ısı yalıtım levhası balyası (kalın tip)", desi: 45.0 },
+            { ad: "çatı kiremit paleti (büyük)", desi: 150.0 },
+            { ad: "yapıştırıcı harç torbası paleti (40 adet)", desi: 120.0 },
+            { ad: "dış cephe boyası kovası paleti (20 kova)", desi: 85.0 },
+            { ad: "otomatik sulama sistemi santrali", desi: 35.0 },
+            { ad: "ağaç budama makinesi (profesyonel)", desi: 42.0 },
+            { ad: "çim biçme makinesi (benzinli, büyük)", desi: 55.0 },
+            { ad: "bahçe traktörü (küçük model, kutulu)", desi: 150.0 },
+            { ad: "büyük hava kompresörü (dikey tanklı)", desi: 220.0 },
+            { ad: "cnc router (küçük masaüstü model)", desi: 90.0 },
+            { ad: "lazer kesim cihazı (mini tip)", desi: 75.0 },
+            { ad: "3d yazıcı (endüstriyel boyut)", desi: 110.0 },
+            { ad: "büyük baskı kağıdı rulosu (5 adet)", desi: 48.0 },
+            { ad: "server sunucu kabini (boş)", desi: 60.0 },
+            { ad: "ups güç kaynağı (büyük sanayi)", desi: 130.0 },
+            { ad: "telefon santrali (büyük işletme)", desi: 50.0 },
+            { ad: "ses sistemi hoparlörü (stadyum tipi, tek)", desi: 105.0 },
+            { ad: "aydinlatma armürü (ticari alan, koli 10 adet)", desi: 40.0 },
+            { ad: "güvenlik barier sistemi (otomobil park)", desi: 55.0 },
+            { ad: "yüksek hızlı fotograf makinesi (endüstriyel)", desi: 70.0 },
+            { ad: "büyük duvar tipi server kabini (dolu)", desi: 110.0 },
+            { ad: "bilgisayar monitörü (ultra geniş, koli)", desi: 35.0 },
+            { ad: "ofis dosya dolabı (yüksek, çelik)", desi: 60.0 },
+            { ad: "ofis kanepe (3 kişilik)", desi: 85.0 },
+            { ad: "otel oda minibarı (kutulu)", desi: 28.0 },
+            { ad: "valiz taşıma arabası (otel tipi)", desi: 32.0 },
+            { ad: "havlu kurutucu radyatör (büyük)", desi: 18.0 },
+            { ad: "endüstriyel aspiratör motoru (büyük)", desi: 50.0 },
+            { ad: "paslanmaz çelik tezgah (2 metre)", desi: 75.0 },
+            { ad: "endüstriyel gıda mikseri (ayaklı)", desi: 130.0 },
+            { ad: "büyük endüstriyel davlumbaz (parça)", desi: 65.0 },
+            { ad: "ticari kahve kavurma makinesi", desi: 180.0 },
+            { ad: "gıda ambalaj makinesi (vakum)", desi: 90.0 }
+        ];
+
+        const lwhInputs = document.querySelectorAll('#lwh-group input');
+        const desiInput = document.getElementById('desi');
+        const manuelSonucDiv = document.getElementById('manuelSonuc');
+        const sepetSonucDiv = document.getElementById('sepetSonuc');
+        const urunTablosuBody = document.querySelector('#urun-tablosu tbody');
+        const toplamDesiSpan = document.getElementById('toplam-desi');
+        const toplamFiyatSpan = document.getElementById('toplam-fiyat');
+
+        function formatTL(x) {
+            return new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x);
+        }
+
+        function gizleManuelSonuc() { manuelSonucDiv.style.display = 'none'; }
+        function gizleSepetSonuc() { sepetSonucDiv.style.display = 'none'; }
+        
+        function hesaplaLWH() {
+            gizleSepetSonuc();
+            desiInput.value = '';
+            const en = parseFloat(document.getElementById('en').value);
+            const boy = parseFloat(document.getElementById('boy').value);
+            const yukseklik = parseFloat(document.getElementById('yukseklik').value);
+
+            if (isNaN(en) || isNaN(boy) || isNaN(yukseklik) || en <= 0 || boy <= 0 || yukseklik <= 0) {
+                document.getElementById('ucretSonuc').textContent = '—';
+                document.getElementById('desiSonuc').textContent = 'Lütfen tüm ölçü alanlarını doldurun.';
+                manuelSonucDiv.style.display = 'block';
+                return;
+            }
+
+            const desi = (en * boy * yukseklik) / DESI_BOLENI;
+            const yuvarlanmisDesi = Math.ceil(desi);
+            const kargoUcreti = yuvarlanmisDesi * DESI_FIYAT;
+
+            document.getElementById('desiSonuc').textContent = `Hacim Desisi: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
+            document.getElementById('ucretSonuc').textContent = formatTL(kargoUcreti) + ' TL';
+            manuelSonucDiv.style.display = 'block';
+        }
+
+        function hesaplaDesi() {
+            gizleSepetSonuc();
+            lwhInputs.forEach(input => input.value = '');
+            const desi = parseFloat(desiInput.value);
+
+            if (isNaN(desi) || desi <= 0) {
+                document.getElementById('ucretSonuc').textContent = '—';
+                document.getElementById('desiSonuc').textContent = 'Lütfen geçerli bir Desi değeri girin.';
+                manuelSonucDiv.style.display = 'block';
+                return;
+            }
+
+            const yuvarlanmisDesi = Math.ceil(desi);
+            const kargoUcreti = yuvarlanmisDesi * DESI_FIYAT;
+
+            document.getElementById('desiSonuc').textContent = `Girilen Desi: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
+            document.getElementById('ucretSonuc').textContent = formatTL(kargoUcreti) + ' TL';
+            manuelSonucDiv.style.display = 'block';
+        }
+
+        function sepetiHesapla() {
+            gizleManuelSonuc();
+
+            let toplamDesi = 0;
+            let toplamFiyat = 0;
+            
+            const seciliUrunler = document.querySelectorAll('#urun-tablosu input[type="checkbox"]:checked');
+
+            seciliUrunler.forEach(checkbox => {
+                const desi = parseFloat(checkbox.dataset.desi);
+                const fiyat = parseFloat(checkbox.dataset.fiyat);
+
+                if (!isNaN(desi) && !isNaN(fiyat)) {
+                    toplamDesi += Math.ceil(desi); 
+                    toplamFiyat += fiyat; 
+                }
+            });
+
+            if (toplamFiyat > 0) {
+                toplamDesiSpan.textContent = toplamDesi.toFixed(1); 
+                toplamFiyatSpan.textContent = formatTL(toplamFiyat) + ' TL';
+                
+                // *** BURASI FİYAT GÖSTERME DÜZELTMESİDİR ***
+                sepetSonucDiv.style.display = 'block';
+            } else {
+                // Sepet boşsa sonucu gizle
+                gizleSepetSonuc();
+            }
+        }
+        
+        function urunleriListele() {
+            if (!urunTablosuBody) return; 
+
+            urunVerileri.forEach(urun => {
+                const satir = urunTablosuBody.insertRow();
+                satir.innerHTML = `
+                    <td style="text-align: left;">${urun.ad}</td>
+                    <td>${Math.ceil(urun.desi).toFixed(1)}</td>
+                    <td>${formatTL(Math.ceil(urun.desi) * DESI_FIYAT)} TL</td> 
+                    <td style="text-align: center;"><input type="checkbox" name="urunSecim" data-desi="${urun.desi}" data-fiyat="${(Math.ceil(urun.desi) * DESI_FIYAT).toFixed(2)}"></td>
+                `;
+            });
+
+            const tumCheckboxlar = document.querySelectorAll('#urun-tablosu input[type="checkbox"]');
+            tumCheckboxlar.forEach(checkbox => {
+                // Checkbox değiştiğinde sepeti hesapla
+                checkbox.addEventListener('change', sepetiHesapla);
+            });
+        }
+        
+        document.getElementById('hesapBtnLWH').addEventListener('click', hesaplaLWH);
+        document.getElementById('hesapBtnDesi').addEventListener('click', hesaplaDesi);
+
+        lwhInputs.forEach(input => {
+            input.addEventListener('keydown', function(e){
+                if (e.key === 'Enter') { hesaplaLWH(); }
+            });
+        });
+        desiInput.addEventListener('keydown', function(e){
+            if (e.key === 'Enter') { hesaplaDesi(); }
+        });
+
+        urunleriListele();
+        gizleManuelSonuc(); 
+        gizleSepetSonuc();
+
+    </script>
+</body>
+</html>
