@@ -26,8 +26,8 @@
         .input-group { position:relative; margin-bottom:18px; }
         .input-group:not(.desi-input-group)::before { content:'📐'; font-size:20px; position:absolute; left:12px; top:10px; z-index:10; }
         .desi-input-group::before { content:'🔢'; font-size:20px; position:absolute; left:12px; top:10px; z-index:10; }
-        input[type="number"], select { width:100%; padding:14px 14px 14px 45px; border:2px solid var(--input-border); border-radius:10px; font-size:16px; box-sizing:border-box; -webkit-appearance:none; transition:border-color .2s; }
-        input[type="number"]:focus, select:focus { border-color:var(--primary); outline:none; }
+        input[type="number"], input[type="text"], select { width:100%; padding:14px 14px 14px 45px; border:2px solid var(--input-border); border-radius:10px; font-size:16px; box-sizing:border-box; -webkit-appearance:none; transition:border-color .2s; }
+        input[type="number"]:focus, input[type="text"]:focus, select:focus { border-color:var(--primary); outline:none; }
         button { width:100%; padding:16px; background-color:var(--accent); color:white; border:none; border-radius:10px; font-size:18px; font-weight:600; cursor:pointer; transition:background-color .18s, transform .1s; box-shadow:0 4px 12px rgba(204,0,0,0.4); margin-top:5px; }
         button:active { transform:translateY(2px); box-shadow:0 2px 8px rgba(204,0,0,0.4); }
         button:hover { background-color: var(--hover-dark); }
@@ -47,6 +47,9 @@
         .manuel-hesap-sonuc, .sepet-hesap-sonuc { display:none; text-align:left; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid var(--input-border); }
         .sepet-hesap-sonuc { border-bottom:none; }
         .footer { margin-top:14px; padding:6px; color:#ddd; font-size:12px; text-align:center; }
+
+        /* Arama kutusu */
+        #urun-ara { margin-bottom:12px; padding-left:12px; border-radius:8px; border:1px solid var(--input-border); width:100%; height:36px; }
         @media(max-width:420px){ .container{padding:20px;} button{padding:14px; font-size:16px;} }
     </style>
 </head>
@@ -78,6 +81,9 @@
             <div class="hazir-urunler-tablo">
                 <hr style="margin:25px 0; border-top:1px solid var(--input-border); border-color:var(--primary);">
                 <h3>📦 Hazır Ürün Seçimi</h3>
+
+                <input type="text" id="urun-ara" placeholder="Ürün ara...">
+
                 <div class="input-group">
                     <label for="kategori">Kategori Seç</label>
                     <select id="kategori">
@@ -135,6 +141,7 @@ const urunTablosuBody = document.querySelector('#urun-tablosu tbody');
 const toplamDesiSpan = document.getElementById('toplam-desi');
 const toplamFiyatSpan = document.getElementById('toplam-fiyat');
 const kategoriSelect = document.getElementById('kategori');
+const urunAraInput = document.getElementById('urun-ara');
 
 function formatTL(x){ return new Intl.NumberFormat('tr-TR',{ minimumFractionDigits:2, maximumFractionDigits:2 }).format(x); }
 function gizleManuelSonuc(){ manuelSonucDiv.style.display='none'; }
@@ -153,7 +160,9 @@ function hesaplaLWH(){
     }
     const desi=(en*boy*yukseklik)/DESI_BOLENI;
     const yuvarlanmisDesi=Math.ceil(desi);
-    const kargoUcreti=yuvarlanmisDesi*DESI_FIYAT;
+    let kargoUcreti=yuvarlanmisDesi*DESI_FIYAT;
+    const faktor=parseFloat(kategoriSelect.value);
+    kargoUcreti*=faktor;
     document.getElementById('desiSonuc').textContent=`Hacim Desisi: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
     document.getElementById('ucretSonuc').textContent=formatTL(kargoUcreti)+' TL';
     manuelSonucDiv.style.display='block';
@@ -169,7 +178,9 @@ function hesaplaDesi(){
         return;
     }
     const yuvarlanmisDesi=Math.ceil(desi);
-    const kargoUcreti=yuvarlanmisDesi*DESI_FIYAT;
+    let kargoUcreti=yuvarlanmisDesi*DESI_FIYAT;
+    const faktor=parseFloat(kategoriSelect.value);
+    kargoUcreti*=faktor;
     document.getElementById('desiSonuc').textContent=`Girilen Desi: ${desi.toFixed(2)} (Yuvarlanmış: ${yuvarlanmisDesi} Desi)`;
     document.getElementById('ucretSonuc').textContent=formatTL(kargoUcreti)+' TL';
     manuelSonucDiv.style.display='block';
@@ -210,11 +221,33 @@ function urunleriListele(){
     tumCheckboxlar.forEach(cb=>cb.addEventListener('change', sepetiHesapla));
 }
 
+// Arama fonksiyonu
+urunAraInput.addEventListener('input',()=>{
+    const filtre=urunAraInput.value.toLowerCase();
+    document.querySelectorAll('#urun-tablosu tbody tr').forEach(tr=>{
+        const urunAdi=tr.cells[0].textContent.toLowerCase();
+        tr.style.display=urunAdi.includes(filtre)?'':'none';
+    });
+});
+
 document.getElementById('hesapBtnLWH').addEventListener('click', hesaplaLWH);
 document.getElementById('hesapBtnDesi').addEventListener('click', hesaplaDesi);
-kategoriSelect.addEventListener('change', sepetiHesapla);
+kategoriSelect.addEventListener('change',()=>{
+    sepetiHesapla();
+    // manuel hesap sonuçları varsa da uygula
+    if(manuelSonucDiv.style.display==='block'){
+        if(lwhInputs[0].value || desiInput.value){
+            if(lwhInputs[0].value || lwhInputs[1].value || lwhInputs[2].value){
+                hesaplaLWH();
+            } else {
+                hesaplaDesi();
+            }
+        }
+    }
+});
 lwhInputs.forEach(input=>input.addEventListener('keydown',e=>{if(e.key==='Enter'){hesaplaLWH();}}));
 desiInput.addEventListener('keydown',e=>{if(e.key==='Enter'){hesaplaDesi();}});
+
 urunleriListele(); gizleManuelSonuc(); gizleSepetSonuc();
 </script>
 </body>
